@@ -1,37 +1,44 @@
-﻿namespace Caty.ToolsApp;
+﻿using Caty.ToolsApp.Model.Rss;
+
+namespace Caty.ToolsApp;
 
 public partial class RssConfigControl : UserControl
 {
-    public RssConfigControl()
+    public RssSource Source{ get; }  
+
+    public RssConfigControl() => InitializeComponent();
+
+    public RssConfigControl(RssSource source)
     {
+        Source = source;
         InitializeComponent();
     }
-    public RssConfigControl(string name, string url, string desc, bool enable)
+
+    private void RssConfigControl_Load(object sender, EventArgs e)
     {
-        InitializeComponent();
-        ck_enable.Checked = enable;
-        txt_name.Text = name;
-        txt_url.Text = url;
-        txt_desc.Text = desc;
+        txt_name.Text = Source.RssName;
+        txt_url.Text = Source.RssUrl;
+        ck_enable.Checked = Source.IsEnabled;
+        txt_desc.Text = Source.RssDescription;
     }
 
-    public void SetName(string name)
+    private void txt_name_TextChanged(object sender, EventArgs e)
     {
-        txt_name.Text = name;
+        Source.RssName = txt_name.Text;
     }
 
-    public void SetUrl(string url)
+    private void txt_url_TextChanged(object sender, EventArgs e)
     {
-        txt_url.Text = url;
+        Source.RssUrl = txt_url.Text;
     }
 
-    public void SetDesc(string desc)
+    private void txt_desc_TextChanged(object sender, EventArgs e)
     {
-        txt_desc.Text = desc;
+        Source.RssDescription = txt_desc.Text;
     }
 
-    public void SetEnable(bool enable)
+    private void ck_enable_CheckedChanged(object sender, EventArgs e)
     {
-        ck_enable.Checked = enable;
+        Source.IsEnabled = ck_enable.Checked;
     }
 }

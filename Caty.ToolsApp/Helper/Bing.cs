@@ -1,6 +1,5 @@
 ﻿using Caty.ToolsApp.Model.Bing;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 
 namespace Caty.ToolsApp.Helper;
 
@@ -12,10 +11,10 @@ internal static class Bing
     /// <returns>必应图片URL</returns>
     public static string GetBingImageUrlAsync()
     {
+        var rnd = new Random();
         using var client = new HttpClient();
-        var json = client.GetStringAsync("http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1").Result;
-
-        var bingImage =   json.ToObject<BingImage>(new Json.OptionConfig());
+        var json = client.GetStringAsync($"http://cn.bing.com/HPImageArchive.aspx?format=js&idx={rnd.Next(0, 10)}&n=1").Result;
+        var bingImage = json.ToObject<BingImage>(new Json.OptionConfig());
         //得到背景图片URL
         return $"https://cn.bing.com{bingImage?.Images[0].Url}";
     }
@@ -29,7 +28,7 @@ internal static class Bing
     {
         using var client = new HttpClient();
         //创建临时文件目录下的存储必应图片的绝对路径
-        var filePath = Path.Combine(Path.GetTempPath(), "bing.jpg");
+        var filePath = Path.Combine(Path.GetTempPath(), $"{DateTime.Now:yyyy-MM-dd}bing.jpg");
         //将图片下载到这个路径下
         var responseMessage = client.GetAsync(url).Result;
         if (!responseMessage.IsSuccessStatusCode) return string.Empty;

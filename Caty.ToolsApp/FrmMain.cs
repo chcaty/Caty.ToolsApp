@@ -1,6 +1,7 @@
 ﻿using Caty.ToolsApp.Frm;
 using Caty.ToolsApp.Helper;
 using Caty.ToolsApp.Model.Rss;
+using Microsoft.Extensions.Options;
 
 namespace Caty.ToolsApp;
 
@@ -12,8 +13,11 @@ public partial class FrmMain : Form
         AutoReset = true, //设置是执行一次（false）还是一直执行（true）
     };//实例化Timer类，设置间隔时间30分钟
 
-    public FrmMain()
+    private readonly List<RssSource> _sources;
+
+    public FrmMain(IOptions<List<RssSource>> options)
     {
+        _sources = options.Value;
         InitializeComponent();
     }
 
@@ -38,9 +42,9 @@ public partial class FrmMain : Form
     }
 
 
-    private static List<RssFeed> GetRssInfo()
+    private List<RssFeed> GetRssInfo()
     {
-        var urlList = Rss.GetRssSources().Select(t => t.RssUrl);
+        var urlList = _sources.Select(t => t.RssUrl);
         return Rss.GetRssFeeds(urlList);
     }
 
@@ -74,7 +78,7 @@ public partial class FrmMain : Form
 
     private void btn_rssConfig_Click(object sender, EventArgs e)
     {
-        var frmPicture = new FrmRssConfig(Helper.Rss.GetRssSources());
+        var frmPicture = new FrmRssConfig(_sources);
         frmPicture.ShowDialog();
     }
 

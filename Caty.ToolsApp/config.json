@@ -1,0 +1,24 @@
+﻿{
+  "RssSources": [
+    {
+      "RssName": "少数派",
+      "RssUrl": "https://sspai.com/feed",
+      "IsEnabled": "true"
+    },
+    {
+      "RssName": "小众软件",
+      "RssUrl": "https://www.appinn.com/feed",
+      "IsEnabled": "true"
+    },
+    {
+      "RssName": "博客园",
+      "RssUrl": "https://feed.cnblogs.com/blog/sitehome/rss",
+      "IsEnabled": "true"
+    },
+    {
+      "RssName": "36氪",
+      "RssUrl": "https://36kr.com/feed",
+      "IsEnabled": "true"
+    }
+  ]
+}

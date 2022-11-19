@@ -1,24 +1,35 @@
-﻿using Caty.ToolsApp.Model.Rss;
+﻿using Caty.ToolsApp.Helper;
+using Caty.ToolsApp.Model.Rss;
 
 namespace Caty.ToolsApp.Frm;
 
 public partial class FrmRssConfig : FrmDialog
 {
-    private readonly List<RssSource> _sources;
+    private List<RssSource> sources;
     public FrmRssConfig(List<RssSource> rssSources)
     {
         InitializeComponent();
-        _sources = rssSources;
+        sources = rssSources;
     }
 
     private void FrmRssConfig_Load(object sender, EventArgs e)
     {
-        foreach (var rssConfig in _sources.Select(source => new RssConfigControl(source.RssName, source.RssUrl, source.RssDescription, source.IsEnabled)
+        foreach (var rssConfig in sources.Select(source => new RssConfigControl(source)
                  {
                      Dock = DockStyle.Top
                  }))
         {
-            Controls.Add(rssConfig);
+            panel_top.Controls.Add(rssConfig);
         }
+    }
+
+    private void btn_save_Click(object sender, EventArgs e)
+    {
+        Config.UpdateConfig("RssSources",sources);
+    }
+
+    private void btn_close_Click(object sender, EventArgs e)
+    {
+        Close();
     }
 }

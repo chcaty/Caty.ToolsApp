@@ -42,6 +42,7 @@
             this.ck_enable.Size = new System.Drawing.Size(15, 14);
             this.ck_enable.TabIndex = 1;
             this.ck_enable.UseVisualStyleBackColor = true;
+            this.ck_enable.CheckedChanged += new System.EventHandler(this.ck_enable_CheckedChanged);
             // 
             // txt_name
             // 
@@ -49,6 +50,7 @@
             this.txt_name.Name = "txt_name";
             this.txt_name.Size = new System.Drawing.Size(83, 23);
             this.txt_name.TabIndex = 2;
+            this.txt_name.TextChanged += new System.EventHandler(this.txt_name_TextChanged);
             // 
             // txt_url
             // 
@@ -56,6 +58,7 @@
             this.txt_url.Name = "txt_url";
             this.txt_url.Size = new System.Drawing.Size(231, 23);
             this.txt_url.TabIndex = 3;
+            this.txt_url.TextChanged += new System.EventHandler(this.txt_url_TextChanged);
             // 
             // txt_desc
             // 
@@ -63,6 +66,7 @@
             this.txt_desc.Name = "txt_desc";
             this.txt_desc.Size = new System.Drawing.Size(146, 23);
             this.txt_desc.TabIndex = 4;
+            this.txt_desc.TextChanged += new System.EventHandler(this.txt_desc_TextChanged);
             // 
             // RssConfigControl
             // 
@@ -74,6 +78,7 @@
             this.Controls.Add(this.ck_enable);
             this.Name = "RssConfigControl";
             this.Size = new System.Drawing.Size(505, 31);
+            this.Load += new System.EventHandler(this.RssConfigControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
