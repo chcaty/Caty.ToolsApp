@@ -1,10 +1,9 @@
-﻿namespace Caty.ToolsApp.Frm
+﻿namespace Caty.ToolsApp.Frm;
+
+public partial class FrmDialog : Form
 {
-    public partial class FrmDialog : Form
+    public FrmDialog()
     {
-        public FrmDialog()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

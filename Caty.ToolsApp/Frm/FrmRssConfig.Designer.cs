@@ -34,9 +34,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(493, 711);
+            this.ClientSize = new System.Drawing.Size(490, 557);
             this.Name = "FrmRssConfig";
             this.Text = "RSS源配置";
+            this.Load += new System.EventHandler(this.FrmRssConfig_Load);
             this.ResumeLayout(false);
 
         }

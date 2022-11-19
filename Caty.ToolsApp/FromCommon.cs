@@ -1,33 +1,40 @@
 ﻿using System.Diagnostics;
-using Caty.ToolsApp.Rss;
+using Caty.ToolsApp.Model.Rss;
 
-namespace Caty.ToolsApp
+namespace Caty.ToolsApp;
+
+internal static class FromCommon
 {
-    internal static class FromCommon
+    public static void AddLabel(this IEnumerable<RssItem> list, Control control)
     {
-        public static void AddLabel(this IEnumerable<RssItem> list, Control control)
+        const string name = "lb";
+        var i = 0;
+        foreach (var index in list)
         {
-            const string name = "lb";
-            var i = 0;
-            foreach (var index in list)
+            var panel = new Panel
             {
-                var lb = new LinkLabel
+                Dock = DockStyle.Top,
+                Height = 30,
+                Margin = new Padding(3)
+            };
+            var lb = new LinkLabel
+            {
+                Name = $"{name}_{i}",
+                Text = $@"{index.Title} 发布时间：{index.PublishDate}",
+                Dock = DockStyle.Fill,
+                AutoSize = false
+            };
+            i++;
+            lb.Links.Add(0, index.Title.Length, index.ContentLink);
+            lb.LinkClicked += delegate (object sender, LinkLabelLinkClickedEventArgs args)
+            {
+                if (args.Link.LinkData is string target && (target.StartsWith("http://") || target.StartsWith("https://")))
                 {
-                    Name = $"{name}_{i}",
-                    Text = $@"{index.Title}",
-                    Dock = DockStyle.Top,
-                };
-                i++;
-                lb.Links.Add(0, 100, index.ContentLink);
-                lb.LinkClicked += delegate (object sender, LinkLabelLinkClickedEventArgs args)
-                {
-                    if (args.Link.LinkData is string target && (target.StartsWith("http://") || target.StartsWith("https://")))
-                    {
-                        Process.Start(new ProcessStartInfo { FileName = target, UseShellExecute = true });
-                    }
-                };
-                control.Controls.Add(lb);
-            }
+                    Process.Start(new ProcessStartInfo { FileName = target, UseShellExecute = true });
+                }
+            };
+            panel.Controls.Add(lb);
+            control.Controls.Add(panel);
         }
     }
 }
