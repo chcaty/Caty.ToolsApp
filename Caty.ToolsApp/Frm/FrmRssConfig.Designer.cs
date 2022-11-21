@@ -29,14 +29,16 @@
         private void InitializeComponent()
         {
             this.panel_bottom = new System.Windows.Forms.Panel();
-            this.panel_top = new System.Windows.Forms.Panel();
-            this.btn_close = new System.Windows.Forms.Button();
             this.btn_save = new System.Windows.Forms.Button();
+            this.btn_close = new System.Windows.Forms.Button();
+            this.panel_top = new System.Windows.Forms.Panel();
+            this.btn_add = new System.Windows.Forms.Button();
             this.panel_bottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel_bottom
             // 
+            this.panel_bottom.Controls.Add(this.btn_add);
             this.panel_bottom.Controls.Add(this.btn_save);
             this.panel_bottom.Controls.Add(this.btn_close);
             this.panel_bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -45,13 +47,15 @@
             this.panel_bottom.Size = new System.Drawing.Size(490, 47);
             this.panel_bottom.TabIndex = 0;
             // 
-            // panel_top
+            // btn_save
             // 
-            this.panel_top.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_top.Location = new System.Drawing.Point(0, 0);
-            this.panel_top.Name = "panel_top";
-            this.panel_top.Size = new System.Drawing.Size(490, 510);
-            this.panel_top.TabIndex = 1;
+            this.btn_save.Location = new System.Drawing.Point(322, 12);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(75, 23);
+            this.btn_save.TabIndex = 1;
+            this.btn_save.Text = "保存";
+            this.btn_save.UseVisualStyleBackColor = true;
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
             // 
             // btn_close
             // 
@@ -63,15 +67,23 @@
             this.btn_close.UseVisualStyleBackColor = true;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
-            // btn_save
+            // panel_top
             // 
-            this.btn_save.Location = new System.Drawing.Point(322, 12);
-            this.btn_save.Name = "btn_save";
-            this.btn_save.Size = new System.Drawing.Size(75, 23);
-            this.btn_save.TabIndex = 1;
-            this.btn_save.Text = "保存";
-            this.btn_save.UseVisualStyleBackColor = true;
-            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
+            this.panel_top.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_top.Location = new System.Drawing.Point(0, 0);
+            this.panel_top.Name = "panel_top";
+            this.panel_top.Size = new System.Drawing.Size(490, 510);
+            this.panel_top.TabIndex = 1;
+            // 
+            // btn_add
+            // 
+            this.btn_add.Location = new System.Drawing.Point(241, 12);
+            this.btn_add.Name = "btn_add";
+            this.btn_add.Size = new System.Drawing.Size(75, 23);
+            this.btn_add.TabIndex = 2;
+            this.btn_add.Text = "新增";
+            this.btn_add.UseVisualStyleBackColor = true;
+            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
             // 
             // FrmRssConfig
             // 
@@ -94,5 +106,6 @@
         private Panel panel_top;
         private Button btn_save;
         private Button btn_close;
+        private Button btn_add;
     }
 }

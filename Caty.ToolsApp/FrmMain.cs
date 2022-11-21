@@ -2,12 +2,16 @@
 using Caty.ToolsApp.Helper;
 using Caty.ToolsApp.Model.Rss;
 using Microsoft.Extensions.Options;
+using System.Windows.Forms;
 
 namespace Caty.ToolsApp;
 
 public partial class FrmMain : Form
 {
-    private readonly System.Timers.Timer _t = new(1000 * 60 * 60)
+    private static double test = 1000 *5;
+    private static double hours = 1000 * 60 * 60;
+
+    private readonly System.Timers.Timer _t = new(hours)
     {
         Enabled = true, //是否执行绑定的事件
         AutoReset = true, //设置是执行一次（false）还是一直执行（true）
@@ -23,7 +27,7 @@ public partial class FrmMain : Form
 
     private void FrmMain_Load(object sender, EventArgs e)
     {
-       UpdateRssInfo();
+        UpdateRssInfo();
         _t.Elapsed += Execute;//绑定的事件
         _t.Start();
     }
@@ -31,7 +35,7 @@ public partial class FrmMain : Form
     public void Execute(object? source, System.Timers.ElapsedEventArgs e)
     {
         _t.Stop();//关闭定时器
-        Invoke(UpdateRssInfo);
+        BeginInvoke(UpdateRssInfo);
         _t.Start();//重新开始定时器
     }
 
@@ -44,13 +48,14 @@ public partial class FrmMain : Form
 
     private List<RssFeed> GetRssInfo()
     {
-        var urlList = _sources.Select(t => t.RssUrl);
+        var urlList = _sources.Where(w => w.IsEnabled).Select(t => t.RssUrl);
         return Rss.GetRssFeeds(urlList);
     }
 
     private void SetRssNews(List<RssFeed> list)
     {
         tab_news.Controls.Clear();
+        var tabList = new List<TabPage>();
         foreach (var rssFeed in list)
         {
             var tabPage = new TabPage
@@ -59,8 +64,9 @@ public partial class FrmMain : Form
                 AutoScroll = true,
             };
             rssFeed.Items.OrderBy(o => o.PublishDate).AddLabel(tabPage);
-            tab_news.Controls.Add(tabPage);
+            tabList.Add(tabPage);
         }
+        tab_news.Controls.AddRange(tabList.ToArray());
     }
 
     private Image GetMoyuImage()
@@ -72,7 +78,7 @@ public partial class FrmMain : Form
 
     private void btn_moyu_Click(object sender, EventArgs e)
     {
-        var frmPicture = new FrmPicture(GetMoyuImage(),"摸鱼日历");
+        var frmPicture = new FrmPicture(GetMoyuImage(), "摸鱼日历");
         frmPicture.ShowDialog();
     }
 
@@ -80,6 +86,10 @@ public partial class FrmMain : Form
     {
         var frmPicture = new FrmRssConfig(_sources);
         frmPicture.ShowDialog();
+        Task.Run(() =>
+        {
+            BeginInvoke(UpdateRssInfo);
+        });
     }
 
     private void btn_rand_Click(object sender, EventArgs e)

@@ -26,10 +26,18 @@ public partial class FrmRssConfig : FrmDialog
     private void btn_save_Click(object sender, EventArgs e)
     {
         Config.UpdateConfig("RssSources",sources);
+        Close();
     }
 
     private void btn_close_Click(object sender, EventArgs e)
     {
         Close();
+    }
+
+    private void btn_add_Click(object sender, EventArgs e)
+    {
+        var add = new RssSource();
+        sources.Add(add);
+        panel_top.Controls.Add(new RssConfigControl(add) { Dock = DockStyle.Top });
     }
 }

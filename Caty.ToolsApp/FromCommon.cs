@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Windows.Forms;
 using Caty.ToolsApp.Model.Rss;
 
 namespace Caty.ToolsApp;
@@ -9,6 +10,7 @@ internal static class FromCommon
     {
         const string name = "lb";
         var i = 0;
+        var panelList = new List<Panel>();
         foreach (var index in list)
         {
             var panel = new Panel
@@ -34,7 +36,8 @@ internal static class FromCommon
                 }
             };
             panel.Controls.Add(lb);
-            control.Controls.Add(panel);
+            panelList.Add(panel);
         }
+        control.Controls.AddRange(panelList.ToArray());
     }
 }

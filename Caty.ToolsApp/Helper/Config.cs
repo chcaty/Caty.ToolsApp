@@ -26,7 +26,6 @@ namespace Caty.ToolsApp.Helper
                 var json = File.ReadAllText(filePath);
                 var valueJson = value.ToJson(new Json.OptionConfig());
 
-
                 var node = JsonNode.Parse(json);
 
                 //var jsonObj = JsonSerializer.Deserialize<dynamic>(json);
@@ -35,28 +34,28 @@ namespace Caty.ToolsApp.Helper
                 if (!string.IsNullOrEmpty(sectionPath) && splittedKey.Length > 1)
                 {
                     var keyPath = splittedKey[1];
-                    node[sectionPath][keyPath] = $@"{valueJson}";
+                    node[sectionPath][keyPath] = JsonNode.Parse(valueJson);
                 }
                 else
                 {
-                    node[key] = $@"{valueJson}";
+                    node[key] = JsonNode.Parse(valueJson);
                 }
 
                 var writerOptions = new JsonWriterOptions
                 {
-                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.CjkUnifiedIdeographs)
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                   // Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.CjkUnifiedIdeographs)
                 };
                 using var fs = File.Create(filePath);
-                using var writer = new Utf8JsonWriter(fs);
+                using var writer = new Utf8JsonWriter(fs,writerOptions);
                 var jsonObject = node.AsObject();
                 var jsonSerializerOptions = new JsonSerializerOptions
                 {
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                     WriteIndented = true,
-                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.CjkUnifiedIdeographs)
-
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
                 };
-                jsonObject.WriteTo(writer);
+                jsonObject.WriteTo(writer,jsonSerializerOptions);
                 writer.Flush();
             }
             catch (ConfigurationErrorsException)
