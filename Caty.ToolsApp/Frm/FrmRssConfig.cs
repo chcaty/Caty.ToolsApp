@@ -19,18 +19,20 @@ public partial class FrmRssConfig : FrmDialog
                      Dock = DockStyle.Top
                  }))
         {
-            panel_top.Controls.Add(rssConfig);
+            panel_middle.Controls.Add(rssConfig);
         }
     }
 
     private void btn_save_Click(object sender, EventArgs e)
     {
         Config.UpdateConfig("RssSources",sources);
+        Dispose();
         Close();
     }
 
     private void btn_close_Click(object sender, EventArgs e)
     {
+        Dispose();
         Close();
     }
 
@@ -38,6 +40,6 @@ public partial class FrmRssConfig : FrmDialog
     {
         var add = new RssSource();
         sources.Add(add);
-        panel_top.Controls.Add(new RssConfigControl(add) { Dock = DockStyle.Top });
+        panel_middle.Controls.Add(new RssConfigControl(add) { Dock = DockStyle.Top });
     }
 }

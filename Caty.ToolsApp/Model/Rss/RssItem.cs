@@ -2,7 +2,7 @@
 
 namespace Caty.ToolsApp.Model.Rss;
 
-public class RssItem
+public class RssItem: BaseEntity
 {
     /// <summary>
     /// 消息作者

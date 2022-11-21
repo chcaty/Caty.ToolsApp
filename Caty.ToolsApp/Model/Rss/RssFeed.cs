@@ -1,6 +1,6 @@
 ﻿namespace Caty.ToolsApp.Model.Rss;
 
-public class RssFeed
+public class RssFeed: BaseEntity
 {
     /// <summary>
     /// 网站标题

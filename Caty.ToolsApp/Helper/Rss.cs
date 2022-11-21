@@ -1,7 +1,6 @@
-﻿using System.ServiceModel.Syndication;
+﻿using Caty.ToolsApp.Model.Rss;
+using System.ServiceModel.Syndication;
 using System.Xml;
-using Caty.ToolsApp.Model.Rss;
-using Microsoft.Extensions.Options;
 
 namespace Caty.ToolsApp.Helper;
 

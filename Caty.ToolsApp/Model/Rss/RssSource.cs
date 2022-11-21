@@ -1,6 +1,6 @@
 ﻿namespace Caty.ToolsApp.Model.Rss;
 
-public class RssSource
+public class RssSource: BaseEntity
 {
     /// <summary>
     /// Rss名称

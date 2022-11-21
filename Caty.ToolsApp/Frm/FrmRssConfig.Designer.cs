@@ -29,11 +29,17 @@
         private void InitializeComponent()
         {
             this.panel_bottom = new System.Windows.Forms.Panel();
+            this.btn_add = new System.Windows.Forms.Button();
             this.btn_save = new System.Windows.Forms.Button();
             this.btn_close = new System.Windows.Forms.Button();
             this.panel_top = new System.Windows.Forms.Panel();
-            this.btn_add = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel_middle = new System.Windows.Forms.Panel();
             this.panel_bottom.SuspendLayout();
+            this.panel_top.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel_bottom
@@ -46,6 +52,16 @@
             this.panel_bottom.Name = "panel_bottom";
             this.panel_bottom.Size = new System.Drawing.Size(490, 47);
             this.panel_bottom.TabIndex = 0;
+            // 
+            // btn_add
+            // 
+            this.btn_add.Location = new System.Drawing.Point(241, 12);
+            this.btn_add.Name = "btn_add";
+            this.btn_add.Size = new System.Drawing.Size(75, 23);
+            this.btn_add.TabIndex = 2;
+            this.btn_add.Text = "新增";
+            this.btn_add.UseVisualStyleBackColor = true;
+            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
             // 
             // btn_save
             // 
@@ -69,33 +85,74 @@
             // 
             // panel_top
             // 
-            this.panel_top.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_top.Controls.Add(this.label4);
+            this.panel_top.Controls.Add(this.label3);
+            this.panel_top.Controls.Add(this.label2);
+            this.panel_top.Controls.Add(this.label1);
+            this.panel_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_top.Location = new System.Drawing.Point(0, 0);
             this.panel_top.Name = "panel_top";
-            this.panel_top.Size = new System.Drawing.Size(490, 510);
+            this.panel_top.Size = new System.Drawing.Size(490, 35);
             this.panel_top.TabIndex = 1;
             // 
-            // btn_add
+            // label4
             // 
-            this.btn_add.Location = new System.Drawing.Point(241, 12);
-            this.btn_add.Name = "btn_add";
-            this.btn_add.Size = new System.Drawing.Size(75, 23);
-            this.btn_add.TabIndex = 2;
-            this.btn_add.Text = "新增";
-            this.btn_add.UseVisualStyleBackColor = true;
-            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(388, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 17);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "描述";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(192, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 17);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "链接";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(87, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 17);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "名称";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 17);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "是否启用";
+            // 
+            // panel_middle
+            // 
+            this.panel_middle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_middle.Location = new System.Drawing.Point(0, 35);
+            this.panel_middle.Name = "panel_middle";
+            this.panel_middle.Size = new System.Drawing.Size(490, 475);
+            this.panel_middle.TabIndex = 2;
             // 
             // FrmRssConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(490, 557);
+            this.Controls.Add(this.panel_middle);
             this.Controls.Add(this.panel_top);
             this.Controls.Add(this.panel_bottom);
             this.Name = "FrmRssConfig";
             this.Text = "RSS源配置";
             this.Load += new System.EventHandler(this.FrmRssConfig_Load);
             this.panel_bottom.ResumeLayout(false);
+            this.panel_top.ResumeLayout(false);
+            this.panel_top.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -107,5 +164,10 @@
         private Button btn_save;
         private Button btn_close;
         private Button btn_add;
+        private Label label1;
+        private Panel panel_middle;
+        private Label label4;
+        private Label label3;
+        private Label label2;
     }
 }

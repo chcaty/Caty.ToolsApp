@@ -28,15 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.btn_moyu = new System.Windows.Forms.Button();
             this.btn_rssConfig = new System.Windows.Forms.Button();
             this.lb_lastUpdateTime = new System.Windows.Forms.Label();
             this.btn_rand = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel_buttom = new System.Windows.Forms.Panel();
             this.gb_news = new System.Windows.Forms.GroupBox();
             this.tab_news = new System.Windows.Forms.TabControl();
-            this.panel1.SuspendLayout();
+            this.notifyIcon_main = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip_notify = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.item_main = new System.Windows.Forms.ToolStripMenuItem();
+            this.item_bing = new System.Windows.Forms.ToolStripMenuItem();
+            this.item_close = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel_buttom.SuspendLayout();
             this.gb_news.SuspendLayout();
+            this.contextMenuStrip_notify.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_moyu
@@ -78,17 +86,17 @@
             this.btn_rand.UseVisualStyleBackColor = true;
             this.btn_rand.Click += new System.EventHandler(this.btn_rand_Click);
             // 
-            // panel1
+            // panel_buttom
             // 
-            this.panel1.Controls.Add(this.lb_lastUpdateTime);
-            this.panel1.Controls.Add(this.btn_moyu);
-            this.panel1.Controls.Add(this.btn_rssConfig);
-            this.panel1.Controls.Add(this.btn_rand);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 420);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(675, 34);
-            this.panel1.TabIndex = 5;
+            this.panel_buttom.Controls.Add(this.lb_lastUpdateTime);
+            this.panel_buttom.Controls.Add(this.btn_moyu);
+            this.panel_buttom.Controls.Add(this.btn_rssConfig);
+            this.panel_buttom.Controls.Add(this.btn_rand);
+            this.panel_buttom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel_buttom.Location = new System.Drawing.Point(0, 420);
+            this.panel_buttom.Name = "panel_buttom";
+            this.panel_buttom.Size = new System.Drawing.Size(675, 34);
+            this.panel_buttom.TabIndex = 5;
             // 
             // gb_news
             // 
@@ -111,19 +119,60 @@
             this.tab_news.Size = new System.Drawing.Size(669, 398);
             this.tab_news.TabIndex = 0;
             // 
+            // notifyIcon_main
+            // 
+            this.notifyIcon_main.ContextMenuStrip = this.contextMenuStrip_notify;
+            this.notifyIcon_main.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon_main.Icon")));
+            this.notifyIcon_main.Text = "工作姬";
+            this.notifyIcon_main.Visible = true;
+            this.notifyIcon_main.Click += new System.EventHandler(this.notifyIcon_main_Click);
+            this.notifyIcon_main.DoubleClick += new System.EventHandler(this.notifyIcon_main_DoubleClick);
+            this.notifyIcon_main.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_main_MouseClick);
+            // 
+            // contextMenuStrip_notify
+            // 
+            this.contextMenuStrip_notify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.item_main,
+            this.item_bing,
+            this.item_close});
+            this.contextMenuStrip_notify.Name = "contextMenuStrip_notify";
+            this.contextMenuStrip_notify.Size = new System.Drawing.Size(137, 70);
+            // 
+            // item_main
+            // 
+            this.item_main.Name = "item_main";
+            this.item_main.Size = new System.Drawing.Size(136, 22);
+            this.item_main.Text = "显示主窗体";
+            this.item_main.Click += new System.EventHandler(this.item_main_Click);
+            // 
+            // item_bing
+            // 
+            this.item_bing.Name = "item_bing";
+            this.item_bing.Size = new System.Drawing.Size(136, 22);
+            this.item_bing.Text = "随机换壁纸";
+            // 
+            // item_close
+            // 
+            this.item_close.Name = "item_close";
+            this.item_close.Size = new System.Drawing.Size(136, 22);
+            this.item_close.Text = "退出";
+            this.item_close.Click += new System.EventHandler(this.item_close_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(675, 454);
             this.Controls.Add(this.gb_news);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel_buttom);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
             this.Text = "工作姬";
             this.Load += new System.EventHandler(this.FrmMain_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panel_buttom.ResumeLayout(false);
+            this.panel_buttom.PerformLayout();
             this.gb_news.ResumeLayout(false);
+            this.contextMenuStrip_notify.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -133,8 +182,13 @@
         private Button btn_rssConfig;
         private Label lb_lastUpdateTime;
         private Button btn_rand;
-        private Panel panel1;
+        private Panel panel_buttom;
         private GroupBox gb_news;
         private TabControl tab_news;
+        private NotifyIcon notifyIcon_main;
+        private ContextMenuStrip contextMenuStrip_notify;
+        private ToolStripMenuItem item_bing;
+        private ToolStripMenuItem item_close;
+        private ToolStripMenuItem item_main;
     }
 }

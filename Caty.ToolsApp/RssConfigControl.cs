@@ -4,7 +4,7 @@ namespace Caty.ToolsApp;
 
 public partial class RssConfigControl : UserControl
 {
-    public RssSource Source{ get; }  
+    private RssSource Source{ get; }  
 
     public RssConfigControl() => InitializeComponent();
 
