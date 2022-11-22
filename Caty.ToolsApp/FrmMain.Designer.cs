@@ -30,94 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            this.btn_moyu = new System.Windows.Forms.Button();
-            this.btn_rssConfig = new System.Windows.Forms.Button();
-            this.lb_lastUpdateTime = new System.Windows.Forms.Label();
-            this.btn_rand = new System.Windows.Forms.Button();
-            this.panel_buttom = new System.Windows.Forms.Panel();
-            this.gb_news = new System.Windows.Forms.GroupBox();
-            this.tab_news = new System.Windows.Forms.TabControl();
             this.notifyIcon_main = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip_notify = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.item_main = new System.Windows.Forms.ToolStripMenuItem();
             this.item_bing = new System.Windows.Forms.ToolStripMenuItem();
             this.item_close = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel_buttom.SuspendLayout();
-            this.gb_news.SuspendLayout();
+            this.panel_left = new System.Windows.Forms.Panel();
+            this.panel_middle = new System.Windows.Forms.Panel();
+            this.panel_right = new System.Windows.Forms.Panel();
             this.contextMenuStrip_notify.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btn_moyu
-            // 
-            this.btn_moyu.Location = new System.Drawing.Point(10, 6);
-            this.btn_moyu.Name = "btn_moyu";
-            this.btn_moyu.Size = new System.Drawing.Size(75, 23);
-            this.btn_moyu.TabIndex = 1;
-            this.btn_moyu.Text = "摸鱼日历";
-            this.btn_moyu.UseVisualStyleBackColor = true;
-            this.btn_moyu.Click += new System.EventHandler(this.btn_moyu_Click);
-            // 
-            // btn_rssConfig
-            // 
-            this.btn_rssConfig.Location = new System.Drawing.Point(91, 6);
-            this.btn_rssConfig.Name = "btn_rssConfig";
-            this.btn_rssConfig.Size = new System.Drawing.Size(75, 23);
-            this.btn_rssConfig.TabIndex = 2;
-            this.btn_rssConfig.Text = "RSS源配置";
-            this.btn_rssConfig.UseVisualStyleBackColor = true;
-            this.btn_rssConfig.Click += new System.EventHandler(this.btn_rssConfig_Click);
-            // 
-            // lb_lastUpdateTime
-            // 
-            this.lb_lastUpdateTime.AutoSize = true;
-            this.lb_lastUpdateTime.Location = new System.Drawing.Point(324, 9);
-            this.lb_lastUpdateTime.Name = "lb_lastUpdateTime";
-            this.lb_lastUpdateTime.Size = new System.Drawing.Size(43, 17);
-            this.lb_lastUpdateTime.TabIndex = 3;
-            this.lb_lastUpdateTime.Text = "label1";
-            // 
-            // btn_rand
-            // 
-            this.btn_rand.Location = new System.Drawing.Point(172, 6);
-            this.btn_rand.Name = "btn_rand";
-            this.btn_rand.Size = new System.Drawing.Size(82, 23);
-            this.btn_rand.TabIndex = 4;
-            this.btn_rand.Text = "随机换壁纸";
-            this.btn_rand.UseVisualStyleBackColor = true;
-            this.btn_rand.Click += new System.EventHandler(this.btn_rand_Click);
-            // 
-            // panel_buttom
-            // 
-            this.panel_buttom.Controls.Add(this.lb_lastUpdateTime);
-            this.panel_buttom.Controls.Add(this.btn_moyu);
-            this.panel_buttom.Controls.Add(this.btn_rssConfig);
-            this.panel_buttom.Controls.Add(this.btn_rand);
-            this.panel_buttom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel_buttom.Location = new System.Drawing.Point(0, 420);
-            this.panel_buttom.Name = "panel_buttom";
-            this.panel_buttom.Size = new System.Drawing.Size(675, 34);
-            this.panel_buttom.TabIndex = 5;
-            // 
-            // gb_news
-            // 
-            this.gb_news.BackColor = System.Drawing.SystemColors.Control;
-            this.gb_news.Controls.Add(this.tab_news);
-            this.gb_news.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gb_news.Location = new System.Drawing.Point(0, 0);
-            this.gb_news.Name = "gb_news";
-            this.gb_news.Size = new System.Drawing.Size(675, 420);
-            this.gb_news.TabIndex = 6;
-            this.gb_news.TabStop = false;
-            this.gb_news.Text = "当前热点";
-            // 
-            // tab_news
-            // 
-            this.tab_news.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tab_news.Location = new System.Drawing.Point(3, 19);
-            this.tab_news.Name = "tab_news";
-            this.tab_news.SelectedIndex = 0;
-            this.tab_news.Size = new System.Drawing.Size(669, 398);
-            this.tab_news.TabIndex = 0;
             // 
             // notifyIcon_main
             // 
@@ -158,37 +80,64 @@
             this.item_close.Text = "退出";
             this.item_close.Click += new System.EventHandler(this.item_close_Click);
             // 
+            // panel_left
+            // 
+            this.panel_left.AutoScroll = true;
+            this.panel_left.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel_left.Location = new System.Drawing.Point(0, 0);
+            this.panel_left.Margin = new System.Windows.Forms.Padding(4);
+            this.panel_left.Name = "panel_left";
+            this.panel_left.Size = new System.Drawing.Size(200, 721);
+            this.panel_left.TabIndex = 2;
+            // 
+            // panel_middle
+            // 
+            this.panel_middle.AutoScroll = true;
+            this.panel_middle.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel_middle.Location = new System.Drawing.Point(200, 0);
+            this.panel_middle.Margin = new System.Windows.Forms.Padding(4);
+            this.panel_middle.Name = "panel_middle";
+            this.panel_middle.Size = new System.Drawing.Size(400, 721);
+            this.panel_middle.TabIndex = 3;
+            // 
+            // panel_right
+            // 
+            this.panel_right.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_right.Location = new System.Drawing.Point(600, 0);
+            this.panel_right.Margin = new System.Windows.Forms.Padding(4);
+            this.panel_right.Name = "panel_right";
+            this.panel_right.Size = new System.Drawing.Size(584, 721);
+            this.panel_right.TabIndex = 4;
+            // 
             // FrmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 454);
-            this.Controls.Add(this.gb_news);
-            this.Controls.Add(this.panel_buttom);
+            this.ClientSize = new System.Drawing.Size(1184, 721);
+            this.Controls.Add(this.panel_right);
+            this.Controls.Add(this.panel_middle);
+            this.Controls.Add(this.panel_left);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "FrmMain";
             this.Text = "工作姬";
             this.Load += new System.EventHandler(this.FrmMain_Load);
-            this.panel_buttom.ResumeLayout(false);
-            this.panel_buttom.PerformLayout();
-            this.gb_news.ResumeLayout(false);
+            this.Controls.SetChildIndex(this.panel_left, 0);
+            this.Controls.SetChildIndex(this.panel_middle, 0);
+            this.Controls.SetChildIndex(this.panel_right, 0);
             this.contextMenuStrip_notify.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private Button btn_moyu;
-        private Button btn_rssConfig;
-        private Label lb_lastUpdateTime;
-        private Button btn_rand;
-        private Panel panel_buttom;
-        private GroupBox gb_news;
-        private TabControl tab_news;
         private NotifyIcon notifyIcon_main;
         private ContextMenuStrip contextMenuStrip_notify;
         private ToolStripMenuItem item_bing;
         private ToolStripMenuItem item_close;
         private ToolStripMenuItem item_main;
+        private Panel panel_left;
+        private Panel panel_middle;
+        private Panel panel_right;
     }
 }

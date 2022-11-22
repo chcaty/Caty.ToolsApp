@@ -2,11 +2,10 @@
 using Caty.ToolsApp.Helper;
 using Caty.ToolsApp.Model.Rss;
 using Microsoft.Extensions.Options;
-using System.Diagnostics;
 
 namespace Caty.ToolsApp;
 
-public partial class FrmMain : Form
+public partial class FrmMain : FrmBasic
 {
     private static double test = 1000 *60;
     private static readonly double hours = 1000 * 60 * 60;
@@ -30,6 +29,7 @@ public partial class FrmMain : Form
     {
         _sources = options.Value;
         InitializeComponent();
+        GetAllInitInfo(Controls[0]);
     }
 
     private void FrmMain_Load(object sender, EventArgs e)
@@ -51,22 +51,67 @@ public partial class FrmMain : Form
     public void CheckUpdate(object? source, System.Timers.ElapsedEventArgs e)
     {
         _checkUpdate.Stop();//关闭定时器
-        ProcessStartInfo processStartInfo = new()
-        {
-            //参数:【升级程序】HHUpdateApp.exe程序所在路径
-            FileName = "./AutoUpdate/HHUpdateApp.exe",
-            //参数1:【应用程序】的名词，例如：LOLClient；参数1:检查更新模式
-            Arguments = "Caty.ToolsApp " + "0"
-        };
-        Process proc = Process.Start(processStartInfo);
-        proc?.WaitForExit();
+        //ProcessStartInfo processStartInfo = new()
+        //{
+        //    //参数:【升级程序】HHUpdateApp.exe程序所在路径
+        //    FileName = "./AutoUpdate/HHUpdateApp.exe",
+        //    //参数1:【应用程序】的名词，例如：LOLClient；参数1:检查更新模式
+        //    Arguments = "Caty.ToolsApp " + "0"
+        //};
+        //Process proc = Process.Start(processStartInfo);
+        //proc?.WaitForExit();
         _checkUpdate.Start();//重新开始定时器
     }
 
     public void UpdateRssInfo()
     {
-        SetRssNews(GetRssInfo());
-        lb_lastUpdateTime.Text = $@"最后更新时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+        var rssSources = _sources.Where(w => w.IsEnabled);
+        foreach (var rssSource in rssSources)
+        {
+            var btn = new Button
+            {
+                BackColor = SystemColors.Control,
+                Dock = DockStyle.Top,
+                Text = rssSource.RssName,
+                Height= 50,
+            };
+            void value(object sender, EventArgs e)
+            {
+                panel_middle.Controls.Clear();
+                var feeds = Rss.GetRssFeed(rssSource.RssUrl);
+                if (feeds != null && feeds.Items.Count > 0)
+                {
+                    foreach (var item in feeds.Items)
+                    {
+                        var lb_title = GetLabel(item.Title, DockStyle.Top);
+                        var lb_pubDate = GetLabel($"发布时间：{item.PublishDate:yyyy-MM-dd HH:mm:ss}", DockStyle.Top, 9);
+                        var lb_desc = GetLabel(item.Summary, DockStyle.Fill, 9);
+                        var panel = new Panel
+                        {
+                            Dock = DockStyle.Top
+                        };
+                        panel.Controls.Add(lb_desc);
+                        panel.Controls.Add(lb_pubDate);
+                        panel.Controls.Add(lb_title);
+                        panel_middle.Controls.Add(panel);
+                    }
+                }
+            }
+            btn.Click += value;
+            panel_left.Controls.Add(btn);
+        }
+        Text = $@"工作姬  最后更新时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+    }
+
+    private Label GetLabel(string text, DockStyle style , float fontSize = 12)
+    {
+        return new Label
+        {
+            Text = text,
+            Dock = style,
+            Font = new Font(Font.Name, fontSize),
+            AutoSize = false
+        };
     }
 
 
@@ -78,19 +123,19 @@ public partial class FrmMain : Form
 
     private void SetRssNews(List<RssFeed> list)
     {
-        tab_news.Controls.Clear();
-        var tabList = new List<TabPage>();
-        foreach (var rssFeed in list)
-        {
-            var tabPage = new TabPage
-            {
-                Text = rssFeed.Title,
-                AutoScroll = true,
-            };
-            rssFeed.Items.OrderBy(o => o.PublishDate).AddLabel(tabPage);
-            tabList.Add(tabPage);
-        }
-        tab_news.Controls.AddRange(tabList.ToArray());
+        //tab_news.Controls.Clear();
+        //var tabList = new List<TabPage>();
+        //foreach (var rssFeed in list)
+        //{
+        //    var tabPage = new TabPage
+        //    {
+        //        Text = rssFeed.Title,
+        //        AutoScroll = true,
+        //    };
+        //    rssFeed.Items.OrderBy(o => o.PublishDate).AddLabel(tabPage);
+        //    tabList.Add(tabPage);
+        //}
+        //tab_news.Controls.AddRange(tabList.ToArray());
     }
 
     private Image GetMoyuImage()
@@ -170,5 +215,15 @@ public partial class FrmMain : Form
         WindowState = FormWindowState.Normal;
         // 任务栏区显示图标
         ShowInTaskbar = true;
+    }
+
+    protected override void OnSizeChanged(EventArgs e)
+    {
+        base.OnSizeChanged(e);
+        if (controlInfo.Count > 0)
+        {
+            ControlsChangeInit(Controls[0]);
+            ControlsChange(Controls[0]);
+        }
     }
 }

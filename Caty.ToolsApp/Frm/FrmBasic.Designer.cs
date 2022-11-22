@@ -28,13 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.panel_basic = new System.Windows.Forms.Panel();
             this.SuspendLayout();
+            // 
+            // panel_basic
+            // 
+            this.panel_basic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_basic.Location = new System.Drawing.Point(0, 0);
+            this.panel_basic.Margin = new System.Windows.Forms.Padding(4);
+            this.panel_basic.Name = "panel_basic";
+            this.panel_basic.Size = new System.Drawing.Size(622, 628);
+            this.panel_basic.TabIndex = 0;
             // 
             // FrmBasic
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(717, 575);
+            this.ClientSize = new System.Drawing.Size(622, 628);
+            this.Controls.Add(this.panel_basic);
+            this.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmBasic";
             this.Text = "FrmBasic";
             this.ResumeLayout(false);
@@ -42,5 +55,7 @@
         }
 
         #endregion
+
+        private Panel panel_basic;
     }
 }

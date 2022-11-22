@@ -6,7 +6,7 @@ namespace Caty.ToolsApp.Helper;
 
 internal static class Rss
 {
-    private static RssFeed GetRssFeed(string rssUri)
+    public static RssFeed GetRssFeed(string rssUri)
     {
         var sf = SyndicationFeed.Load(XmlReader.Create(rssUri));
         var feed = new RssFeed
