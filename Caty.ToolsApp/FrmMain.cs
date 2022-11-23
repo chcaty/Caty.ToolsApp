@@ -1,6 +1,9 @@
 ﻿using Caty.ToolsApp.Frm;
 using Caty.ToolsApp.Helper;
 using Caty.ToolsApp.Model.Rss;
+using Caty.ToolsApp.UxControl;
+using CefSharp;
+using CefSharp.WinForms;
 using Microsoft.Extensions.Options;
 
 namespace Caty.ToolsApp;
@@ -28,6 +31,7 @@ public partial class FrmMain : FrmBasic
     public FrmMain(IOptions<List<RssSource>> options)
     {
         _sources = options.Value;
+        Cef.Initialize(new CefSettings());
         InitializeComponent();
         GetAllInitInfo(Controls[0]);
     }
@@ -75,67 +79,36 @@ public partial class FrmMain : FrmBasic
                 Text = rssSource.RssName,
                 Height= 50,
             };
-            void value(object sender, EventArgs e)
+            void showRssContent(object sender, EventArgs e)
             {
-                panel_middle.Controls.Clear();
+                spc_content.Panel1.Controls.Clear();
                 var feeds = Rss.GetRssFeed(rssSource.RssUrl);
                 if (feeds != null && feeds.Items.Count > 0)
                 {
                     foreach (var item in feeds.Items)
                     {
-                        var lb_title = GetLabel(item.Title, DockStyle.Top);
-                        var lb_pubDate = GetLabel($"发布时间：{item.PublishDate:yyyy-MM-dd HH:mm:ss}", DockStyle.Top, 9);
-                        var lb_desc = GetLabel(item.Summary, DockStyle.Fill, 9);
-                        var panel = new Panel
+                        var rssControl = new RssContentControl(item)
                         {
-                            Dock = DockStyle.Top
+                            Dock = DockStyle.Top,
                         };
-                        panel.Controls.Add(lb_desc);
-                        panel.Controls.Add(lb_pubDate);
-                        panel.Controls.Add(lb_title);
-                        panel_middle.Controls.Add(panel);
+                        void showDetail(object sender, EventArgs e)
+                        {
+                            spc_content.Panel2.Controls.Clear();
+                            var browser = new ChromiumWebBrowser(item.ContentLink)
+                            {
+                                Dock= DockStyle.Fill,
+                            };
+                            spc_content.Panel2.Controls.Add(browser);
+                        }
+                        rssControl.ControlClick += showDetail;
+                        spc_content.Panel1.Controls.Add(rssControl);
                     }
                 }
             }
-            btn.Click += value;
-            panel_left.Controls.Add(btn);
+            btn.Click += showRssContent;
+            spc_source.Panel1.Controls.Add(btn);
         }
         Text = $@"工作姬  最后更新时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
-    }
-
-    private Label GetLabel(string text, DockStyle style , float fontSize = 12)
-    {
-        return new Label
-        {
-            Text = text,
-            Dock = style,
-            Font = new Font(Font.Name, fontSize),
-            AutoSize = false
-        };
-    }
-
-
-    private List<RssFeed> GetRssInfo()
-    {
-        var urlList = _sources.Where(w => w.IsEnabled).Select(t => t.RssUrl);
-        return Rss.GetRssFeeds(urlList);
-    }
-
-    private void SetRssNews(List<RssFeed> list)
-    {
-        //tab_news.Controls.Clear();
-        //var tabList = new List<TabPage>();
-        //foreach (var rssFeed in list)
-        //{
-        //    var tabPage = new TabPage
-        //    {
-        //        Text = rssFeed.Title,
-        //        AutoScroll = true,
-        //    };
-        //    rssFeed.Items.OrderBy(o => o.PublishDate).AddLabel(tabPage);
-        //    tabList.Add(tabPage);
-        //}
-        //tab_news.Controls.AddRange(tabList.ToArray());
     }
 
     private Image GetMoyuImage()
@@ -160,6 +133,8 @@ public partial class FrmMain : FrmBasic
             BeginInvoke(UpdateRssInfo);
         });
     }
+
+
 
     private void btn_rand_Click(object sender, EventArgs e)
     {

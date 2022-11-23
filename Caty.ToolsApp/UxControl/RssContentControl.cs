@@ -1,19 +1,11 @@
 ﻿using Caty.ToolsApp.Model.Rss;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Caty.ToolsApp.UxControl
 {
     public partial class RssContentControl : UserControl
     {
         private RssItem _item;
+        public event EventHandler ControlClick;
 
         public RssContentControl()
         {
@@ -28,7 +20,34 @@ namespace Caty.ToolsApp.UxControl
 
         private void RssContentControl_Load(object sender, EventArgs e)
         {
+            lb_desc.Text = _item.Summary;
             lb_name.Text = _item.Title;
+            lb_pubDate.Text = $"发布时间：{_item.PublishDate:yyyy-MM-dd HH:mm:ss}";
+        }
+
+        protected override void OnClick(EventArgs e)
+        {
+            base.OnClick(e);
+        }
+
+        private void RssContentControl_Click(object sender, EventArgs e)
+        {
+            ControlClick?.Invoke(sender, e);
+        }
+
+        private void lb_name_Click(object sender, EventArgs e)
+        {
+            ControlClick?.Invoke(sender, e);
+        }
+
+        private void lb_pubDate_Click(object sender, EventArgs e)
+        {
+            ControlClick?.Invoke(sender, e);
+        }
+
+        private void lb_desc_Click(object sender, EventArgs e)
+        {
+            ControlClick?.Invoke(sender, e);
         }
     }
 }

@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.lb_name = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.lb_pubDate = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.lb_desc = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -43,75 +44,91 @@
             // 
             this.panel1.Controls.Add(this.lb_name);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(394, 26);
+            this.panel1.Size = new System.Drawing.Size(234, 34);
             this.panel1.TabIndex = 0;
+            // 
+            // lb_name
+            // 
+            this.lb_name.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lb_name.Location = new System.Drawing.Point(0, 0);
+            this.lb_name.Name = "lb_name";
+            this.lb_name.Size = new System.Drawing.Size(234, 34);
+            this.lb_name.TabIndex = 0;
+            this.lb_name.Text = "label1";
+            this.lb_name.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lb_name.Click += new System.EventHandler(this.lb_name_Click);
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.lb_pubDate);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 26);
+            this.panel2.Location = new System.Drawing.Point(0, 34);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(394, 32);
+            this.panel2.Size = new System.Drawing.Size(234, 20);
             this.panel2.TabIndex = 1;
+            // 
+            // lb_pubDate
+            // 
+            this.lb_pubDate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lb_pubDate.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lb_pubDate.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lb_pubDate.Location = new System.Drawing.Point(0, 0);
+            this.lb_pubDate.Name = "lb_pubDate";
+            this.lb_pubDate.Size = new System.Drawing.Size(234, 20);
+            this.lb_pubDate.TabIndex = 0;
+            this.lb_pubDate.Text = "label2";
+            this.lb_pubDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lb_pubDate.Click += new System.EventHandler(this.lb_pubDate_Click);
+            // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.label1.Location = new System.Drawing.Point(0, 73);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(234, 2);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "label1";
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.lb_desc);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 58);
+            this.panel3.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.panel3.Location = new System.Drawing.Point(0, 54);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(394, 83);
-            this.panel3.TabIndex = 2;
-            // 
-            // lb_name
-            // 
-            this.lb_name.AutoSize = true;
-            this.lb_name.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lb_name.Location = new System.Drawing.Point(0, 0);
-            this.lb_name.Name = "lb_name";
-            this.lb_name.Size = new System.Drawing.Size(43, 17);
-            this.lb_name.TabIndex = 0;
-            this.lb_name.Text = "label1";
-            // 
-            // lb_pubDate
-            // 
-            this.lb_pubDate.AutoSize = true;
-            this.lb_pubDate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lb_pubDate.Location = new System.Drawing.Point(0, 0);
-            this.lb_pubDate.Name = "lb_pubDate";
-            this.lb_pubDate.Size = new System.Drawing.Size(43, 17);
-            this.lb_pubDate.TabIndex = 0;
-            this.lb_pubDate.Text = "label2";
+            this.panel3.Size = new System.Drawing.Size(234, 19);
+            this.panel3.TabIndex = 4;
             // 
             // lb_desc
             // 
-            this.lb_desc.AutoSize = true;
             this.lb_desc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lb_desc.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lb_desc.Location = new System.Drawing.Point(0, 0);
             this.lb_desc.Name = "lb_desc";
-            this.lb_desc.Size = new System.Drawing.Size(43, 17);
+            this.lb_desc.Size = new System.Drawing.Size(234, 19);
             this.lb_desc.TabIndex = 0;
-            this.lb_desc.Text = "label3";
+            this.lb_desc.Text = "label1";
+            this.lb_desc.Click += new System.EventHandler(this.lb_desc_Click);
             // 
             // RssContentControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel3);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "RssContentControl";
-            this.Size = new System.Drawing.Size(394, 141);
+            this.Size = new System.Drawing.Size(234, 75);
             this.Load += new System.EventHandler(this.RssContentControl_Load);
+            this.Click += new System.EventHandler(this.RssContentControl_Click);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -120,9 +137,10 @@
 
         private Panel panel1;
         private Panel panel2;
-        private Panel panel3;
         private Label lb_name;
         private Label lb_pubDate;
+        private Label label1;
+        private Panel panel3;
         private Label lb_desc;
     }
 }

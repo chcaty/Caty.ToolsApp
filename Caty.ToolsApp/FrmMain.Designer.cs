@@ -35,10 +35,14 @@
             this.item_main = new System.Windows.Forms.ToolStripMenuItem();
             this.item_bing = new System.Windows.Forms.ToolStripMenuItem();
             this.item_close = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel_left = new System.Windows.Forms.Panel();
-            this.panel_middle = new System.Windows.Forms.Panel();
-            this.panel_right = new System.Windows.Forms.Panel();
+            this.spc_source = new System.Windows.Forms.SplitContainer();
+            this.spc_content = new System.Windows.Forms.SplitContainer();
             this.contextMenuStrip_notify.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spc_source)).BeginInit();
+            this.spc_source.Panel2.SuspendLayout();
+            this.spc_source.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spc_content)).BeginInit();
+            this.spc_content.SuspendLayout();
             this.SuspendLayout();
             // 
             // notifyIcon_main
@@ -80,52 +84,60 @@
             this.item_close.Text = "退出";
             this.item_close.Click += new System.EventHandler(this.item_close_Click);
             // 
-            // panel_left
+            // spc_source
             // 
-            this.panel_left.AutoScroll = true;
-            this.panel_left.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel_left.Location = new System.Drawing.Point(0, 0);
-            this.panel_left.Margin = new System.Windows.Forms.Padding(4);
-            this.panel_left.Name = "panel_left";
-            this.panel_left.Size = new System.Drawing.Size(200, 721);
-            this.panel_left.TabIndex = 2;
+            this.spc_source.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.spc_source.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.spc_source.Location = new System.Drawing.Point(0, 0);
+            this.spc_source.Name = "spc_source";
             // 
-            // panel_middle
+            // spc_source.Panel1
             // 
-            this.panel_middle.AutoScroll = true;
-            this.panel_middle.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel_middle.Location = new System.Drawing.Point(200, 0);
-            this.panel_middle.Margin = new System.Windows.Forms.Padding(4);
-            this.panel_middle.Name = "panel_middle";
-            this.panel_middle.Size = new System.Drawing.Size(400, 721);
-            this.panel_middle.TabIndex = 3;
+            this.spc_source.Panel1.AutoScroll = true;
             // 
-            // panel_right
+            // spc_source.Panel2
             // 
-            this.panel_right.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_right.Location = new System.Drawing.Point(600, 0);
-            this.panel_right.Margin = new System.Windows.Forms.Padding(4);
-            this.panel_right.Name = "panel_right";
-            this.panel_right.Size = new System.Drawing.Size(584, 721);
-            this.panel_right.TabIndex = 4;
+            this.spc_source.Panel2.Controls.Add(this.spc_content);
+            this.spc_source.Size = new System.Drawing.Size(1184, 721);
+            this.spc_source.SplitterDistance = 137;
+            this.spc_source.TabIndex = 2;
+            // 
+            // spc_content
+            // 
+            this.spc_content.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.spc_content.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.spc_content.Location = new System.Drawing.Point(0, 0);
+            this.spc_content.Name = "spc_content";
+            // 
+            // spc_content.Panel1
+            // 
+            this.spc_content.Panel1.AutoScroll = true;
+            // 
+            // spc_content.Panel2
+            // 
+            this.spc_content.Panel2.AutoScroll = true;
+            this.spc_content.Size = new System.Drawing.Size(1043, 721);
+            this.spc_content.SplitterDistance = 359;
+            this.spc_content.TabIndex = 0;
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1184, 721);
-            this.Controls.Add(this.panel_right);
-            this.Controls.Add(this.panel_middle);
-            this.Controls.Add(this.panel_left);
+            this.Controls.Add(this.spc_source);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "FrmMain";
             this.Text = "工作姬";
             this.Load += new System.EventHandler(this.FrmMain_Load);
-            this.Controls.SetChildIndex(this.panel_left, 0);
-            this.Controls.SetChildIndex(this.panel_middle, 0);
-            this.Controls.SetChildIndex(this.panel_right, 0);
+            this.Controls.SetChildIndex(this.spc_source, 0);
             this.contextMenuStrip_notify.ResumeLayout(false);
+            this.spc_source.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.spc_source)).EndInit();
+            this.spc_source.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.spc_content)).EndInit();
+            this.spc_content.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -136,8 +148,7 @@
         private ToolStripMenuItem item_bing;
         private ToolStripMenuItem item_close;
         private ToolStripMenuItem item_main;
-        private Panel panel_left;
-        private Panel panel_middle;
-        private Panel panel_right;
+        private SplitContainer spc_source;
+        private SplitContainer spc_content;
     }
 }
