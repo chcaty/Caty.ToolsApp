@@ -1,6 +1,8 @@
 ﻿using Caty.Tools.Model;
-using Caty.Tools.Model.Rss;
+using Caty.Tools.Model.Context;
+using Caty.Tools.Service;
 using Caty.Tools.Share;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +24,8 @@ internal static class Program
         ConfigureServices(service);
 
         var serviceProvider = service.BuildServiceProvider();
+        var db = serviceProvider.GetRequiredService<RssDbContext>();
+        db.Database.Migrate();
         var frmMain = serviceProvider.GetRequiredService<FrmMain>();
         Application.Run(frmMain);
     }
@@ -41,6 +45,6 @@ internal static class Program
         services.AddOptions();
         services.AddShareServiceModule();
         services.AddApplicationEntitiesModule(configuration);
-        services.Configure<List<RssSource>>(configuration.GetSection("RssSources"));
+        services.AddUxServicesModule();
     }
 }

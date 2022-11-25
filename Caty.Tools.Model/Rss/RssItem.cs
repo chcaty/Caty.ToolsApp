@@ -8,27 +8,27 @@ public class RssItem : Entity<int>
     /// <summary>
     /// 消息作者
     /// </summary>
-    public string Author { get; set; }
+    public string Author { get; set; } = string.Empty;
 
     /// <summary>
     /// 作者主页地址
     /// </summary>
-    public string AuthorLink { get; set; }
+    public string AuthorLink { get; set; } = string.Empty;
 
     /// <summary>
     /// 作者邮箱
     /// </summary>
-    public string AuthorEmail { get; set; }
+    public string AuthorEmail { get; set; } = string.Empty;
 
     /// <summary>
     /// 消息标题
     /// </summary>
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// 消息摘要
     /// </summary>
-    public string Summary { get; set; }
+    public string Summary { get; set; } = string.Empty;
 
     /// <summary>
     /// 最后更新时间
@@ -38,12 +38,12 @@ public class RssItem : Entity<int>
     /// <summary>
     /// 消息Id
     /// </summary>
-    public string ItemId { get; set; }
+    public string ItemId { get; set; } = string.Empty;
 
     /// <summary>
     /// 消息地址
     /// </summary>
-    public string ContentLink { get; set; }
+    public string ContentLink { get; set; } = string.Empty;
 
     public DateTime PublishDate { get; set; }
 

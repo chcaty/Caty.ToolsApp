@@ -2,15 +2,25 @@
 using Caty.Tools.Share.Repository.UxSpecification;
 using System.Linq.Expressions;
 
-namespace Caty.Tools.WinForm.Specification.Rss
+namespace Caty.Tools.Service.Specification.Rss
 {
     public class RssSourceByIsEnabledSpecification : Specification<RssSource>
     {
         public RssSourceByIsEnabledSpecification(bool isEnabled)
         {
-            Criteria = x =>  x.IsEnabled == isEnabled;
+            Criteria = x => x.IsEnabled == isEnabled;
         }
 
         public override Expression<Func<RssSource, bool>> Criteria { get; }
+    }
+
+    public class RssFeedSpecification : Specification<RssFeed>
+    {
+        public RssFeedSpecification()
+        {
+            Criteria = x => true;
+        }
+
+        public override Expression<Func<RssFeed, bool>> Criteria { get; }
     }
 }

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Caty.Tools.Model\Caty.Tools.Model.csproj" />
+    <ProjectReference Include="..\Caty.Tools.Service\Caty.Tools.Service.csproj" />
     <ProjectReference Include="..\Caty.Tools.UxForm\Caty.Tools.UxForm.csproj" />
   </ItemGroup>
 

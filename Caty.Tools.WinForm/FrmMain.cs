@@ -1,13 +1,14 @@
 ﻿using Caty.Tools.Model.Context;
 using Caty.Tools.Model.Rss;
+using Caty.Tools.Service.Rss;
 using Caty.Tools.Share.Repository.EfCore;
 using Caty.Tools.UxForm;
 using Caty.Tools.WinForm.Frm;
 using Caty.Tools.WinForm.Helper;
-using Caty.Tools.WinForm.Specification.Rss;
 using Caty.Tools.WinForm.UxControl;
 using CefSharp;
 using CefSharp.WinForms;
+using Microsoft.EntityFrameworkCore;
 
 namespace Caty.Tools.WinForm;
 
@@ -28,14 +29,13 @@ public partial class FrmMain : FrmBasic
         AutoReset = true, //设置是执行一次（false）还是一直执行（true）
     };//实例化Timer类，设置间隔时间30分钟
 
-    private List<RssSource> _sources;
-    private readonly IEfRepository<RssSource, int> _repository;
     private readonly IUnitOfWorkEf<RssDbContext> _unitOfWork;
+    private readonly IRssSourceService _rssSourceService;
 
-    public FrmMain(IUnitOfWorkEf<RssDbContext> unitOfWork)
+    public FrmMain(IUnitOfWorkEf<RssDbContext> unitOfWork, IRssSourceService rssSourceService)
     {
         _unitOfWork = unitOfWork;
-        _repository = unitOfWork.GetRepository<RssSource, int>();
+        _rssSourceService = rssSourceService;
         Cef.Initialize(new CefSettings());
         InitializeComponent();
         GetAllInitInfo(Controls[0]);
@@ -43,7 +43,6 @@ public partial class FrmMain : FrmBasic
 
     private void FrmMain_Load(object sender, EventArgs e)
     {
-        _unitOfWork.Context.Database.EnsureCreated();
         UpdateRssInfo();
         _updateRss.Elapsed += UpdateRssExecute;//绑定的事件
         _updateRss.Start();
@@ -75,8 +74,7 @@ public partial class FrmMain : FrmBasic
 
     public async void UpdateRssInfo()
     {
-        var rssSources = await _repository.FindAsync(new RssSourceByIsEnabledSpecification(true));
-        _sources = (List<RssSource>)rssSources;
+        var rssSources = await _rssSourceService.List(true);
         panel_source.Controls.Clear();
         foreach (var rssSource in rssSources)
         {
@@ -130,16 +128,6 @@ public partial class FrmMain : FrmBasic
     {
         var frmPicture = new FrmPicture(GetMoyuImage(), "摸鱼日历");
         frmPicture.ShowDialog();
-    }
-
-    private void btn_rssConfig_Click(object sender, EventArgs e)
-    {
-        var frmPicture = new FrmRssConfig(_sources);
-        frmPicture.ShowDialog();
-        Task.Run(() =>
-        {
-            BeginInvoke(UpdateRssInfo);
-        });
     }
 
     private void btn_rand_Click(object sender, EventArgs e)
@@ -210,6 +198,11 @@ public partial class FrmMain : FrmBasic
 
     private void btn_add_Click(object sender, EventArgs e)
     {
-        
+        FrmRssConfig frm = new(_rssSourceService);
+        frm.ShowDialog();
+        Task.Run(() =>
+        {
+            BeginInvoke(UpdateRssInfo);
+        });
     }
 }

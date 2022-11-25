@@ -7,22 +7,22 @@ public class RssFeed : Entity<int>
     /// <summary>
     /// 网站标题
     /// </summary>
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// 网站首页地址
     /// </summary>
-    public string Link { get; set; }
+    public string Link { get; set; } = string.Empty;
 
     /// <summary>
     /// 作者
     /// </summary>
-    public string Author { get; set; }
+    public string Author { get; set; } = string.Empty;
 
     /// <summary>
     /// 描述
     /// </summary>
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 
     /// <summary>
     /// 最后更新时间
@@ -32,12 +32,17 @@ public class RssFeed : Entity<int>
     /// <summary>
     /// 生成器
     /// </summary>
-    public string Generator { get; set; }
+    public string Generator { get; set; } = string.Empty;
 
     /// <summary>
     /// 聚合UUId
     /// </summary>
-    public string FeedCode { get; set; }
+    public string FeedCode { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Rss源Id
+    /// </summary>
+    public int SourceId { get; set; }
 
     /// <summary>
     /// 消息列表
