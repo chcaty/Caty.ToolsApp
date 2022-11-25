@@ -34,8 +34,8 @@ namespace Caty.Tools.Service.Rss
 
         public async Task<IReadOnlyList<RssSource>?> List(bool isEnabled)
         {
-            var rssSources = await _repository.FindAsync(new RssSourceByIsEnabledSpecification(isEnabled));
-            return rssSources;
+            var sources = await _repository.FindAsync(new RssSourceByIsEnabledSpecification(isEnabled));
+            return sources;
         }
 
         public async Task Update(RssSource source)

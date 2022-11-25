@@ -42,7 +42,6 @@ public partial class FrmRssConfig : FrmDialog
 
     private void btn_save_Click(object sender, EventArgs e)
     {
-        //Config.UpdateConfig("RssSources",sources);
         if(isAdd)
         {
             _rssSourceService.Add(_source);

@@ -3,6 +3,7 @@ using System;
 using Caty.Tools.Model.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Caty.Tools.Model.Migrations.RssDb
 {
     [DbContext(typeof(RssDbContext))]
-    partial class RssDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221125074251_modifynotnull")]
+    partial class modifynotnull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.11");

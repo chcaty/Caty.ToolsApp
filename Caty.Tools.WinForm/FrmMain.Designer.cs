@@ -63,7 +63,6 @@
             this.notifyIcon_main.Text = "工作姬";
             this.notifyIcon_main.Visible = true;
             this.notifyIcon_main.Click += new System.EventHandler(this.notifyIcon_main_Click);
-            this.notifyIcon_main.DoubleClick += new System.EventHandler(this.notifyIcon_main_DoubleClick);
             this.notifyIcon_main.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_main_MouseClick);
             // 
             // contextMenuStrip_notify
@@ -174,6 +173,7 @@
             // 
             this.btn_edit.BackColor = System.Drawing.SystemColors.Control;
             this.btn_edit.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btn_edit.Enabled = false;
             this.btn_edit.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_edit.Location = new System.Drawing.Point(0, 0);
             this.btn_edit.Name = "btn_edit";
@@ -181,6 +181,7 @@
             this.btn_edit.TabIndex = 0;
             this.btn_edit.Text = "编辑";
             this.btn_edit.UseVisualStyleBackColor = false;
+            this.btn_edit.Click += new System.EventHandler(this.btn_edit_Click);
             // 
             // btn_rand
             // 

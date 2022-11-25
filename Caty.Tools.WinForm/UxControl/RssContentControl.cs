@@ -5,6 +5,7 @@ namespace Caty.Tools.WinForm.UxControl
     public partial class RssContentControl : UserControl
     {
         private RssItem _item;
+        public Color backColor = SystemColors.Control;
         public event EventHandler ControlClick;
 
         public RssContentControl()
@@ -28,6 +29,22 @@ namespace Caty.Tools.WinForm.UxControl
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
+        }
+
+        public override bool Focused
+        {
+            get
+            {
+                return lb_desc.Focused || lb_name.Focused || lb_pubDate.Focused;
+            }
+        }
+
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            lb_pubDate.BackColor = backColor;
+            lb_desc.BackColor = backColor;
+            lb_name.BackColor = backColor;
         }
 
         private void RssContentControl_Click(object sender, EventArgs e)

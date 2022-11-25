@@ -6,15 +6,16 @@ namespace Caty.Tools.WinForm.Helper;
 
 internal static class Rss
 {
-    public static RssFeed GetRssFeed(string rssUri)
+    public static RssFeed? GetRssFeed(string rssUri)
     {
         var sf = SyndicationFeed.Load(XmlReader.Create(rssUri));
+        if (sf == null) return null;
         var feed = new RssFeed
         {
-            Title = sf.Title.Text,
+            Title = sf.Title?.Text,
             FeedCode = sf.Id,
             LastUpdatedTime = sf.LastUpdatedTime.DateTime,
-            Description = sf.Description.Text,
+            Description = sf.Description?.Text,
 
         };
         if (sf.Links.Count > 0)
@@ -29,23 +30,24 @@ internal static class Rss
         return feed;
     }
 
-    public static List<RssFeed> GetRssFeeds(IEnumerable<string> rssUris)
+    public static List<RssFeed>? GetRssFeeds(IEnumerable<string> rssUris)
     {
-        return rssUris.Select(GetRssFeed).ToList();
+        return (List<RssFeed>?)rssUris.Select(GetRssFeed);
     }
 
     public static List<RssItem>? GetRssItems(string rssUri)
     {
         var sf = SyndicationFeed.Load(XmlReader.Create(rssUri));
+        if (sf == null) return null;
         var itemList = sf.Items?.Select(it => new RssItem()
         {
             ItemId = it.Id,
             Author = it.Authors.Count == 0 ? "" : $"{it.Authors[0].Name}",
             AuthorLink = it.Authors.Count == 0 ? "" : $"{it.Authors[0].Uri}",
             AuthorEmail = it.Authors.Count == 0 ? "" : $"{it.Authors[0].Email}",
-            Title = it.Title.Text,
+            Title = it.Title?.Text,
             LastUpdatedTime = it.LastUpdatedTime.DateTime,
-            Summary = it.Summary.Text,
+            Summary = it.Summary?.Text,
             ContentLink = it.Links.Count == 0 ? "" : $"{it.Links[0].Uri}",
             PublishDate = it.PublishDate.DateTime
         }).ToList();

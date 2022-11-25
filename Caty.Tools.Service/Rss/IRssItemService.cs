@@ -11,8 +11,12 @@ namespace Caty.Tools.Service.Rss
 
         public Task Delete(int id);
 
-        public Task<IReadOnlyList<RssItem>?> List();
+        public Task<IReadOnlyList<RssItem>?> List(int feedId);
 
         public Task<RssItem?> Detail(int id);
+
+        public Task Add(List<RssItem> item);
+
+        public Task<bool> CheckRepeat(int feedId, string url);
     }
 }

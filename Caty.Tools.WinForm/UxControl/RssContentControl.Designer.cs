@@ -42,6 +42,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.Controls.Add(this.lb_name);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -52,6 +53,7 @@
             // 
             // lb_name
             // 
+            this.lb_name.BackColor = System.Drawing.SystemColors.Control;
             this.lb_name.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_name.Location = new System.Drawing.Point(0, 0);
             this.lb_name.Name = "lb_name";
@@ -63,6 +65,7 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Control;
             this.panel2.Controls.Add(this.lb_pubDate);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 39);
@@ -72,6 +75,7 @@
             // 
             // lb_pubDate
             // 
+            this.lb_pubDate.BackColor = System.Drawing.SystemColors.Control;
             this.lb_pubDate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_pubDate.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lb_pubDate.ForeColor = System.Drawing.SystemColors.ControlDark;
@@ -95,6 +99,7 @@
             // 
             // panel3
             // 
+            this.panel3.BackColor = System.Drawing.SystemColors.Control;
             this.panel3.Controls.Add(this.lb_desc);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -105,6 +110,7 @@
             // 
             // lb_desc
             // 
+            this.lb_desc.BackColor = System.Drawing.SystemColors.Control;
             this.lb_desc.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_desc.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lb_desc.Location = new System.Drawing.Point(0, 0);

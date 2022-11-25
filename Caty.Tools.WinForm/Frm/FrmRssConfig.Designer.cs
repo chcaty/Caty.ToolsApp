@@ -63,6 +63,7 @@
             this.btn_close.TabIndex = 2;
             this.btn_close.Text = "关闭";
             this.btn_close.UseVisualStyleBackColor = true;
+            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
             // btn_save
             // 
@@ -124,7 +125,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 68);
+            this.label2.Location = new System.Drawing.Point(21, 65);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 21);
             this.label2.TabIndex = 2;
@@ -141,7 +142,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 34);
+            this.label1.Location = new System.Drawing.Point(21, 34);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(42, 21);
             this.label1.TabIndex = 0;

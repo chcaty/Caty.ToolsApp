@@ -5,7 +5,7 @@ namespace Caty.Tools.Service.Rss
 {
     public interface IRssFeedService: INormalService
     {
-        public Task Add(RssFeed feed);
+        public Task<RssFeed> Add(RssFeed feed);
 
         public Task Update(RssFeed feed);
 

@@ -23,4 +23,15 @@ namespace Caty.Tools.Service.Specification.Rss
 
         public override Expression<Func<RssFeed, bool>> Criteria { get; }
     }
+
+    public class RssItemSpecification : Specification<RssItem>
+    {
+        public RssItemSpecification(int feedId)
+        {
+            Criteria = x => x.FeedId == feedId;
+            ApplyOrderBy(x => x.PublishDate);
+        }
+
+        public override Expression<Func<RssItem, bool>> Criteria { get; }
+    }
 }

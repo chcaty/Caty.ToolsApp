@@ -1,5 +1,6 @@
 ﻿using Caty.Tools.Model.Context;
 using Caty.Tools.Model.Rss;
+using Caty.Tools.Service.Specification.Rss;
 using Caty.Tools.Share.Repository.EfCore;
 
 namespace Caty.Tools.Service.Rss
@@ -27,17 +28,34 @@ namespace Caty.Tools.Service.Rss
 
         public async Task<RssItem?> Detail(int id)
         {
-            throw new NotImplementedException();
+            var item = await _repository.FindById(id);
+            return item;
         }
 
-        public async Task<IReadOnlyList<RssItem>?> List()
+        public async Task<IReadOnlyList<RssItem>?> List(int feedId)
         {
-            throw new NotImplementedException();
+            var items = await _repository.FindAsync(new RssItemSpecification(feedId));
+            return items;
         }
 
         public async Task Update(RssItem item)
         {
-            throw new NotImplementedException();
+            var rssItem = await _repository.FindById(item.Id);
+            if (rssItem == null) return;
+            _repository.Update(item);
+            await _repository.SaveAsync();
+        }
+
+        public async Task Add(List<RssItem> item)
+        {
+            _repository.Insert(item);
+            await _repository.SaveAsync();
+        }
+
+        public async Task<bool> CheckRepeat(int feedId, string url)
+        {
+            var repeat = await _repository.FirstOrDefault(t=>t.FeedId == feedId && t.ContentLink== url);
+            return repeat != null;
         }
     }
 }

@@ -37,7 +37,8 @@
             this.pic_view.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pic_view.Location = new System.Drawing.Point(0, 0);
             this.pic_view.Name = "pic_view";
-            this.pic_view.Size = new System.Drawing.Size(733, 889);
+            this.pic_view.Size = new System.Drawing.Size(545, 710);
+            this.pic_view.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pic_view.TabIndex = 1;
             this.pic_view.TabStop = false;
             // 
@@ -45,7 +46,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(733, 889);
+            this.ClientSize = new System.Drawing.Size(545, 710);
             this.Controls.Add(this.pic_view);
             this.Margin = new System.Windows.Forms.Padding(9, 6, 9, 6);
             this.Name = "FrmPicture";

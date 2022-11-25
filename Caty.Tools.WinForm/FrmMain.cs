@@ -1,20 +1,17 @@
-﻿using Caty.Tools.Model.Context;
-using Caty.Tools.Model.Rss;
+﻿using Caty.Tools.Model.Rss;
 using Caty.Tools.Service.Rss;
-using Caty.Tools.Share.Repository.EfCore;
 using Caty.Tools.UxForm;
 using Caty.Tools.WinForm.Frm;
 using Caty.Tools.WinForm.Helper;
 using Caty.Tools.WinForm.UxControl;
 using CefSharp;
 using CefSharp.WinForms;
-using Microsoft.EntityFrameworkCore;
 
 namespace Caty.Tools.WinForm;
 
 public partial class FrmMain : FrmBasic
 {
-    private static double test = 1000 *60;
+    private static double test = 1000 * 60;
     private static readonly double hours = 1000 * 60 * 60;
 
     private readonly System.Timers.Timer _updateRss = new(hours)
@@ -29,13 +26,16 @@ public partial class FrmMain : FrmBasic
         AutoReset = true, //设置是执行一次（false）还是一直执行（true）
     };//实例化Timer类，设置间隔时间30分钟
 
-    private readonly IUnitOfWorkEf<RssDbContext> _unitOfWork;
     private readonly IRssSourceService _rssSourceService;
+    private readonly IRssFeedService _rssFeedService;
+    private readonly IRssItemService _rssItemService;
+    private RssSource _rssSource;
 
-    public FrmMain(IUnitOfWorkEf<RssDbContext> unitOfWork, IRssSourceService rssSourceService)
+    public FrmMain(IRssSourceService rssSourceService,IRssFeedService rssFeedService, IRssItemService rssItemService)
     {
-        _unitOfWork = unitOfWork;
         _rssSourceService = rssSourceService;
+        _rssFeedService = rssFeedService;
+        _rssItemService = rssItemService;
         Cef.Initialize(new CefSettings());
         InitializeComponent();
         GetAllInitInfo(Controls[0]);
@@ -43,6 +43,7 @@ public partial class FrmMain : FrmBasic
 
     private void FrmMain_Load(object sender, EventArgs e)
     {
+        LoadRssInfo();
         UpdateRssInfo();
         _updateRss.Elapsed += UpdateRssExecute;//绑定的事件
         _updateRss.Start();
@@ -72,10 +73,11 @@ public partial class FrmMain : FrmBasic
         _checkUpdate.Start();//重新开始定时器
     }
 
-    public async void UpdateRssInfo()
+    private async void LoadRssInfo()
     {
         var rssSources = await _rssSourceService.List(true);
         panel_source.Controls.Clear();
+        if (rssSources == null) return;
         foreach (var rssSource in rssSources)
         {
             var btn = new Button
@@ -83,38 +85,110 @@ public partial class FrmMain : FrmBasic
                 BackColor = SystemColors.Control,
                 Dock = DockStyle.Top,
                 Text = rssSource.RssName,
-                Height= 50,
+                Height = 50
             };
-            void showRssContent(object sender, EventArgs e)
-            {
-                spc_content.Panel1.Controls.Clear();
-                var feeds = Rss.GetRssFeed(rssSource.RssUrl);
-                if (feeds != null && feeds.Items.Count > 0)
-                {
-                    foreach (var item in feeds.Items)
-                    {
-                        var rssControl = new RssContentControl(item)
-                        {
-                            Dock = DockStyle.Top,
-                        };
-                        void showDetail(object sender, EventArgs e)
-                        {
-                            spc_content.Panel2.Controls.Clear();
-                            var browser = new ChromiumWebBrowser(item.ContentLink)
-                            {
-                                Dock= DockStyle.Fill,
-                            };
-                            spc_content.Panel2.Controls.Add(browser);
-                        }
-                        rssControl.ControlClick += showDetail;
-                        spc_content.Panel1.Controls.Add(rssControl);
-                    }
-                }
-            }
-            btn.Click += showRssContent;
+            setButtonClick(btn,rssSource);
             panel_source.Controls.Add(btn);
         }
-        Text = $@"工作姬  最后更新时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+        Text = $"工作姬  最后更新时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+    }
+
+    private void setButtonClick(Button btn, RssSource rssSource)
+    {
+        async void showRssContent(object sender, EventArgs e)
+        {
+            spc_content.Panel1.Controls.Clear();
+            _rssSource = rssSource;
+            var feed = await _rssFeedService.GetFeedBySourceId(rssSource.Id);
+            if (feed != null)
+            {
+                var items = await _rssItemService.List(feed.Id);
+                if (items == null) return;
+                foreach (var item in items)
+                {
+                    setRssDetail(item);
+                }
+            }
+        }
+        btn.Click += showRssContent;
+        void getFocus(object sender, EventArgs e)
+        {
+            btn_edit.Enabled = true;
+            btn.BackColor= SystemColors.ControlDark;
+        }
+        btn.GotFocus += getFocus;
+        void lostFocus(object sender, EventArgs e)
+        {
+            btn_edit.Enabled = false;
+            btn.BackColor = SystemColors.Control;
+        }
+        btn.LostFocus += lostFocus;
+    }
+
+    private void setRssDetail(RssItem item)
+    {
+        var rssControl = new RssContentControl(item)
+        {
+            Dock = DockStyle.Top,
+        };
+        void showDetail(object sender, EventArgs e)
+        {
+            rssControl.Focus();
+            spc_content.Panel2.Controls.Clear();
+            var browser = new ChromiumWebBrowser(item.ContentLink)
+            {
+                Dock = DockStyle.Fill,
+            };
+            spc_content.Panel2.Controls.Add(browser);
+        }
+        rssControl.ControlClick += showDetail;
+        void getFocus(object sender, EventArgs e)
+        {
+            rssControl.backColor = SystemColors.ControlLight;
+            rssControl.BackColor = SystemColors.ControlLight;
+        }
+        rssControl.GotFocus += getFocus;
+        void lostFocus(object sender, EventArgs e)
+        {
+            rssControl.backColor = SystemColors.Control;
+            rssControl.BackColor = SystemColors.Control;
+        }
+        rssControl.LostFocus += lostFocus;
+        spc_content.Panel1.Controls.Add(rssControl);
+    }
+
+    /// <summary>
+    /// 从Rss源处更新RssInfo
+    /// </summary>
+    public async void UpdateRssInfo()
+    {
+        var sources = await _rssSourceService.List(true);
+        if (sources == null) return;
+        foreach (var source in sources)
+        {
+            var feed = await _rssFeedService.GetFeedBySourceId(source.Id);
+            if (feed == null)
+            {
+                var add = Rss.GetRssFeed(source.RssUrl);
+                if (add == null) return;
+                add.SourceId= source.Id;
+                feed = await _rssFeedService.Add(add);
+            } 
+            var items = Rss.GetRssItems(source.RssUrl);
+            if (items == null) continue;
+            var addItems = new List<RssItem>();
+            foreach (var item in items)
+            {
+                var isRepeat = await _rssItemService.CheckRepeat(feed.Id, item.ContentLink);
+                if(!isRepeat)
+                {
+                    item.FeedId = feed.Id;
+                    addItems.Add(item);
+                }
+            }
+            await _rssItemService.Add(addItems);
+        }
+        Text = $"工作姬  最后更新时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
     }
 
     private Image GetMoyuImage()
@@ -140,16 +214,6 @@ public partial class FrmMain : FrmBasic
     private void notifyIcon_main_Click(object sender, EventArgs e)
     {
         ShowMainFrom();
-    }
-
-    private void notifyIcon_main_DoubleClick(object sender, EventArgs e)
-    {
-        if(WindowState == FormWindowState.Minimized)
-        {
-            ShowMainFrom();
-            // 激活窗体并给予它焦点
-            Activate();
-        }
     }
 
     private void notifyIcon_main_MouseClick(object sender, MouseEventArgs e)
@@ -202,7 +266,17 @@ public partial class FrmMain : FrmBasic
         frm.ShowDialog();
         Task.Run(() =>
         {
-            BeginInvoke(UpdateRssInfo);
+            BeginInvoke(LoadRssInfo);
+        });
+    }
+
+    private void btn_edit_Click(object sender, EventArgs e)
+    {
+        FrmRssConfig frm = new(_rssSource, _rssSourceService);
+        frm.ShowDialog();
+        Task.Run(() =>
+        {
+            BeginInvoke(LoadRssInfo);
         });
     }
 }

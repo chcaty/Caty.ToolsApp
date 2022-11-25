@@ -14,10 +14,11 @@ namespace Caty.Tools.Service.Rss
             _repository = unitOfWork.GetRepository<RssFeed, int>();
         }
 
-        public async Task Add(RssFeed feed)
+        public async Task<RssFeed> Add(RssFeed feed)
         {
-            await _repository.Insert(feed);
+            var result = await _repository.Insert(feed);
             await _repository.SaveAsync();
+            return result;
         }
 
         public async Task Delete(int id)
@@ -40,8 +41,8 @@ namespace Caty.Tools.Service.Rss
 
         public async Task<IReadOnlyList<RssFeed>?> List()
         {
-            var rssSources = await _repository.FindAsync(new RssFeedSpecification());
-            return rssSources;
+            var feeds = await _repository.FindAsync(new RssFeedSpecification());
+            return feeds;
         }
 
         public async Task Update(RssFeed feed)
