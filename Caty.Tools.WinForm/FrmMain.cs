@@ -11,16 +11,16 @@ namespace Caty.Tools.WinForm;
 
 public partial class FrmMain : FrmBasic
 {
-    private static double test = 1000 * 60;
-    private static readonly double hours = 1000 * 60 * 60;
+    private const double Test = 1000 * 60;
+    private const double Hours = 1000 * 60 * 60;
 
-    private readonly System.Timers.Timer _updateRss = new(hours)
+    private readonly System.Timers.Timer _updateRss = new(Hours)
     {
         Enabled = true, //是否执行绑定的事件
         AutoReset = true, //设置是执行一次（false）还是一直执行（true）
     };//实例化Timer类，设置间隔时间30分钟
 
-    private readonly System.Timers.Timer _checkUpdate = new(test)
+    private readonly System.Timers.Timer _checkUpdate = new(Test)
     {
         Enabled = true, //是否执行绑定的事件
         AutoReset = true, //设置是执行一次（false）还是一直执行（true）
@@ -29,7 +29,7 @@ public partial class FrmMain : FrmBasic
     private readonly IRssSourceService _rssSourceService;
     private readonly IRssFeedService _rssFeedService;
     private readonly IRssItemService _rssItemService;
-    private RssSource _rssSource;
+    private RssSource? _rssSource;
 
     public FrmMain(IRssSourceService rssSourceService,IRssFeedService rssFeedService, IRssItemService rssItemService)
     {
@@ -87,51 +87,49 @@ public partial class FrmMain : FrmBasic
                 Text = rssSource.RssName,
                 Height = 50
             };
-            setButtonClick(btn,rssSource);
+            SetButtonClick(btn,rssSource);
             panel_source.Controls.Add(btn);
         }
-        Text = $"工作姬  最后更新时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+        Text = $@"工作姬  最后更新时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
     }
 
-    private void setButtonClick(Button btn, RssSource rssSource)
+    private void SetButtonClick(Control btn, RssSource rssSource)
     {
-        async void showRssContent(object sender, EventArgs e)
+        async void ShowRssContent(object? sender, EventArgs e)
         {
             spc_content.Panel1.Controls.Clear();
             _rssSource = rssSource;
             var feed = await _rssFeedService.GetFeedBySourceId(rssSource.Id);
-            if (feed != null)
+            if (feed == null) return;
+            var items = await _rssItemService.List(feed.Id);
+            if (items == null) return;
+            foreach (var item in items)
             {
-                var items = await _rssItemService.List(feed.Id);
-                if (items == null) return;
-                foreach (var item in items)
-                {
-                    setRssDetail(item);
-                }
+                SetRssDetail(item);
             }
         }
-        btn.Click += showRssContent;
-        void getFocus(object sender, EventArgs e)
+        btn.Click += ShowRssContent;
+        void GetFocus(object? sender, EventArgs e)
         {
             btn_edit.Enabled = true;
-            btn.BackColor= SystemColors.ControlDark;
+            btn.BackColor = SystemColors.ControlDark;
         }
-        btn.GotFocus += getFocus;
-        void lostFocus(object sender, EventArgs e)
+        btn.GotFocus += GetFocus;
+        void LostFocus(object? sender, EventArgs e)
         {
             btn_edit.Enabled = false;
             btn.BackColor = SystemColors.Control;
         }
-        btn.LostFocus += lostFocus;
+        btn.LostFocus += LostFocus;
     }
 
-    private void setRssDetail(RssItem item)
+    private void SetRssDetail(RssItem item)
     {
         var rssControl = new RssContentControl(item)
         {
             Dock = DockStyle.Top,
         };
-        void showDetail(object sender, EventArgs e)
+        void ShowDetail(object? sender, EventArgs e)
         {
             rssControl.Focus();
             spc_content.Panel2.Controls.Clear();
@@ -141,19 +139,17 @@ public partial class FrmMain : FrmBasic
             };
             spc_content.Panel2.Controls.Add(browser);
         }
-        rssControl.ControlClick += showDetail;
-        void getFocus(object sender, EventArgs e)
+        rssControl.ControlClick += ShowDetail;
+        void GetFocus(object? sender, EventArgs e)
         {
-            rssControl.backColor = SystemColors.ControlLight;
-            rssControl.BackColor = SystemColors.ControlLight;
+            rssControl.UxBackColor = SystemColors.ControlLight;
         }
-        rssControl.GotFocus += getFocus;
-        void lostFocus(object sender, EventArgs e)
+        rssControl.GotFocus += GetFocus;
+        void LostFocus(object? sender, EventArgs e)
         {
-            rssControl.backColor = SystemColors.Control;
-            rssControl.BackColor = SystemColors.Control;
+            rssControl.UxBackColor = SystemColors.Control;
         }
-        rssControl.LostFocus += lostFocus;
+        rssControl.LostFocus += LostFocus;
         spc_content.Panel1.Controls.Add(rssControl);
     }
 
@@ -180,18 +176,16 @@ public partial class FrmMain : FrmBasic
             foreach (var item in items)
             {
                 var isRepeat = await _rssItemService.CheckRepeat(feed.Id, item.ContentLink);
-                if(!isRepeat)
-                {
-                    item.FeedId = feed.Id;
-                    addItems.Add(item);
-                }
+                if (isRepeat) continue;
+                item.FeedId = feed.Id;
+                addItems.Add(item);
             }
             await _rssItemService.Add(addItems);
         }
-        Text = $"工作姬  最后更新时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+        Text = $@"工作姬  最后更新时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
     }
 
-    private Image GetMoyuImage()
+    private static Image GetMoyuImage()
     {
         var client = new HttpClient();
         var stream = client.GetStreamAsync("https://api.vvhan.com/api/moyu").Result;
@@ -218,23 +212,24 @@ public partial class FrmMain : FrmBasic
 
     private void notifyIcon_main_MouseClick(object sender, MouseEventArgs e)
     {
-        if(e.Button== MouseButtons.Right)
+        switch (e.Button)
         {
-            contextMenuStrip_notify.Show();
-        }else if(e.Button== MouseButtons.Left)
-        {
-            ShowMainFrom();
-            Visible = true;
+            case MouseButtons.Right:
+                contextMenuStrip_notify.Show();
+                break;
+            case MouseButtons.Left:
+                ShowMainFrom();
+                Visible = true;
+                break;
         }
     }
 
     private void item_close_Click(object sender, EventArgs e)
     {
-        if (MessageBox.Show("是否确认退出程序？", "退出", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-        {
-            Dispose();
-            Close();
-        }
+        if (MessageBox.Show(@"是否确认退出程序？", @"退出", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) !=
+            DialogResult.OK) return;
+        Dispose();
+        Close();
     }
 
     private void item_main_Click(object sender, EventArgs e)
@@ -253,11 +248,9 @@ public partial class FrmMain : FrmBasic
     protected override void OnSizeChanged(EventArgs e)
     {
         base.OnSizeChanged(e);
-        if (controlInfo.Count > 0)
-        {
-            ControlsChangeInit(Controls[0]);
-            ControlsChange(Controls[0]);
-        }
+        if (controlInfo.Count <= 0) return;
+        ControlsChangeInit(Controls[0]);
+        ControlsChange(Controls[0]);
     }
 
     private void btn_add_Click(object sender, EventArgs e)

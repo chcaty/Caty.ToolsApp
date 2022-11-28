@@ -52,7 +52,7 @@ namespace Caty.Tools.Service.Rss
             await _repository.SaveAsync();
         }
 
-        public async Task<bool> CheckRepeat(int feedId, string url)
+        public async Task<bool> CheckRepeat(int feedId, string? url)
         {
             var repeat = await _repository.FirstOrDefault(t=>t.FeedId == feedId && t.ContentLink== url);
             return repeat != null;

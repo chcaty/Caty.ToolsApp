@@ -17,6 +17,6 @@ namespace Caty.Tools.Service.Rss
 
         public Task Add(List<RssItem> item);
 
-        public Task<bool> CheckRepeat(int feedId, string url);
+        public Task<bool> CheckRepeat(int feedId, string? url);
     }
 }
