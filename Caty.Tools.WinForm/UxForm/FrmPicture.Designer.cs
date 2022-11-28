@@ -1,4 +1,4 @@
-﻿namespace Caty.Tools.WinForm.Frm
+﻿namespace Caty.Tools.WinForm.UxForm
 {
     partial class FrmPicture
     {

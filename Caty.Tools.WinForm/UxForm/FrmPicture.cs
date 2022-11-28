@@ -1,6 +1,6 @@
 ﻿using Caty.Tools.UxForm;
 
-namespace Caty.Tools.WinForm.Frm;
+namespace Caty.Tools.WinForm.UxForm;
 
 public partial class FrmPicture : FrmDialog
 {

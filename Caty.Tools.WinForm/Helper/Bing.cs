@@ -14,7 +14,8 @@ internal static class Bing
     {
         var rnd = new Random();
         using var client = new HttpClient();
-        var json = client.GetStringAsync($"http://cn.bing.com/HPImageArchive.aspx?format=js&idx={rnd.Next(0, 10)}&n=1").Result;
+        var json = client.GetStringAsync($"http://cn.bing.com/HPImageArchive.aspx?format=js&idx={rnd.Next(0, 10)}&n=1")
+            .Result;
         var bingImage = json.ToObject<BingImage>(new Json.OptionConfig());
         //得到背景图片URL
         return $"https://cn.bing.com{bingImage?.Images[0].Url}";
@@ -43,12 +44,11 @@ internal static class Bing
     /// <summary>
     /// Windows系统函数 - DllImport：using System.Runtime.InteropServices;
     /// </summary>
-    [DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
+    [DllImport("user32.dll", EntryPoint = "SystemParametersInfo", CharSet = CharSet.Unicode)]
     public static extern int SystemParametersInfo(
         int uAction,
         int uParam,
         string lpvParam,
         int fuWinIni
     );
-
 }

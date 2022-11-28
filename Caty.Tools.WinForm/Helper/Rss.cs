@@ -38,8 +38,7 @@ internal static class Rss
     public static List<RssItem>? GetRssItems(string rssUri)
     {
         var sf = SyndicationFeed.Load(XmlReader.Create(rssUri));
-        if (sf == null) return null;
-        var itemList = sf.Items?.Select(it => new RssItem()
+        var itemList = sf?.Items?.Select(it => new RssItem()
         {
             ItemId = it.Id,
             Author = it.Authors.Count == 0 ? "" : $"{it.Authors[0].Name}",

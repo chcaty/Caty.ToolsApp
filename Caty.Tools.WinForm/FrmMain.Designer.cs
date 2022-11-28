@@ -155,6 +155,7 @@
             this.btn_read.TabIndex = 2;
             this.btn_read.Text = "已读";
             this.btn_read.UseVisualStyleBackColor = false;
+            this.btn_read.Click += new System.EventHandler(this.btn_read_Click);
             // 
             // btn_add
             // 

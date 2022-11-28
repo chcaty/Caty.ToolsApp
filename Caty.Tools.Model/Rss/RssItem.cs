@@ -51,6 +51,11 @@ public class RssItem : Entity<int>
     public DateTime PublishDate { get; set; }
 
     /// <summary>
+    /// 是否已读
+    /// </summary>
+    public bool IsRead { get; set; } = false;
+
+    /// <summary>
     /// 聚合Id
     /// </summary>
     public int FeedId { get; set; }

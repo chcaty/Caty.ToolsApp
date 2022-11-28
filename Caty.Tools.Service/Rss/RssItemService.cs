@@ -46,9 +46,9 @@ namespace Caty.Tools.Service.Rss
             await _repository.SaveAsync();
         }
 
-        public async Task Add(List<RssItem> item)
+        public async Task Add(List<RssItem> items)
         {
-            _repository.Insert(item);
+            _repository.Insert(items);
             await _repository.SaveAsync();
         }
 
@@ -56,6 +56,12 @@ namespace Caty.Tools.Service.Rss
         {
             var repeat = await _repository.FirstOrDefault(t=>t.FeedId == feedId && t.ContentLink== url);
             return repeat != null;
+        }
+
+        public async Task Update(List<RssItem> items)
+        {
+            _repository.Update(items);
+            await _repository.SaveAsync();
         }
     }
 }
