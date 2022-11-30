@@ -14,7 +14,7 @@ public partial class FrmMain : FrmBasic
     private const double Test = 1000 * 60;
     private const double Hours = 1000 * 60 * 60;
 
-    private readonly System.Timers.Timer _updateRss = new(Hours)
+    private readonly System.Timers.Timer _updateRss = new(Test)
     {
         Enabled = true, //是否执行绑定的事件
         AutoReset = true, //设置是执行一次（false）还是一直执行（true）
@@ -85,7 +85,8 @@ public partial class FrmMain : FrmBasic
                 BackColor = SystemColors.Control,
                 Dock = DockStyle.Top,
                 Text = rssSource.RssName,
-                Height = 50
+                Height = 50,
+                FlatStyle = FlatStyle.Flat,
             };
             SetButtonClick(btn, rssSource);
             panel_source.Controls.Add(btn);
@@ -266,7 +267,7 @@ public partial class FrmMain : FrmBasic
     protected override void OnSizeChanged(EventArgs e)
     {
         base.OnSizeChanged(e);
-        if (controlInfo.Count <= 0) return;
+        if (ControlInfo.Count <= 0) return;
         ControlsChangeInit(Controls[0]);
         ControlsChange(Controls[0]);
     }

@@ -7,9 +7,9 @@ namespace Caty.Tools.Share.Repository.EfCore
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TContext"></typeparam>
-    /// <typeparam name="K"></typeparam>
-    public class GenericEfRepositoryImpl<TEntity, K, TContext> : EfRepository<TEntity, K>
-        where TEntity : Entity<K>, new()
+    /// <typeparam name="TK"></typeparam>
+    public class GenericEfRepositoryImpl<TEntity, TK, TContext> : EfRepository<TEntity, TK>
+        where TEntity : Entity<TK>, new()
         where TContext : DbContext
     {
         /// <summary>

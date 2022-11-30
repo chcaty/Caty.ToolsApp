@@ -12,7 +12,7 @@ public static class Json
     /// <param name="target">目标对象</param>
     /// <param name="config">转换配置参数</param>
     /// <param name="isConvertToSingleQuotes">是否将双引号转成单引号</param>
-    public static string ToJson(this object target,
+    public static string ToJson(this object? target,
         OptionConfig config,
        bool isConvertToSingleQuotes = false)
     {

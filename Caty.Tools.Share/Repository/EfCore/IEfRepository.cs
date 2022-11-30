@@ -7,14 +7,15 @@ namespace Caty.Tools.Share.Repository.EfCore
     /// 通用数据处理
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IEfRepository<T, K> where T : Entity<K>, new()
+    /// <typeparam name="TK"></typeparam>
+    public interface IEfRepository<T, TK> where T : Entity<TK>, new()
     {
         /// <summary>
         /// 获取指定对像通过指定的唯一主键（如表中有多个唯一主键，请在实体设置中设置）
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        ValueTask<T?> FindById(K id);
+        ValueTask<T?> FindById(TK id);
         /// <summary>
         /// 插入指定数据到数据库
         /// </summary>
@@ -29,9 +30,9 @@ namespace Caty.Tools.Share.Repository.EfCore
         /// <summary>
         /// 从数据库中删除指定条件的数据
         /// </summary>
-        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="TK"></typeparam>
         /// <param name="id"></param>
-        void Delete(K id);
+        void Delete(TK id);
         /// <summary>
         /// 根据条件查找指定数据
         /// </summary>
@@ -100,7 +101,7 @@ namespace Caty.Tools.Share.Repository.EfCore
         /// <summary>
         /// 从数据库中删除指定条件的数据
         /// </summary>
-        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="TK"></typeparam>
         /// <param name="list"></param>
         void Delete(IEnumerable<T> list);
     }

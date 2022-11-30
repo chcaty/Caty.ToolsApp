@@ -8,8 +8,8 @@ namespace Caty.Tools.Share.Repository.EfCore
     /// ef core 通用数据存储规范实例
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <typeparam name="K"></typeparam>
-    public class EfRepository<T, K> : IEfRepository<T, K> where T : Entity<K>, new()
+    /// <typeparam name="TK"></typeparam>
+    public class EfRepository<T, TK> : IEfRepository<T, TK> where T : Entity<TK>, new()
     {
         /// <summary>
         /// 数据集
@@ -34,10 +34,10 @@ namespace Caty.Tools.Share.Repository.EfCore
         /// <summary>
         /// 获取指定对像通过指定的唯一主键（如表中有多个唯一主键，请在实体设置中设置）
         /// </summary>
-        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="TK"></typeparam>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual ValueTask<T?> FindById(K id)
+        public virtual ValueTask<T?> FindById(TK id)
         {
             _table.AsNoTracking();
             return _table.FindAsync(id);
@@ -115,9 +115,9 @@ namespace Caty.Tools.Share.Repository.EfCore
         /// <summary>
         /// 删除指定唯一主键对应的值
         /// </summary>
-        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="TK"></typeparam>
         /// <param name="id"></param>
-        public virtual void Delete(K id)
+        public virtual void Delete(TK id)
         {
             _table.AsNoTracking();
             var existing = _table.Find(id);
