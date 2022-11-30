@@ -1,4 +1,4 @@
-﻿namespace Caty.Tools.UxForm
+﻿namespace Caty.Tools.UxForm.Forms
 {
     partial class FrmDialog
     {

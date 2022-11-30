@@ -1,6 +1,6 @@
 ﻿using Caty.Tools.Model.Rss;
 using Caty.Tools.Service.Rss;
-using Caty.Tools.UxForm;
+using Caty.Tools.UxForm.Forms;
 
 namespace Caty.Tools.WinForm.UxForm;
 

@@ -28,39 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panel_left = new System.Windows.Forms.Panel();
+            this.spc_content = new System.Windows.Forms.SplitContainer();
             this.chromiumWebBrowser1 = new CefSharp.WinForms.ChromiumWebBrowser();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.panel_button = new System.Windows.Forms.Panel();
+            this.panel_source = new System.Windows.Forms.Panel();
+            this.btn_add = new System.Windows.Forms.Button();
+            this.btn_edit = new System.Windows.Forms.Button();
+            this.btn_read = new System.Windows.Forms.Button();
+            this.panel_left.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spc_content)).BeginInit();
+            this.spc_content.Panel2.SuspendLayout();
+            this.spc_content.SuspendLayout();
+            this.panel_button.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // panel_left
             // 
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(144, 721);
-            this.panel1.TabIndex = 0;
+            this.panel_left.Controls.Add(this.panel_source);
+            this.panel_left.Controls.Add(this.panel_button);
+            this.panel_left.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel_left.Location = new System.Drawing.Point(0, 0);
+            this.panel_left.Name = "panel_left";
+            this.panel_left.Size = new System.Drawing.Size(150, 721);
+            this.panel_left.TabIndex = 0;
             // 
-            // splitContainer1
+            // spc_content
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(144, 0);
-            this.splitContainer1.Name = "splitContainer1";
+            this.spc_content.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.spc_content.Location = new System.Drawing.Point(150, 0);
+            this.spc_content.Name = "spc_content";
             // 
-            // splitContainer1.Panel2
+            // spc_content.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.chromiumWebBrowser1);
-            this.splitContainer1.Size = new System.Drawing.Size(839, 721);
-            this.splitContainer1.SplitterDistance = 279;
-            this.splitContainer1.TabIndex = 1;
+            this.spc_content.Panel2.Controls.Add(this.chromiumWebBrowser1);
+            this.spc_content.Size = new System.Drawing.Size(833, 721);
+            this.spc_content.SplitterDistance = 277;
+            this.spc_content.TabIndex = 1;
             // 
             // chromiumWebBrowser1
             // 
@@ -68,54 +72,97 @@
             this.chromiumWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chromiumWebBrowser1.Location = new System.Drawing.Point(0, 0);
             this.chromiumWebBrowser1.Name = "chromiumWebBrowser1";
-            this.chromiumWebBrowser1.Size = new System.Drawing.Size(556, 721);
+            this.chromiumWebBrowser1.Size = new System.Drawing.Size(552, 721);
             this.chromiumWebBrowser1.TabIndex = 0;
             this.chromiumWebBrowser1.Text = "chromiumWebBrowser1";
             // 
-            // button1
+            // panel_button
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Location = new System.Drawing.Point(0, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(144, 54);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.panel_button.Controls.Add(this.btn_read);
+            this.panel_button.Controls.Add(this.btn_edit);
+            this.panel_button.Controls.Add(this.btn_add);
+            this.panel_button.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel_button.Location = new System.Drawing.Point(0, 671);
+            this.panel_button.Name = "panel_button";
+            this.panel_button.Size = new System.Drawing.Size(150, 50);
+            this.panel_button.TabIndex = 0;
             // 
-            // button2
+            // panel_source
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button2.Location = new System.Drawing.Point(0, 54);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(144, 54);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.panel_source.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_source.Location = new System.Drawing.Point(0, 0);
+            this.panel_source.Name = "panel_source";
+            this.panel_source.Size = new System.Drawing.Size(150, 671);
+            this.panel_source.TabIndex = 0;
+            // 
+            // btn_add
+            // 
+            this.btn_add.BackColor = System.Drawing.Color.Transparent;
+            this.btn_add.BackgroundImage = global::Caty.Tools.WinForm.Properties.Resources.increase;
+            this.btn_add.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_add.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btn_add.FlatAppearance.BorderSize = 0;
+            this.btn_add.Location = new System.Drawing.Point(0, 0);
+            this.btn_add.Name = "btn_add";
+            this.btn_add.Size = new System.Drawing.Size(50, 50);
+            this.btn_add.TabIndex = 0;
+            this.btn_add.UseVisualStyleBackColor = false;
+            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
+            // 
+            // btn_edit
+            // 
+            this.btn_edit.BackColor = System.Drawing.Color.Transparent;
+            this.btn_edit.BackgroundImage = global::Caty.Tools.WinForm.Properties.Resources.edit;
+            this.btn_edit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_edit.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btn_edit.FlatAppearance.BorderSize = 0;
+            this.btn_edit.Location = new System.Drawing.Point(50, 0);
+            this.btn_edit.Name = "btn_edit";
+            this.btn_edit.Size = new System.Drawing.Size(50, 50);
+            this.btn_edit.TabIndex = 1;
+            this.btn_edit.UseVisualStyleBackColor = false;
+            this.btn_edit.Click += new System.EventHandler(this.btn_edit_Click);
+            // 
+            // btn_read
+            // 
+            this.btn_read.BackColor = System.Drawing.Color.Transparent;
+            this.btn_read.BackgroundImage = global::Caty.Tools.WinForm.Properties.Resources.selection;
+            this.btn_read.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_read.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_read.FlatAppearance.BorderSize = 0;
+            this.btn_read.Location = new System.Drawing.Point(100, 0);
+            this.btn_read.Name = "btn_read";
+            this.btn_read.Size = new System.Drawing.Size(50, 50);
+            this.btn_read.TabIndex = 2;
+            this.btn_read.UseVisualStyleBackColor = false;
+            this.btn_read.Click += new System.EventHandler(this.btn_read_Click);
             // 
             // RssShowControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.spc_content);
+            this.Controls.Add(this.panel_left);
             this.Name = "RssShowControl";
             this.Size = new System.Drawing.Size(983, 721);
-            this.panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.panel_left.ResumeLayout(false);
+            this.spc_content.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.spc_content)).EndInit();
+            this.spc_content.ResumeLayout(false);
+            this.panel_button.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Panel panel1;
-        private Button button2;
-        private Button button1;
-        private SplitContainer splitContainer1;
+        private Panel panel_left;
+        private SplitContainer spc_content;
         private CefSharp.WinForms.ChromiumWebBrowser chromiumWebBrowser1;
+        private Panel panel_source;
+        private Panel panel_button;
+        private Button btn_read;
+        private Button btn_edit;
+        private Button btn_add;
     }
 }

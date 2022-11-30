@@ -1,4 +1,4 @@
-﻿using Caty.Tools.UxForm;
+﻿using Caty.Tools.UxForm.Forms;
 
 namespace Caty.Tools.WinForm.UxForm;
 
