@@ -35,6 +35,24 @@ namespace Caty.Tools.UxForm.Helpers
         }
 
         /// <summary>
+        /// 功能描述:获取字符串宽度
+        /// </summary>
+        /// <param name="strSource">strSource</param>
+        /// <param name="g">g</param>
+        /// <param name="font">font</param>
+        /// <returns>返回值</returns>
+        public static int GetStringWidth(
+            string strSource,
+            System.Drawing.Graphics g,
+            System.Drawing.Font font)
+        {
+            var strs = strSource.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var fltWidth = strs.Select(item => g.MeasureString(strSource.Replace(" ", "A"), font)).Select(sizeF => sizeF.Width).Prepend(0).Max();
+
+            return (int)fltWidth;
+        }
+
+        /// <summary>
         /// Handles the Disposed event of the control control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
