@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Caty.Tools.UxForm;
+namespace Caty.Tools.UxForm.Forms;
 
 public partial class FrmBasic : Form
 {
