@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Caty.Tools.UxForm.Controls
+namespace Caty.Tools.UxForm.Controls.Page
 {
     /// <summary>
     /// Delegate PageControlEventHandler

@@ -1,6 +1,6 @@
-﻿namespace Caty.Tools.UxForm.Controls
+﻿namespace Caty.Tools.UxForm.Controls.Menu
 {
-    partial class UxPageBase
+    partial class UxMenu
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.SuspendLayout();
             // 
-            // UCPagerControlBase
+            // UxMenu
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Name = "UCPagerControlBase";
-            this.Size = new System.Drawing.Size(304, 58);
-            this.Load += new System.EventHandler(this.UxPageBase_Load);
+            this.AutoScroll = true;
+            this.BackColor =
+                System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(30)))), ((int)(((byte)(39)))));
+            this.Name = "UxMenu";
+            this.Size = new System.Drawing.Size(204, 468);
             this.ResumeLayout(false);
         }
 
