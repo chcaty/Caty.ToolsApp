@@ -50,16 +50,16 @@ public partial class UxMenu : UserControl
     /// </summary>
     public Dictionary<string, object> ChildrenItemStyles { get; set; }
 
-    private List<MenuItemEntity> m_dataSource;
+    private List<MenuItemEntity> _dataSource;
     /// <summary>
     /// 数据源
     /// </summary>
     public List<MenuItemEntity> DataSource
     {
-        get => m_dataSource;
+        get => _dataSource;
         set
         {
-            m_dataSource = value;
+            _dataSource = value;
             ReloadItems();
         }
     }
@@ -74,10 +74,10 @@ public partial class UxMenu : UserControl
     /// </summary>
     public MenuStyle MenuStyle { get; set; } = MenuStyle.Fill;
 
-    private List<Control> m_lstParentItems = new();
-    private IMenuItem m_selectParentItem = null;
-    private IMenuItem m_selectChildrenItem = null;
-    private Panel m_panChildren = null;
+    private List<Control> _parentItems = new();
+    private IMenuItem _selectParentItem = null;
+    private IMenuItem _selectChildrenItem = null;
+    private Panel _panChildren = null;
 
     private void ReloadItems()
     {
@@ -85,10 +85,10 @@ public partial class UxMenu : UserControl
         {
             ControlHelper.FreezeControl(this, true);
             Controls.Clear();
-            m_lstParentItems.Clear();
-            if (m_dataSource is { Count: > 0 })
+            _parentItems.Clear();
+            if (_dataSource is { Count: > 0 })
             {
-                foreach (var parent in m_dataSource)
+                foreach (var parent in _dataSource)
                 {
                     var parentItem = (IMenuItem)Activator.CreateInstance(_parentItemType);
                     parentItem.DataSource = parent;
@@ -99,31 +99,31 @@ public partial class UxMenu : UserControl
                     c.Dock = DockStyle.Top;
                     Controls.Add(c);
                     Controls.SetChildIndex(c, 0);
-                    m_lstParentItems.Add(c);
+                    _parentItems.Add(c);
                 }
             }
-            m_panChildren = new Panel();
+            _panChildren = new Panel();
             if (MenuStyle == MenuStyle.Fill)
             {
-                m_panChildren.Dock = DockStyle.Fill;
-                m_panChildren.Height = 0;
+                _panChildren.Dock = DockStyle.Fill;
+                _panChildren.Height = 0;
             }
             else
             {
-                m_panChildren.Dock = DockStyle.Top;
-                m_panChildren.Height = 0;
+                _panChildren.Dock = DockStyle.Top;
+                _panChildren.Height = 0;
             }
-            m_panChildren.AutoScroll = true;
-            Controls.Add(m_panChildren);
+            _panChildren.AutoScroll = true;
+            Controls.Add(_panChildren);
         }
         finally
         {
             ControlHelper.FreezeControl(this, false);
         }
 
-        if (IsShowFirstItem && m_lstParentItems is { Count: > 0 })
+        if (IsShowFirstItem && _parentItems is { Count: > 0 })
         {
-            parentItem_SelectedItem(m_lstParentItems[0], null);
+            parentItem_SelectedItem(_parentItems[0], null);
         }
     }
 
@@ -131,35 +131,35 @@ public partial class UxMenu : UserControl
     {
         FindForm().ActiveControl = this;
         var item = sender as IMenuItem;
-        if (m_lstParentItems.Contains(sender as Control))
+        if (_parentItems.Contains(sender as Control))
         {
-            if (m_selectParentItem != item)
+            if (_selectParentItem != item)
             {
-                if (m_selectParentItem != null)
+                if (_selectParentItem != null)
                 {
-                    m_selectParentItem.SetSelectedStyle(false);
+                    _selectParentItem.SetSelectedStyle(false);
                 }
-                m_selectParentItem = item;
-                m_selectParentItem.SetSelectedStyle(true);
-                SetChildrenControl(m_selectParentItem);
+                _selectParentItem = item;
+                _selectParentItem.SetSelectedStyle(true);
+                SetChildrenControl(_selectParentItem);
             }
             else
             {
-                m_selectParentItem.SetSelectedStyle(false);
-                m_selectParentItem = null;
-                SetChildrenControl(m_selectParentItem, false);
+                _selectParentItem.SetSelectedStyle(false);
+                _selectParentItem = null;
+                SetChildrenControl(_selectParentItem, false);
             }
         }
-        else if (m_panChildren.Controls.Contains(sender as Control))
+        else if (_panChildren.Controls.Contains(sender as Control))
         {
-            if (m_selectChildrenItem != item)
+            if (_selectChildrenItem != item)
             {
-                if (m_selectChildrenItem != null)
+                if (_selectChildrenItem != null)
                 {
-                    m_selectChildrenItem.SetSelectedStyle(false);
+                    _selectChildrenItem.SetSelectedStyle(false);
                 }
-                m_selectChildrenItem = item;
-                m_selectChildrenItem.SetSelectedStyle(true);
+                _selectChildrenItem = item;
+                _selectChildrenItem.SetSelectedStyle(true);
             }
         }
         if (SelectedItem != null)
@@ -178,20 +178,20 @@ public partial class UxMenu : UserControl
                 if (blnChildren)
                 {
                     var cMenu = menuitem as Control;
-                    var index = m_lstParentItems.IndexOf(cMenu);
+                    var index = _parentItems.IndexOf(cMenu);
                     for (var i = 0; i <= index; i++)
                     {
-                        m_lstParentItems[i].Dock = DockStyle.Top;
-                        Controls.SetChildIndex(m_lstParentItems[i], 1);
+                        _parentItems[i].Dock = DockStyle.Top;
+                        Controls.SetChildIndex(_parentItems[i], 1);
                     }
 
-                    for (var i = index + 1; i < m_lstParentItems.Count; i++)
+                    for (var i = index + 1; i < _parentItems.Count; i++)
                     {
-                        m_lstParentItems[i].Dock = DockStyle.Bottom;
-                        Controls.SetChildIndex(m_lstParentItems[i], m_lstParentItems.Count);
+                        _parentItems[i].Dock = DockStyle.Bottom;
+                        Controls.SetChildIndex(_parentItems[i], _parentItems.Count);
                     }
 
-                    m_panChildren.Controls.Clear();
+                    _panChildren.Controls.Clear();
                     var intItemHeight = 0;
                     foreach (var item in menuitem.DataSource.Childrens)
                     {
@@ -204,15 +204,15 @@ public partial class UxMenu : UserControl
                         if (intItemHeight == 0)
                             intItemHeight = c.Height;
                         c.Dock = DockStyle.Top;
-                        m_panChildren.Controls.Add(c);
-                        m_panChildren.Controls.SetChildIndex(c, 0);
+                        _panChildren.Controls.Add(c);
+                        _panChildren.Controls.SetChildIndex(c, 0);
                     }
                 }
 
                 else
                 {
-                    m_panChildren.Controls.Clear();
-                    foreach (var item in m_lstParentItems)
+                    _panChildren.Controls.Clear();
+                    foreach (var item in _parentItems)
                     {
                         item.Dock = DockStyle.Top;
                         Controls.SetChildIndex(item, 1);
@@ -224,9 +224,9 @@ public partial class UxMenu : UserControl
                 if (blnChildren)
                 {
                     var cMenu = menuitem as Control;
-                    var index = m_lstParentItems.IndexOf(cMenu);
-                    Controls.SetChildIndex(m_panChildren, m_lstParentItems.Count - index - 1);
-                    m_panChildren.Controls.Clear();
+                    var index = _parentItems.IndexOf(cMenu);
+                    Controls.SetChildIndex(_panChildren, _parentItems.Count - index - 1);
+                    _panChildren.Controls.Clear();
                     var intItemHeight = 0;
                     foreach (var item in menuitem.DataSource.Childrens)
                     {
@@ -239,15 +239,15 @@ public partial class UxMenu : UserControl
                         if (intItemHeight == 0)
                             intItemHeight = c.Height;
                         c.Dock = DockStyle.Top;
-                        m_panChildren.Controls.Add(c);
-                        m_panChildren.Controls.SetChildIndex(c, 0);
+                        _panChildren.Controls.Add(c);
+                        _panChildren.Controls.SetChildIndex(c, 0);
                     }
-                    m_panChildren.Height = menuitem.DataSource.Childrens.Count * intItemHeight;
+                    _panChildren.Height = menuitem.DataSource.Childrens.Count * intItemHeight;
                 }
                 else
                 {
-                    m_panChildren.Controls.Clear();
-                    m_panChildren.Height = 0;
+                    _panChildren.Controls.Clear();
+                    _panChildren.Height = 0;
                 }
             }
 
