@@ -2,7 +2,7 @@
 using Caty.Tools.UxForm.Helpers;
 using Timer = System.Windows.Forms.Timer;
 
-namespace Caty.Tools.UxForm.Controls
+namespace Caty.Tools.UxForm.Controls.List
 {
     [DefaultEvent("ItemClick")]
     public partial class UxList : UserControl

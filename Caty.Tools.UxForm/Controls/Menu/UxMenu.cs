@@ -9,34 +9,34 @@ public partial class UxMenu : UserControl
     /// </summary>
     public event EventHandler SelectedItem;
 
-    private Type m_parentItemType = typeof(UxMenuParentItem);
+    private Type _parentItemType = typeof(UxMenuParentItem);
     /// <summary>
     /// 父类节点类型
     /// </summary>
     public Type ParentItemType
     {
-        get => m_parentItemType;
+        get => _parentItemType;
         set
         {
             if(value ==null)
                 return;
             if(!typeof(IMenuItem).IsAssignableFrom(value) || !value.IsSubclassOf(typeof(Control)))
                 throw new Exception("节点控件没有实现IMenuItem接口");
-            m_parentItemType = value;
+            _parentItemType = value;
         }
     }
 
-    private Type m_childrenItemType = typeof(UxMenuChildrenItem);
+    private Type _childrenItemType = typeof(UxMenuChildrenItem);
     public Type ChildrenItemType
     {
-        get => m_childrenItemType;
+        get => _childrenItemType;
         set
         {
             if (value == null)
                 return;
             if (!typeof(IMenuItem).IsAssignableFrom(value) || !value.IsSubclassOf(typeof(Control)))
                 throw new Exception("节点控件没有实现IMenuItem接口");
-            m_childrenItemType = value;
+            _childrenItemType = value;
         }
     }
 
@@ -75,7 +75,6 @@ public partial class UxMenu : UserControl
     public MenuStyle MenuStyle { get; set; } = MenuStyle.Fill;
 
     private List<Control> m_lstParentItems = new();
-
     private IMenuItem m_selectParentItem = null;
     private IMenuItem m_selectChildrenItem = null;
     private Panel m_panChildren = null;
@@ -85,13 +84,13 @@ public partial class UxMenu : UserControl
         try
         {
             ControlHelper.FreezeControl(this, true);
-            this.Controls.Clear();
+            Controls.Clear();
             m_lstParentItems.Clear();
             if (m_dataSource is { Count: > 0 })
             {
                 foreach (var parent in m_dataSource)
                 {
-                    var parentItem = (IMenuItem)Activator.CreateInstance(m_parentItemType);
+                    var parentItem = (IMenuItem)Activator.CreateInstance(_parentItemType);
                     parentItem.DataSource = parent;
                     if (ParentItemStyles != null)
                         parentItem.SetStyle(ParentItemStyles);
@@ -196,7 +195,7 @@ public partial class UxMenu : UserControl
                     var intItemHeight = 0;
                     foreach (var item in menuitem.DataSource.Childrens)
                     {
-                        var parentItem = (IMenuItem)Activator.CreateInstance(m_childrenItemType);
+                        var parentItem = (IMenuItem)Activator.CreateInstance(_childrenItemType);
                         parentItem.DataSource = item;
                         if (ChildrenItemStyles != null)
                             parentItem.SetStyle(ChildrenItemStyles);
@@ -228,22 +227,22 @@ public partial class UxMenu : UserControl
                     var index = m_lstParentItems.IndexOf(cMenu);
                     Controls.SetChildIndex(m_panChildren, m_lstParentItems.Count - index - 1);
                     m_panChildren.Controls.Clear();
-                    var intItemHeigth = 0;
+                    var intItemHeight = 0;
                     foreach (var item in menuitem.DataSource.Childrens)
                     {
-                        var parentItem = (IMenuItem)Activator.CreateInstance(m_childrenItemType);
+                        var parentItem = (IMenuItem)Activator.CreateInstance(_childrenItemType);
                         parentItem.DataSource = item;
                         if (ChildrenItemStyles != null)
                             parentItem.SetStyle(ChildrenItemStyles);
                         parentItem.SelectedItem += parentItem_SelectedItem;
                         var c = parentItem as Control;
-                        if (intItemHeigth == 0)
-                            intItemHeigth = c.Height;
+                        if (intItemHeight == 0)
+                            intItemHeight = c.Height;
                         c.Dock = DockStyle.Top;
                         m_panChildren.Controls.Add(c);
                         m_panChildren.Controls.SetChildIndex(c, 0);
                     }
-                    m_panChildren.Height = menuitem.DataSource.Childrens.Count * intItemHeigth;
+                    m_panChildren.Height = menuitem.DataSource.Childrens.Count * intItemHeight;
                 }
                 else
                 {

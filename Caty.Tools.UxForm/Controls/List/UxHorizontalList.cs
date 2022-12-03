@@ -1,6 +1,6 @@
 ﻿using Caty.Tools.UxForm.Helpers;
 
-namespace Caty.Tools.UxForm.Controls;
+namespace Caty.Tools.UxForm.Controls.List;
 
 public partial class UxHorizontalList : UserControl
 {

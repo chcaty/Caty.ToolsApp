@@ -1,4 +1,4 @@
-﻿namespace Caty.Tools.UxForm.Controls
+﻿namespace Caty.Tools.UxForm.Controls.List
 {
     partial class UxList
     {
