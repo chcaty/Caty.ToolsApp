@@ -72,7 +72,7 @@ public partial class UxTreeView : TreeView
     {
         HideSelection = false;
         DrawMode = TreeViewDrawMode.OwnerDrawAll;
-        DrawNode += treeview_DrawNode;
+        DrawNode += TreeView_DrawNode;
         NodeMouseClick += UxTreeView_NodeMouseClick;
         SizeChanged += UxTreeView_SizeChanged;
         AfterSelect += UxTreeView_AfterSelect;
@@ -144,7 +144,7 @@ public partial class UxTreeView : TreeView
         }
     }
 
-    private void treeview_DrawNode(object sender, DrawTreeNodeEventArgs e)
+    private void TreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
     {
         try
         {
@@ -177,7 +177,7 @@ public partial class UxTreeView : TreeView
                     num = (e.Bounds.Height - ImageList.ImageSize.Height) / 2;
                 }
 
-                if ((e.State == TreeNodeStates.Selected || e.State == TreeNodeStates.Focused ||
+                if ((e.State is TreeNodeStates.Selected or TreeNodeStates.Focused ||
                      e.State == (TreeNodeStates.Focused | TreeNodeStates.Selected)) &&
                     (ParentNodeCanSelect || e.Node.Nodes.Count <= 0))
                 {
@@ -203,7 +203,7 @@ public partial class UxTreeView : TreeView
                         num2 = 3;
                     }
 
-                    e.Graphics.DrawImage(base.ImageList.Images[e.Node.ImageIndex],
+                    e.Graphics.DrawImage(ImageList.Images[e.Node.ImageIndex],
                         new Rectangle(new Point(num2, e.Bounds.Y + num), ImageList.ImageSize));
                 }
 
@@ -263,7 +263,7 @@ public partial class UxTreeView : TreeView
                 flag = true;
             }
 
-            SizeF sizeF = graphics.MeasureString("a", font, 100, StringFormat.GenericTypographic);
+            var sizeF = graphics.MeasureString("a", font, 100, StringFormat.GenericTypographic);
 
             if (flag)
             {

@@ -10,32 +10,32 @@ public partial class UxButtonsGroup : UserControl
     /// </summary>
     public event EventHandler SelectedItemChanged;
 
-    private Dictionary<string, string> _mDataSource = new();
+    private Dictionary<string, string> _dataSource = new();
 
     /// <summary>
     /// 数据源
     /// </summary>
     public Dictionary<string, string> DataSource
     {
-        get => _mDataSource;
+        get => _dataSource;
         set
         {
-            _mDataSource = value;
+            _dataSource = value;
             Reload();
         }
     }
 
-    private List<string> _mSelectItem = new();
+    private List<string> _selectItem = new();
 
     /// <summary>
     /// 选中项
     /// </summary>
     public List<string> SelectItem
     {
-        get => _mSelectItem;
+        get => _selectItem;
         set
         {
-            _mSelectItem = value;
+            _selectItem = value;
             SetSelected();
         }
     }
@@ -94,29 +94,29 @@ public partial class UxButtonsGroup : UserControl
     private void btn_BtnClick(object sender, EventArgs e)
     {
         var btn = sender as UxButtonBase;
-        if (btn?.Name != null && _mSelectItem.Contains(btn.Name))
+        if (btn?.Name != null && _selectItem.Contains(btn.Name))
         {
             btn.RectColor = Color.FromArgb(224, 224, 224);
-            _mSelectItem.Remove(btn.Name);
+            _selectItem.Remove(btn.Name);
         }
         else
         {
             if (!IsMultiple)
             {
-                foreach (var item in _mSelectItem)
+                foreach (var item in _selectItem)
                 {
-                    var lst = this.flowLayoutPanel1.Controls.Find(item, false);
+                    var lst = flowLayoutPanel1.Controls.Find(item, false);
                     if (lst.Length != 1) continue;
                     if (lst[0] is UxButtonBase uxButtonBase) uxButtonBase.RectColor = Color.FromArgb(224, 224, 224);
                 }
 
-                _mSelectItem.Clear();
+                _selectItem.Clear();
             }
 
             if (btn != null)
             {
                 btn.RectColor = Color.FromArgb(255, 77, 59);
-                _mSelectItem.Add(btn.Name);
+                _selectItem.Add(btn.Name);
             }
         }
 
@@ -125,13 +125,13 @@ public partial class UxButtonsGroup : UserControl
 
     private void SetSelected()
     {
-        if (_mSelectItem is not { Count: > 0 } || DataSource is not { Count: > 0 }) return;
+        if (_selectItem is not { Count: > 0 } || DataSource is not { Count: > 0 }) return;
         try
         {
             ControlHelper.FreezeControl(flowLayoutPanel1, true);
             if (IsMultiple)
             {
-                foreach (var item in _mSelectItem)
+                foreach (var item in _selectItem)
                 {
                     var lst = flowLayoutPanel1.Controls.Find(item, false);
                     if (lst.Length != 1) continue;
@@ -141,16 +141,16 @@ public partial class UxButtonsGroup : UserControl
             else
             {
                 UxButtonBase? btn = null;
-                foreach (var item in _mSelectItem)
+                foreach (var item in _selectItem)
                 {
-                    var lst = this.flowLayoutPanel1.Controls.Find(item, false);
+                    var lst = flowLayoutPanel1.Controls.Find(item, false);
                     if (lst.Length != 1) continue;
                     btn = lst[0] as UxButtonBase;
                     break;
                 }
 
                 if (btn == null) return;
-                _mSelectItem = new List<string> { btn.Name };
+                _selectItem = new List<string> { btn.Name };
                 btn.RectColor = Color.FromArgb(255, 77, 59);
             }
         }

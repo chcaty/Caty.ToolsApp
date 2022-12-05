@@ -7,14 +7,14 @@ public partial class UxMenuParentItem : UserControl,IMenuItem
 {
 
     public event EventHandler SelectedItem;
-    private MenuItemEntity _mDataSource;
+    private MenuItemEntity _dataSource;
 
     public MenuItemEntity DataSource
     {
-        get => _mDataSource;
+        get => _dataSource;
         set
         {
-            _mDataSource = value;
+            _dataSource = value;
             if (value != null)
             {
                 lblTitle.Text = value.Text;

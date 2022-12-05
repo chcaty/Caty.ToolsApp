@@ -10,7 +10,7 @@ public class ListEntity
     /// 编码，唯一值
     /// </summary>
     /// <value>The identifier.</value>
-    public string ID { get; set; }
+    public string Id { get; set; }
     /// <summary>
     /// 大标题
     /// </summary>

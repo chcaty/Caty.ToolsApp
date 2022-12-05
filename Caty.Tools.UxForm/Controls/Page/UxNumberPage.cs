@@ -139,7 +139,7 @@ public partial class UxNumberPage : UxPageBase
                     lst.Add(-1);
                     lst.Add(PageCount);
                 }
-                else if (this.PageIndex > PageCount - 6)
+                else if (PageIndex > PageCount - 6)
                 {
                     lst.Add(1);
                     lst.Add(-1);
@@ -160,7 +160,7 @@ public partial class UxNumberPage : UxPageBase
                         begin = end - 4;
                         if (PageIndex - begin < 2)
                         {
-                            begin = begin - 1;
+                            begin -= 1;
                         }
                     }
                     else if (end + 1 == PageCount)

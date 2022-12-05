@@ -67,7 +67,7 @@ public partial class UxRadioButton : UserControl
                     _checked ? Properties.Resources.radioButton10 : Properties.Resources.radioButton00;
             }
 
-            setCheck(value);
+            SetCheck(value);
             if (CheckedChangeEvent != null)
             {
                 CheckedChangeEvent(this, null);
@@ -101,7 +101,7 @@ public partial class UxRadioButton : UserControl
         InitializeComponent();
     }
 
-    private void setCheck(bool value)
+    private void SetCheck(bool value)
     {
         if (!value) return;
         if (Parent == null) return;

@@ -6,7 +6,7 @@ namespace Caty.Tools.UxForm.Controls.List;
 [ToolboxItem(false)]
 public partial class UxHorizontalListItem : UserControl
 {
-    public event EventHandler SelectedItem;
+    public event EventHandler? SelectedItem;
     private KeyValuePair<string,string> _dataSource;
 
     public KeyValuePair<string, string> DataSource
@@ -38,10 +38,7 @@ public partial class UxHorizontalListItem : UserControl
 
     private void Item_MouseDown(object sender, MouseEventArgs e)
     {
-        if (SelectedItem != null)
-        {
-            SelectedItem(this, e);
-        }
+        SelectedItem?.Invoke(this, e);
     }
 
     public void SetSelect(bool isSelect)

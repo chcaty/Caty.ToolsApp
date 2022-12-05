@@ -66,7 +66,7 @@ public partial class UxListItem : UserControl
     }
 
     [Description("项选中事件"), Category("自定义")]
-    public event EventHandler ItemClick;
+    public event EventHandler? ItemClick;
 
     /// <summary>
     /// 数据源
@@ -84,10 +84,7 @@ public partial class UxListItem : UserControl
 
     private void item_MouseDown(object sender, MouseEventArgs e)
     {
-        if (ItemClick != null)
-        {
-            ItemClick(this, e);
-        }
+        ItemClick?.Invoke(this, e);
     }
 
     /// <summary>

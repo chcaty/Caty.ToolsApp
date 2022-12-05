@@ -1,20 +1,20 @@
 ﻿using System.ComponentModel;
 
-namespace Caty.Tools.UxForm.Controls.KeyBord;
+namespace Caty.Tools.UxForm.Controls.KeyBoard;
 
 [DefaultEvent("KeyDown")]
-public partial class UxKeyBorderAll : UserControl
+public partial class UxKeyBoardAll : UserControl
 {
-    private KeyBorderCharType _charType = KeyBorderCharType.Char;
+    private KeyBoardCharType _charType = KeyBoardCharType.Char;
 
     [Description("默认显示样式"), Category("自定义")]
-    public KeyBorderCharType CharType
+    public KeyBoardCharType CharType
     {
         get => _charType;
         set
         {
             _charType = value;
-            if (value == KeyBorderCharType.Char)
+            if (value == KeyBoardCharType.Char)
             {
                 if (label37.Text.ToLower() == "abc.")
                 {
@@ -32,25 +32,28 @@ public partial class UxKeyBorderAll : UserControl
     }
 
     [Description("按键点击事件"), Category("自定义")]
-    public event EventHandler KeyClick;
+    public event EventHandler? KeyClick;
 
     [Description("回车点击事件"), Category("自定义")]
-    public event EventHandler EnterClick;
+    public event EventHandler? EnterClick;
 
     [Description("删除点击事件"), Category("自定义")]
-    public event EventHandler BackspaceClick;
+    public event EventHandler? BackspaceClick;
 
     [Description("收起点击事件"), Category("自定义")]
-    public event EventHandler RetractClick;
+    public event EventHandler? RetractClick;
 
-    public UxKeyBorderAll()
+    public UxKeyBoardAll()
     {
         InitializeComponent();
     }
 
     private void KeyDown_MouseDown(object sender, MouseEventArgs e)
     {
-        var lbl = sender as Label;
+        if (sender is not Label lbl)
+        {
+            return;
+        }
         if (string.IsNullOrEmpty(lbl.Text))
         {
             return;
@@ -76,21 +79,18 @@ public partial class UxKeyBorderAll : UserControl
             case "删除":
             {
                 SendKeys.Send("{BACKSPACE}");
-                if (BackspaceClick != null)
-                    BackspaceClick(sender, e);
+                BackspaceClick?.Invoke(sender, e);
                 break;
             }
             case "回车":
             {
                 SendKeys.Send("{ENTER}");
-                if (EnterClick != null)
-                    EnterClick(sender, e);
+                EnterClick?.Invoke(sender, e);
                 break;
             }
             case "收起":
             {
-                if (RetractClick != null)
-                    RetractClick(sender, e);
+                RetractClick?.Invoke(sender, e);
                 break;
             }
             default:
@@ -98,8 +98,7 @@ public partial class UxKeyBorderAll : UserControl
                 break;
         }
 
-        if (KeyClick != null)
-            KeyClick(sender, e);
+        KeyClick?.Invoke(sender, e);
     }
 
     private void ChangeCase(bool bln)
@@ -133,10 +132,4 @@ public partial class UxKeyBorderAll : UserControl
             }
         }
     }
-}
-
-public enum KeyBorderCharType
-{
-    Char = 1,
-    Number = 2
 }

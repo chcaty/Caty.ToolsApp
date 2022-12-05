@@ -1,8 +1,8 @@
-﻿using Caty.Tools.UxForm.Controls.KeyBord;
-using Caty.Tools.UxForm.Helpers;
+﻿using Caty.Tools.UxForm.Helpers;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Caty.Tools.UxForm.Controls.KeyBoard;
 
 namespace Caty.Tools.UxForm.Controls
 {
@@ -185,7 +185,6 @@ namespace Caty.Tools.UxForm.Controls
             txtInput.Location = txtInput.Location with { Y = (Height - txtInput.Height) / 2 };
         }
 
-
         private void txtInput_TextChanged(object sender, EventArgs e)
         {
             if (_mIsShowClearBtn)
@@ -213,7 +212,7 @@ namespace Caty.Tools.UxForm.Controls
         }
 
         private Forms.FrmAnchor _mFrmAnchor;
-        private void btnKeyBord_MouseDown(object sender, MouseEventArgs e)
+        private void btnKeyBoard_MouseDown(object sender, MouseEventArgs e)
         {
             _mIntSelectionStart = txtInput.SelectionStart;
             _mIntSelectionLength = txtInput.SelectionLength;
@@ -226,8 +225,8 @@ namespace Caty.Tools.UxForm.Controls
                     {
                         if (_mFrmAnchor == null)
                         {
-                            var key = new UxKeyBorderAll();
-                            key.CharType = KeyBorderCharType.Char;
+                            var key = new UxKeyBoardAll();
+                            key.CharType = KeyBoardCharType.Char;
                             key.RetractClick += (a, b) =>
                             {
                                 _mFrmAnchor.Hide();
@@ -246,8 +245,8 @@ namespace Caty.Tools.UxForm.Controls
 
                     if (_mFrmAnchor == null)
                     {
-                        var key = new UxKeyBorderAll();
-                        key.CharType = KeyBorderCharType.Number;
+                        var key = new UxKeyBoardAll();
+                        key.CharType = KeyBoardCharType.Number;
                         key.RetractClick += (a, b) =>
                         {
                             _mFrmAnchor.Hide();
@@ -265,7 +264,7 @@ namespace Caty.Tools.UxForm.Controls
                 case KeyBoardType.UxKeyBorderNum:
                     if (_mFrmAnchor == null)
                     {
-                        var key = new UxKeyBorderNum();
+                        var key = new UxKeyBoardNum();
                         _mFrmAnchor = new Forms.FrmAnchor(this, key);
                         _mFrmAnchor.VisibleChanged += (a, b) =>
                         {
@@ -317,7 +316,7 @@ namespace Caty.Tools.UxForm.Controls
                         IsShowRect = true,
                         RectColor = Color.FromArgb(189, 197, 203),
                         Location = new Point(278, 332),
-                        BtnFont = new System.Drawing.Font("微软雅黑", 8),
+                        BtnFont = new Font("微软雅黑", 8),
                         BtnText = "确定"
                     };
                     btnEnter.BtnClick += (a, b) =>
@@ -340,7 +339,7 @@ namespace Caty.Tools.UxForm.Controls
                     throw new ArgumentOutOfRangeException();
             }
             if (!_mFrmAnchor.Visible)
-                _mFrmAnchor.Show(this.FindForm());
+                _mFrmAnchor.Show(FindForm());
             if (KeyboardClick != null)
             {
                 KeyboardClick(sender, e);
@@ -379,7 +378,7 @@ namespace Caty.Tools.UxForm.Controls
                 {
                     _mHandPWin = null;
 
-                    _mHandPWin = Process.Start(this.m_HandExeName);
+                    _mHandPWin = Process.Start(m_HandExeName);
                     _mHandPWin.WaitForInputIdle();
                 }
                 while (_mHandPWin.MainWindowHandle == IntPtr.Zero)

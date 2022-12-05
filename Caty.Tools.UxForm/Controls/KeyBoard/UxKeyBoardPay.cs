@@ -1,24 +1,24 @@
 ﻿using System.ComponentModel;
 
-namespace Caty.Tools.UxForm.Controls.KeyBord
+namespace Caty.Tools.UxForm.Controls.KeyBoard
 {
-    public partial class UxKeyBorderPay : UserControl
+    public partial class UxKeyBoardPay : UserControl
     {
         [Description("数字点击事件"), Category("自定义")]
-        public event EventHandler NumClick;
+        public event EventHandler? NumClick;
 
         [Description("取消点击事件"), Category("自定义")]
-        public event EventHandler CancelClick;
+        public event EventHandler? CancelClick;
 
         [Description("确定点击事件"), Category("自定义")]
-        public event EventHandler OkClick;
+        public event EventHandler? OkClick;
 
         [Description("删除点击事件"), Category("自定义")]
-        public event EventHandler BackspaceClick;
+        public event EventHandler? BackspaceClick;
 
         [Description("金额点击事件"), Category("自定义")]
-        public event EventHandler MoneyClick;
-        public UxKeyBorderPay()
+        public event EventHandler? MoneyClick;
+        public UxKeyBoardPay()
         {
             InitializeComponent();
         }
@@ -178,32 +178,27 @@ namespace Caty.Tools.UxForm.Controls.KeyBord
         }
         private void Num_MouseDown(object sender, MouseEventArgs e)
         {
-            if (NumClick != null)
-                NumClick((sender as Label).Tag, e);
+            NumClick?.Invoke((sender as Label)?.Tag, e);
         }
 
         private void Backspace_MouseDown(object sender, MouseEventArgs e)
         {
-            if (BackspaceClick != null)
-                BackspaceClick((sender as Label).Tag, e);
+            BackspaceClick?.Invoke((sender as Label)?.Tag, e);
         }
 
         private void Cancel_MouseDown(object sender, MouseEventArgs e)
         {
-            if (CancelClick != null)
-                CancelClick((sender as Label).Tag, e);
+            CancelClick?.Invoke((sender as Label)?.Tag, e);
         }
 
         private void OK_MouseDown(object sender, MouseEventArgs e)
         {
-            if (OkClick != null)
-                OkClick((sender as Label).Tag, e);
+            OkClick?.Invoke((sender as Label)?.Tag, e);
         }
 
         private void Money_MouseDown(object sender, MouseEventArgs e)
         {
-            if (MoneyClick != null)
-                MoneyClick((sender as Label).Tag, e);
+            MoneyClick?.Invoke((sender as Label)?.Tag, e);
         }
 
         public void Money1Click()

@@ -6,20 +6,20 @@ public partial class UxHorizontalList : UserControl
 {
     public UxHorizontalListItem SelectedItem { get; set; }
 
-    public event EventHandler SelectedItemEvent;
+    public event EventHandler? SelectedItemEvent;
 
-    private int _mStartItemIndex = 0;
+    private int _startItemIndex;
 
     public bool IsAutoSelectFirst { get; set; } = true;
 
-    private List<KeyValuePair<string, string>> dataSource = null;
+    private List<KeyValuePair<string, string>>? _dataSource;
 
-    public List<KeyValuePair<string, string>> DataSource
+    public List<KeyValuePair<string, string>>? DataSource
     {
-        get => dataSource;
+        get => _dataSource;
         set
         {
-            dataSource = value;
+            _dataSource = value;
             ReloadSource();
         }
     }
@@ -57,7 +57,7 @@ public partial class UxHorizontalList : UserControl
             }
 
             panList.Location = new Point(0, 0);
-            _mStartItemIndex = 0;
+            _startItemIndex = 0;
             panRight.Visible = panList.Width > panMain.Width;
 
             panLeft.Visible = false;
@@ -93,8 +93,7 @@ public partial class UxHorizontalList : UserControl
 
         SelectedItem = item;
         SelectedItem.SetSelect(true);
-        if (SelectedItemEvent != null)
-            SelectedItemEvent(item, null);
+        SelectedItemEvent?.Invoke(item, null);
     }
 
     private void panLeft_MouseDown(object sender, MouseEventArgs e)
@@ -105,17 +104,17 @@ public partial class UxHorizontalList : UserControl
             return;
         }
 
-        for (var i = _mStartItemIndex; i >= 0; i--)
+        for (var i = _startItemIndex; i >= 0; i--)
         {
-            if (panList.Controls[i].Location.X < panList.Controls[_mStartItemIndex].Location.X - panMain.Width)
+            if (panList.Controls[i].Location.X < panList.Controls[_startItemIndex].Location.X - panMain.Width)
             {
-                _mStartItemIndex = i + 1;
+                _startItemIndex = i + 1;
                 break;
             }
 
             if (i == 0)
             {
-                _mStartItemIndex = 0;
+                _startItemIndex = 0;
             }
         }
 
@@ -132,11 +131,11 @@ public partial class UxHorizontalList : UserControl
             return;
         if (panList.Controls.Count <= 0)
             return;
-        for (var i = _mStartItemIndex; i < panList.Controls.Count; i++)
+        for (var i = _startItemIndex; i < panList.Controls.Count; i++)
         {
             if (panList.Location.X + panList.Controls[i].Location.X + panList.Controls[i].Width <=
                 panMain.Width) continue;
-            _mStartItemIndex = i;
+            _startItemIndex = i;
             break;
         }
 
@@ -151,7 +150,7 @@ public partial class UxHorizontalList : UserControl
     {
         if (panList.Controls.Count > 0)
         {
-            panList.Location = new Point(panList.Controls[_mStartItemIndex].Location.X * -1, 0);
+            panList.Location = new Point(panList.Controls[_startItemIndex].Location.X * -1, 0);
         }
     }
 

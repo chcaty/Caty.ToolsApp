@@ -1,6 +1,6 @@
-﻿namespace Caty.Tools.UxForm.Controls.KeyBord
+﻿namespace Caty.Tools.UxForm.Controls.KeyBoard
 {
-    partial class UxKeyBorderAll
+    partial class UxKeyBoardAll
     {
         /// <summary> 
         /// Required designer variable.

@@ -11,7 +11,7 @@
             {
                 if(value <0)
                     return;
-                this._value = value;
+                _value = value;
                 SetValue();
             }
         }

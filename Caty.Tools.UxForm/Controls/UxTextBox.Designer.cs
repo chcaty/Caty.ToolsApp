@@ -99,7 +99,7 @@
             this.btnKeyBord.Size = new System.Drawing.Size(30, 32);
             this.btnKeyBord.TabIndex = 6;
             this.btnKeyBord.Visible = false;
-            this.btnKeyBord.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnKeyBord_MouseDown);
+            this.btnKeyBord.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnKeyBoard_MouseDown);
             // 
             // btnSearch
             // 

@@ -4,7 +4,7 @@ using Caty.Tools.UxForm.Forms;
 
 namespace Caty.Tools.WinForm.UxForm;
 
-public partial class FrmRssConfig : FrmDialog
+public partial class FrmRssConfig : FrmBasicDialog
 {
     private RssSource? _source;
     private readonly bool _isAdd;

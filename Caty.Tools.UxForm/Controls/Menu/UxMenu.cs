@@ -7,13 +7,13 @@ public partial class UxMenu : UserControl
     /// <summary>
     /// 选中项事件
     /// </summary>
-    public event EventHandler SelectedItem;
+    public event EventHandler? SelectedItem;
 
     private Type _parentItemType = typeof(UxMenuParentItem);
     /// <summary>
     /// 父类节点类型
     /// </summary>
-    public Type ParentItemType
+    public Type? ParentItemType
     {
         get => _parentItemType;
         set
@@ -27,7 +27,7 @@ public partial class UxMenu : UserControl
     }
 
     private Type _childrenItemType = typeof(UxMenuChildrenItem);
-    public Type ChildrenItemType
+    public Type? ChildrenItemType
     {
         get => _childrenItemType;
         set
@@ -74,7 +74,7 @@ public partial class UxMenu : UserControl
     /// </summary>
     public MenuStyle MenuStyle { get; set; } = MenuStyle.Fill;
 
-    private List<Control> _parentItems = new();
+    private readonly List<Control> _parentItems = new();
     private IMenuItem _selectParentItem = null;
     private IMenuItem _selectChildrenItem = null;
     private Panel _panChildren = null;
@@ -162,10 +162,8 @@ public partial class UxMenu : UserControl
                 _selectChildrenItem.SetSelectedStyle(true);
             }
         }
-        if (SelectedItem != null)
-        {
-            SelectedItem(sender, e);
-        }
+
+        SelectedItem?.Invoke(sender, e);
     }
 
     private void SetChildrenControl(IMenuItem menuitem, bool blnChildren = true)

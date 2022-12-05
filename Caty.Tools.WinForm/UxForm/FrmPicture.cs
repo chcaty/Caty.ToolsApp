@@ -2,7 +2,7 @@
 
 namespace Caty.Tools.WinForm.UxForm;
 
-public partial class FrmPicture : FrmDialog
+public partial class FrmPicture : FrmBasicDialog
 {
     private readonly Image _image;
     public FrmPicture(Image image, string name)

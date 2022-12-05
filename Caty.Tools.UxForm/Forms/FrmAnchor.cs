@@ -4,7 +4,7 @@ namespace Caty.Tools.UxForm.Forms
 {
     public partial class FrmAnchor : Form, IMessageFilter
     {
-        private bool blnDown = true;
+        private readonly bool _blnDown;
         public FrmAnchor(Control parentControl, Control childControl, Point? deviation = null)
         {
             InitializeComponent();
@@ -19,12 +19,12 @@ namespace Caty.Tools.UxForm.Forms
             if (p.Y + parentControl.Height + childControl.Height > Screen.PrimaryScreen.Bounds.Height)
             {
                 intY = p.Y - childControl.Height - 1;
-                blnDown = false;
+                _blnDown = false;
             }
             else
             {
                 intY = p.Y + parentControl.Height + 1;
-                blnDown = true;
+                _blnDown = true;
             }
 
             if (p.X + childControl.Width > Screen.PrimaryScreen.Bounds.Width)
@@ -57,12 +57,12 @@ namespace Caty.Tools.UxForm.Forms
             if (p.Y + parentControl.Height + size.Height > Screen.PrimaryScreen.Bounds.Height)
             {
                 intY = p.Y - size.Height - 1;
-                blnDown = false;
+                _blnDown = false;
             }
             else
             {
                 intY = p.Y + parentControl.Height + 1;
-                blnDown = true;
+                _blnDown = true;
             }
 
             if (p.X + size.Width > Screen.PrimaryScreen.Bounds.Width)
@@ -140,11 +140,11 @@ namespace Caty.Tools.UxForm.Forms
             if (Visible)
             {
                 ControlHelper.AnimateWindow(Handle, 100,
-                    blnDown ? ControlHelper.AW_VER_POSITIVE : ControlHelper.AW_VER_NEGATIVE);
+                    _blnDown ? ControlHelper.AW_VER_POSITIVE : ControlHelper.AW_VER_NEGATIVE);
             }
             else
             {
-                if (blnDown)
+                if (_blnDown)
                     ControlHelper.AnimateWindow(Handle, 100, ControlHelper.AW_VER_NEGATIVE | ControlHelper.AW_HIDE);
                 else
                 {
@@ -164,6 +164,5 @@ namespace Caty.Tools.UxForm.Forms
                 Hide();
             }
         }
-
     }
 }

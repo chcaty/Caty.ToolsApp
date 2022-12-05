@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace Caty.Tools.UxForm.Controls.KeyBord;
+namespace Caty.Tools.UxForm.Controls.KeyBoard;
 
-public partial class UxKeyBorderNum : UserControl
+public partial class UxKeyBoardNum : UserControl
 {
     /// <summary>
     /// 是否使用自定义的事件来接收按键，当为true时将不再向系统发送按键请求
@@ -11,33 +11,27 @@ public partial class UxKeyBorderNum : UserControl
     public bool UseCustomEvent { get; set; } = false;
 
     [Description("数字点击事件"), Category("自定义")]
-    public event EventHandler NumClick;
+    public event EventHandler? NumClick;
     [Description("删除点击事件"), Category("自定义")]
-    public event EventHandler BackspaceClick;
+    public event EventHandler? BackspaceClick;
     [Description("回车点击事件"), Category("自定义")]
-    public event EventHandler EnterClick;
-    public UxKeyBorderNum()
+    public event EventHandler? EnterClick;
+    public UxKeyBoardNum()
     {
         InitializeComponent();
     }
     private void Num_MouseDown(object sender, MouseEventArgs e)
     {
-        if (NumClick != null)
-        {
-            NumClick(sender, e);
-        }
+        NumClick?.Invoke(sender, e);
         if (UseCustomEvent)
             return;
-        var lbl = sender as Label;
+        if (sender is not Label lbl) return;
         SendKeys.Send(lbl.Tag.ToString());
     }
 
     private void Backspace_MouseDown(object sender, MouseEventArgs e)
     {
-        if (BackspaceClick != null)
-        {
-            BackspaceClick(sender, e);
-        }
+        BackspaceClick?.Invoke(sender, e);
         if (UseCustomEvent)
             return;
         SendKeys.Send("{BACKSPACE}");
@@ -45,10 +39,7 @@ public partial class UxKeyBorderNum : UserControl
 
     private void Enter_MouseDown(object sender, MouseEventArgs e)
     {
-        if (EnterClick != null)
-        {
-            EnterClick(sender, e);
-        }
+        EnterClick?.Invoke(sender, e);
         if (UseCustomEvent)
             return;
         SendKeys.Send("{ENTER}");
