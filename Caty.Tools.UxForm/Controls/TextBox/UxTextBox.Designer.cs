@@ -1,4 +1,4 @@
-﻿namespace Caty.Tools.UxForm.Controls
+﻿namespace Caty.Tools.UxForm.Controls.TextBox
 {
     partial class UxTextBox
     {
@@ -32,7 +32,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources =
                 new System.ComponentModel.ComponentResourceManager(typeof(UxTextBox));
-            this.txtInput = new Caty.Tools.UxForm.Controls.UxTextBoxBase();
+            this.txtInput = new UxTextBoxBase();
             this.imageList1 = new System.Windows.Forms.ImageList();
             this.btnClear = new System.Windows.Forms.Panel();
             this.btnKeyBord = new System.Windows.Forms.Panel();

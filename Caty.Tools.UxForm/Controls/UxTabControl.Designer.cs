@@ -1,6 +1,6 @@
 ﻿namespace Caty.Tools.UxForm.Controls
 {
-    partial class UxTextBoxBase
+    partial class UxTabControl
     {
         /// <summary>
         /// Required designer variable.

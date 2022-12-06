@@ -1,19 +1,17 @@
-﻿using Caty.Tools.UxForm.Helpers;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using Caty.Tools.UxForm.Helpers;
 
-namespace Caty.Tools.UxForm.Controls;
+namespace Caty.Tools.UxForm.Controls.TextBox;
 
-public partial class UxTextBoxBase : TextBox
+public partial class UxTextBoxBase : System.Windows.Forms.TextBox
 {
-    private bool blnFocus;
+    private bool _blnFocus;
 
     private string _promptText = string.Empty;
 
-    private Rectangle _myRectangle = Rectangle.FromLTRB(1, 3, 1000, 3);
-
     private TextInputType _inputType = TextInputType.NotControl;
 
-    private string m_strOldValue = string.Empty;
+    private string _oldValue = string.Empty;
 
     /// <summary>
     /// 水印文字
@@ -89,7 +87,7 @@ public partial class UxTextBoxBase : TextBox
         KeyPress += UxTextBox_KeyPress;
     }
 
-    private void UxTextBox_KeyPress(object sender, KeyPressEventArgs e)
+    private static void UxTextBox_KeyPress(object sender, KeyPressEventArgs e)
     {
         //以下代码  取消按下回车或esc的“叮”声
         if (e.KeyChar == Convert.ToChar(13) || e.KeyChar == Convert.ToChar(27))
@@ -100,14 +98,14 @@ public partial class UxTextBoxBase : TextBox
 
     private void UxTextBox_MouseUp(object sender, MouseEventArgs e)
     {
-        if (!blnFocus) return;
+        if (!_blnFocus) return;
         SelectAll();
-        blnFocus = false;
+        _blnFocus = false;
     }
 
     private void UxTextBox_GotFocus(object sender, EventArgs e)
     {
-        blnFocus = true;
+        _blnFocus = true;
         SelectAll();
     }
 
@@ -115,14 +113,14 @@ public partial class UxTextBoxBase : TextBox
     {
         if (Text == "")
         {
-            m_strOldValue = Text;
+            _oldValue = Text;
         }
-        else if (m_strOldValue != Text)
+        else if (_oldValue != Text)
         {
             if (!ControlHelper.CheckInputType(Text, _inputType, MaxValue, MinValue, DecLength, RegexPattern))
             {
                 var num = SelectionStart;
-                if (m_strOldValue.Length < Text.Length)
+                if (_oldValue.Length < Text.Length)
                 {
                     num--;
                 }
@@ -132,7 +130,7 @@ public partial class UxTextBoxBase : TextBox
                 }
 
                 TextChanged -= TextBoxEx_TextChanged;
-                Text = m_strOldValue;
+                Text = _oldValue;
                 TextChanged += TextBoxEx_TextChanged;
                 if (num < 0)
                 {
@@ -143,7 +141,7 @@ public partial class UxTextBoxBase : TextBox
             }
             else
             {
-                m_strOldValue = Text;
+                _oldValue = Text;
             }
         }
     }

@@ -47,7 +47,7 @@ namespace Caty.Tools.UxForm.Helpers
             System.Drawing.Graphics g,
             System.Drawing.Font font)
         {
-            var strs = strSource.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var strs = strSource.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             var fltWidth = strs.Select(item => g.MeasureString(strSource.Replace(" ", "A"), font)).Select(sizeF => sizeF.Width).Prepend(0).Max();
 
             return (int)fltWidth;

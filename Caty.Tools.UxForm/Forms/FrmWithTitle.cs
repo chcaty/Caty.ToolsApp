@@ -2,8 +2,7 @@
 
 namespace Caty.Tools.UxForm.Forms
 {
-    [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design",
-        typeof(System.ComponentModel.Design.IDesigner))]
+    [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(System.ComponentModel.Design.IDesigner))]
     public partial class FrmWithTitle : FrmBase
     {
         [Description("窗体标题"), Category("自定义")]

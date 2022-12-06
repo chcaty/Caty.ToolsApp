@@ -1,10 +1,10 @@
-﻿using Caty.Tools.UxForm.Helpers;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Caty.Tools.UxForm.Controls.KeyBoard;
+using Caty.Tools.UxForm.Helpers;
 
-namespace Caty.Tools.UxForm.Controls
+namespace Caty.Tools.UxForm.Controls.TextBox
 {
     public partial class UxTextBox : UxControlBase
     {

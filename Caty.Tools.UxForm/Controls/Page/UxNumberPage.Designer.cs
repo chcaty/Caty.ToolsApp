@@ -1,4 +1,6 @@
-﻿namespace Caty.Tools.UxForm.Controls.Page
+﻿using Caty.Tools.UxForm.Controls.TextBox;
+
+namespace Caty.Tools.UxForm.Controls.Page
 {
     partial class UxNumberPage
     {
@@ -45,7 +47,7 @@
             this.p4 = new Caty.Tools.UxForm.Controls.UxButtonBase();
             this.p3 = new Caty.Tools.UxForm.Controls.UxButtonBase();
             this.p2 = new Caty.Tools.UxForm.Controls.UxButtonBase();
-            this.txtPage = new Caty.Tools.UxForm.Controls.UxTextBox();
+            this.txtPage = new UxTextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
