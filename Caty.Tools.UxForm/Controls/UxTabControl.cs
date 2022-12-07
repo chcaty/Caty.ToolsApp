@@ -28,7 +28,7 @@ namespace Caty.Tools.UxForm.Controls
         [DefaultValue(typeof(Color), "White")]
         public override Color BackColor
         {
-            get { return _backColor; }
+            get => _backColor;
             set
             {
                 _backColor = value;
@@ -41,7 +41,7 @@ namespace Caty.Tools.UxForm.Controls
         [Description("TabContorl边框色")]
         public Color BorderColor
         {
-            get { return _borderColor; }
+            get => _borderColor;
             set
             {
                 _borderColor = value;
@@ -49,48 +49,30 @@ namespace Caty.Tools.UxForm.Controls
             }
         }
 
-        private Color _headSelectedBackColor = Color.FromArgb(255, 85, 51);
-
         [DefaultValue(typeof(Color), "255, 85, 51")]
         [Description("TabPage头部选中后的背景颜色")]
-        public Color HeadSelectedBackColor
-        {
-            get { return _headSelectedBackColor; }
-            set { _headSelectedBackColor = value; }
-        }
-
-        private Color _headSelectedBorderColor = Color.FromArgb(232, 232, 232);
+        public Color HeadSelectedBackColor { get; set; } = Color.FromArgb(255, 85, 51);
 
         [DefaultValue(typeof(Color), "232, 232, 232")]
         [Description("TabPage头部选中后的边框颜色")]
-        public Color HeadSelectedBorderColor
-        {
-            get { return _headSelectedBorderColor; }
-            set { _headSelectedBorderColor = value; }
-        }
-
-        private Color _headerBackColor = Color.White;
+        public Color HeadSelectedBorderColor { get; set; } = Color.FromArgb(232, 232, 232);
 
         [DefaultValue(typeof(Color), "White")]
         [Description("TabPage头部默认背景颜色")]
-        public Color HeaderBackColor
-        {
-            get { return _headerBackColor; }
-            set { _headerBackColor = value; }
-        }
+        public Color HeaderBackColor { get; set; } = Color.White;
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
-            if (DesignMode == true)
+            if (DesignMode)
             {
-                LinearGradientBrush backBrush = new LinearGradientBrush(Bounds, SystemColors.ControlLightLight,
+                var backBrush = new LinearGradientBrush(Bounds, SystemColors.ControlLightLight,
                     SystemColors.ControlLight, LinearGradientMode.Vertical);
-                pevent.Graphics.FillRectangle(backBrush, this.Bounds);
+                pevent.Graphics.FillRectangle(backBrush, Bounds);
                 backBrush.Dispose();
             }
             else
             {
-                this.PaintTransparentBackground(pevent.Graphics, this.ClientRectangle);
+                PaintTransparentBackground(pevent.Graphics, ClientRectangle);
             }
         }
 
@@ -99,30 +81,28 @@ namespace Caty.Tools.UxForm.Controls
             if (Parent != null)
             {
                 rect.Offset(Location);
-                PaintEventArgs e = new PaintEventArgs(g, rect);
-                GraphicsState state = g.Save();
+                var e = new PaintEventArgs(g, rect);
+                var state = g.Save();
                 g.SmoothingMode = SmoothingMode.HighSpeed;
                 try
                 {
-                    g.TranslateTransform((float)-this.Location.X, (float)-this.Location.Y);
-                    InvokePaintBackground(this.Parent, e);
+                    g.TranslateTransform(-Location.X, -Location.Y);
+                    InvokePaintBackground(Parent, e);
                     InvokePaint(Parent, e);
                 }
                 finally
                 {
                     g.Restore(state);
-                    rect.Offset(-this.Location.X, -this.Location.Y);
-                    using (SolidBrush brush = new SolidBrush(_backColor))
-                    {
-                        rect.Inflate(1,1);
-                        g.FillRectangle(brush, rect);
-                    }
+                    rect.Offset(-Location.X, -Location.Y);
+                    using var brush = new SolidBrush(_backColor);
+                    rect.Inflate(1,1);
+                    g.FillRectangle(brush, rect);
                 }
             }
             else
             {
-                System.Drawing.Drawing2D.LinearGradientBrush backBrush = new System.Drawing.Drawing2D.LinearGradientBrush(this.Bounds, SystemColors.ControlLightLight, SystemColors.ControlLight, System.Drawing.Drawing2D.LinearGradientMode.Vertical);
-                g.FillRectangle(backBrush, this.Bounds);
+                var backBrush = new LinearGradientBrush(Bounds, SystemColors.ControlLightLight, SystemColors.ControlLight, LinearGradientMode.Vertical);
+                g.FillRectangle(backBrush, Bounds);
                 backBrush.Dispose();
             }
         }
@@ -130,45 +110,43 @@ namespace Caty.Tools.UxForm.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            this.PaintTransparentBackground(e.Graphics,this.ClientRectangle);
-            this.PaintAllTheTabs(e);
-            this.PaintTheTabPageBorder(e);
-            this.PaintTheSelectedTab(e);
+            PaintTransparentBackground(e.Graphics,ClientRectangle);
+            PaintAllTheTabs(e);
+            PaintTheTabPageBorder(e);
+            PaintTheSelectedTab(e);
         }
 
-        private void PaintAllTheTabs(System.Windows.Forms.PaintEventArgs e)
+        private void PaintAllTheTabs(PaintEventArgs e)
         {
-            if (this.TabCount > 0)
+            if (TabCount <= 0) return;
+            for (var i = 0; i < TabCount; i++)
             {
-                for (int i = 0; i < this.TabCount; i++)
-                {
-                    this.PaintTab(e, i);
-                }
+                PaintTab(e, i);
             }
         }
 
         private void PaintTab(PaintEventArgs e, int index)
         {
-            GraphicsPath path = this.GetTabPath(index);
-            this.PaintTabBackground(e.Graphics, index, path);
-            this.PaintTabBorder(e.Graphics, index, path);
-            this.PaintTabText(e.Graphics, index);
-            this.PaintTabImage(e.Graphics, index);
+            var path = GetTabPath(index);
+            PaintTabBackground(e.Graphics, index, path);
+            PaintTabBorder(e.Graphics, index, path);
+            PaintTabText(e.Graphics, index);
+            PaintTabImage(e.Graphics, index);
         }
 
         private void PaintTabBackground(Graphics g, int index, GraphicsPath path)
         {
-            Rectangle rectangle = this.GetTabRect(index);
-            Brush buttonBrush = new LinearGradientBrush(rectangle, _headerBackColor,_headerBackColor, LinearGradientMode.Vertical);
+            var rectangle = GetTabRect(index);
+            Brush buttonBrush = new LinearGradientBrush(rectangle, HeaderBackColor,HeaderBackColor, LinearGradientMode.Vertical);
             g.FillPath(buttonBrush, path);
         }
 
         private void PaintTabBorder(Graphics g, int index, GraphicsPath path)
         {
-            Pen borderPen = new Pen(_borderColor);
-            if (index == this.SelectedIndex)
+            var borderPen = new Pen(_borderColor);
+            if (index == SelectedIndex)
             {
-                borderPen = new Pen(_headSelectedBorderColor);
+                borderPen = new Pen(HeadSelectedBorderColor);
             }
 
             g.DrawPath(borderPen, path);
@@ -177,90 +155,74 @@ namespace Caty.Tools.UxForm.Controls
 
         private void PaintTabImage(Graphics g, int index)
         {
-            Image tabImage = null;
-            if (this.TabPages[index].ImageIndex > -1 && this.ImageList != null)
+            Image? tabImage = null;
+            if (TabPages[index].ImageIndex > -1 && ImageList != null)
             {
-                tabImage = this.ImageList.Images[this.TabPages[index].ImageIndex];
+                tabImage = ImageList.Images[TabPages[index].ImageIndex];
             }
-            else if (this.TabPages[index].ImageKey.Trim().Length > 0 && this.ImageList != null)
+            else if (TabPages[index].ImageKey.Trim().Length > 0 && ImageList != null)
             {
-                tabImage = this.ImageList.Images[this.TabPages[index].ImageKey];
+                tabImage = ImageList.Images[TabPages[index].ImageKey];
             }
 
-            if (tabImage != null)
-            {
-                Rectangle rect  = this.GetTabRect(index);
-                g.DrawImage(tabImage, rect.Right - rect.Height - 4, 4, rect.Height-2, rect.Height -2);
-            }
+            if (tabImage == null) return;
+            var rect  = GetTabRect(index);
+            g.DrawImage(tabImage, rect.Right - rect.Height - 4, 4, rect.Height-2, rect.Height -2);
         }
 
         private void PaintTabText(Graphics g, int index)
         {
-            string tabText = this.TabPages[index].Text;
-            StringFormat format = new StringFormat();
-            format.Alignment = StringAlignment.Near;
-            format.LineAlignment = StringAlignment.Center;
-            format.Trimming = StringTrimming.EllipsisCharacter;
-
-            Brush foreBrush = null;
-
-            if (this.TabPages[index].Enabled == false)
+            var tabText = TabPages[index].Text;
+            var format = new StringFormat
             {
-                foreBrush = SystemBrushes.ControlDark;
-            }
-            else
-            {
-                foreBrush = SystemBrushes.ControlText;
-            }
-
-            Font tabFont = this.Font;
+                Alignment = StringAlignment.Near,
+                LineAlignment = StringAlignment.Center,
+                Trimming = StringTrimming.EllipsisCharacter
+            };
+            var foreBrush = TabPages[index].Enabled == false ? SystemBrushes.ControlDark : SystemBrushes.ControlText;
+            var tabFont = Font;
             if (index == SelectedIndex)
             {
-                if (TabPages[index].Enabled != false)
+                if (TabPages[index].Enabled)
                 {
-                    foreBrush = new SolidBrush(_headSelectedBackColor);
+                    foreBrush = new SolidBrush(HeadSelectedBackColor);
                 }
             }
-            Rectangle rectangle = this.GetTabRect(index);
+            var rectangle = GetTabRect(index);
 
             var txtSize = ControlHelper.GetStringWidth(tabText, g, tabFont);
-            Rectangle rect = new Rectangle(rectangle.Left + (rectangle.Width - txtSize) / 2 - 1, rectangle.Top,
-                rectangle.Width, rectangle.Height);
+            var rect = rectangle with { X = rectangle.Left + (rectangle.Width - txtSize) / 2 - 1, Y = rectangle.Top };
             g.DrawString(tabText, tabFont, foreBrush, rect, format);
         }
 
         private void PaintTheTabPageBorder(PaintEventArgs e)
         {
-            if (this.TabCount > 0)
-            {
-                Rectangle borderRectangle = this.TabPages[0].Bounds;
-                Rectangle rect = new Rectangle(borderRectangle.X - 2, borderRectangle.Y - 1, borderRectangle.Width + 5,
-                    borderRectangle.Height + 2);
-                ControlPaint.DrawBorder(e.Graphics, rect, this.BackColor, ButtonBorderStyle.Solid);
-            }
+            if (TabCount <= 0) return;
+            var borderRectangle = TabPages[0].Bounds;
+            var rect = new Rectangle(borderRectangle.X - 2, borderRectangle.Y - 1, borderRectangle.Width + 5,
+                borderRectangle.Height + 2);
+            ControlPaint.DrawBorder(e.Graphics, rect, BackColor, ButtonBorderStyle.Solid);
         }
 
         private void PaintTheSelectedTab(PaintEventArgs e)
         {
-            if (this.SelectedIndex == -1)
+            if (SelectedIndex == -1)
             {
                 return;
             }
 
-            Rectangle selectedRectangle;
-            int selectedRectRight = 0;
-            selectedRectangle = this.GetTabRect(this.SelectedIndex);
-            selectedRectRight = selectedRectangle.Right;
-            e.Graphics.DrawLine(new Pen(_headSelectedBackColor), selectedRectangle.Left, selectedRectangle.Bottom + 1,
+            var selectedRectangle = GetTabRect(SelectedIndex);
+            var selectedRectRight = selectedRectangle.Right;
+            e.Graphics.DrawLine(new Pen(HeadSelectedBackColor), selectedRectangle.Left, selectedRectangle.Bottom + 1,
                 selectedRectRight, selectedRectangle.Bottom + 1);
         }
 
         private GraphicsPath GetTabPath(int index)
         {
-            GraphicsPath path = new GraphicsPath();
+            GraphicsPath path = new();
             path.Reset();
 
-            Rectangle rectangle = this.GetTabRect(index);
+            var rectangle = GetTabRect(index);
             path.AddLine(rectangle.Left, rectangle.Top, rectangle.Left, rectangle.Bottom + 1);
             path.AddLine(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Top);
             path.AddLine(rectangle.Right, rectangle.Top, rectangle.Right, rectangle.Bottom + 1);
@@ -283,10 +245,10 @@ namespace Caty.Tools.UxForm.Controls
         protected override void OnFontChanged(EventArgs e)
         {
             base.OnFontChanged(e);
-            IntPtr hFont = Font.ToHfont();
-            SendMessage(this.Handle, WM_SETFONT, hFont, (IntPtr)(-1));
-            SendMessage(this.Handle, WM_FONTCHANGE, IntPtr.Zero, IntPtr.Zero);
-            this.UpdateStyles();
+            var hFont = Font.ToHfont();
+            SendMessage(Handle, WM_SETFONT, hFont, (IntPtr)(-1));
+            SendMessage(Handle, WM_FONTCHANGE, IntPtr.Zero, IntPtr.Zero);
+            UpdateStyles();
         }
     }
 }
