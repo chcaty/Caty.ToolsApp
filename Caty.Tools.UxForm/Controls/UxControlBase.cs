@@ -33,7 +33,7 @@ public partial class UxControlBase : UserControl
     /// 边框宽度
     /// </summary>
     [Description("边框宽度"), Category("自定义")]
-    public int RectWidth { get; set; } = 1;
+    public virtual int RectWidth { get; set; } = 1;
 
     /// <summary>
     /// 当使用边框时填充颜色，当值为背景色或透明色或空值则不填充

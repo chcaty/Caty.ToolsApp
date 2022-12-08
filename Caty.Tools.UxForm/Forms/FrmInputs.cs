@@ -10,7 +10,7 @@ public partial class FrmInputs : FrmWithOKCancel1
     private readonly Dictionary<int,string> _inputDictionary = new();
 
     public FrmInputs(string title, string[] inputLabels, Dictionary<string, TextInputType> inputTypeDic = null, 
-        Dictionary<string, string> regexDic = null, Dictionary<string, KeyBoardType> keyBoardDic = null, 
+        Dictionary<string, string?> regexDic = null, Dictionary<string, KeyBoardType> keyBoardDic = null, 
         List<string> inputs = null, Dictionary<string, string> defaultValueDic= null) 
     {
         InitializeComponent();

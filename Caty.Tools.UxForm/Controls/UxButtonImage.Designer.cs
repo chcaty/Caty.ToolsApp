@@ -1,6 +1,6 @@
 ﻿namespace Caty.Tools.UxForm.Controls
 {
-    sealed partial class UxButtonImage
+    partial class UxButtonImage
     {
         /// <summary> 
         /// Required designer variable.

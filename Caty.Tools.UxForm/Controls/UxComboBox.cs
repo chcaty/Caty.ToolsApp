@@ -232,7 +232,7 @@ public partial class UxComboBox : UxControlBase
         TextChangedEvent?.Invoke(this, null);
     }
 
-    private void click_MouseDown(object sender, MouseEventArgs e)
+    protected virtual void click_MouseDown(object sender, MouseEventArgs e)
     {
         if (_frmAnchor == null || _frmAnchor.IsDisposed || _frmAnchor.Visible == false)
         {

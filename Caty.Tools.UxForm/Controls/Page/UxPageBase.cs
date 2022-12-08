@@ -26,6 +26,7 @@ public partial class UxPageBase : UserControl,IPageControl
 
     public virtual int PageCount { get; set; }
     public virtual int PageIndex { get; set; }
+    public PageModel PageModel { get; set; } = PageModel.Source;
 
     public UxPageBase()
     {

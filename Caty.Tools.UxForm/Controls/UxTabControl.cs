@@ -20,6 +20,15 @@ namespace Caty.Tools.UxForm.Controls
             SetStyle(ControlStyles.UserPaint|ControlStyles.DoubleBuffer|ControlStyles.OptimizedDoubleBuffer|ControlStyles.AllPaintingInWmPaint|ControlStyles.ResizeRedraw|ControlStyles.SupportsTransparentBackColor, true);
             UpdateStyles();
         }
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is show close BTN.
+        /// </summary>
+        /// <value><c>true</c> if this instance is show close BTN; otherwise, <c>false</c>.</value>
+        [Description("是否显示关闭按钮"), Category("自定义")]
+        public bool IsShowCloseBtn { get; set; }
+
+        [Description("不可关闭的标签序号列表，下标0"), Category("自定义")]
+        public int[] UnCloseTabIndexList { get; set; }
 
         private Color _backColor = Color.White;
 

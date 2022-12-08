@@ -71,6 +71,26 @@ namespace Caty.Tools.UxForm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static Image caret_down {
+            get {
+                object obj = ResourceManager.GetObject("caret_down", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static Image caret_right {
+            get {
+                object obj = ResourceManager.GetObject("caret_right", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap checkbox0 {

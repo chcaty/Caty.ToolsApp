@@ -124,7 +124,7 @@ namespace Caty.Tools.UxForm.Controls
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private UxTextBoxBase txtInput;
+        public UxTextBoxBase txtInput;
         private System.Windows.Forms.Label lblInput;
     }
 }

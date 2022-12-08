@@ -40,7 +40,7 @@ public partial class UxButtonBase : UxControlBase
 
     private Color _btnForeColor = Color.Black;
     [Description("按钮字体颜色"), Category("自定义")]
-    public Color BtnForeColor
+    public virtual Color BtnForeColor
     {
         get => _btnForeColor;
         set

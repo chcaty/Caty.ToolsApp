@@ -1,4 +1,5 @@
 ﻿using System.Drawing.Drawing2D;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -86,12 +87,12 @@ namespace Caty.Tools.UxForm.Helpers
         /// <param name="strRegexPattern">正则</param>
         /// <returns>返回值</returns>
         public static bool CheckInputType(
-            string strValue,
+            string? strValue,
             TextInputType inputType,
             decimal decMaxValue = default,
             decimal decMinValue = default,
             int intLength = 2,
-            string strRegexPattern = null)
+            string? strRegexPattern = null)
         {
             bool result;
             switch (inputType)
@@ -106,7 +107,7 @@ namespace Caty.Tools.UxForm.Helpers
                         return result;
                     }
 
-                    if (strValue.IndexOf("-") >= 0)
+                    if (strValue.Contains('-'))
                     {
                         result = false;
                         return result;
@@ -170,11 +171,11 @@ namespace Caty.Tools.UxForm.Helpers
             }
             else
             {
-                if (inputType == TextInputType.Number || inputType == TextInputType.UnsignNumber || inputType == TextInputType.PositiveNumber)
+                if (inputType is TextInputType.Number or TextInputType.UnsignNumber or TextInputType.PositiveNumber)
                 {
-                    if (strValue.IndexOf(".") >= 0)
+                    if (strValue.Contains('.'))
                     {
-                        var text = strValue.Substring(strValue.IndexOf("."));
+                        var text = strValue[strValue.IndexOf(".", StringComparison.Ordinal)..];
                         if (text.Length > intLength + 1)
                         {
                             result = false;
@@ -249,6 +250,87 @@ namespace Caty.Tools.UxForm.Helpers
             roundedRect.AddLine(rect.X, rect.Bottom - cornerRadius * 2, rect.X, rect.Y + cornerRadius * 2);
             roundedRect.CloseFigure();
             return roundedRect;
+        }
+
+        /// <summary>
+        /// Gets the colors.
+        /// </summary>
+        /// <value>The colors.</value>
+        public static Color[] Colors { get; private set; }
+
+        static ControlHelper()
+        {
+            var list = new List<Color>
+            {
+                Color.FromArgb(55, 162, 218),
+                Color.FromArgb(50, 197, 233),
+                Color.FromArgb(103, 224, 227),
+                Color.FromArgb(159, 230, 184),
+                Color.FromArgb(255, 219, 92),
+                Color.FromArgb(255, 159, 127),
+                Color.FromArgb(251, 114, 147),
+                Color.FromArgb(224, 98, 174),
+                Color.FromArgb(230, 144, 209),
+                Color.FromArgb(231, 188, 243),
+                Color.FromArgb(157, 150, 245),
+                Color.FromArgb(131, 120, 234),
+                Color.FromArgb(150, 191, 255),
+                Color.FromArgb(243, 67, 54),
+                Color.FromArgb(156, 39, 176),
+                Color.FromArgb(103, 58, 183),
+                Color.FromArgb(63, 81, 181),
+                Color.FromArgb(33, 150, 243),
+                Color.FromArgb(0, 188, 211),
+                Color.FromArgb(3, 169, 244),
+                Color.FromArgb(0, 150, 136),
+                Color.FromArgb(139, 195, 74),
+                Color.FromArgb(76, 175, 80),
+                Color.FromArgb(204, 219, 57),
+                Color.FromArgb(233, 30, 99),
+                Color.FromArgb(254, 234, 59),
+                Color.FromArgb(254, 192, 7),
+                Color.FromArgb(254, 152, 0),
+                Color.FromArgb(255, 87, 34),
+                Color.FromArgb(121, 85, 72),
+                Color.FromArgb(158, 158, 158),
+                Color.FromArgb(96, 125, 139),
+                Color.FromArgb(252, 117, 85),
+                Color.FromArgb(172, 113, 191),
+                Color.FromArgb(115, 131, 253),
+                Color.FromArgb(78, 206, 255),
+                Color.FromArgb(121, 195, 82),
+                Color.FromArgb(255, 163, 28),
+                Color.FromArgb(255, 185, 15),
+                Color.FromArgb(255, 181, 197),
+                Color.FromArgb(255, 110, 180),
+                Color.FromArgb(255, 69, 0),
+                Color.FromArgb(255, 48, 48),
+                Color.FromArgb(154, 205, 50),
+                Color.FromArgb(155, 205, 155),
+                Color.FromArgb(154, 50, 205),
+                Color.FromArgb(131, 111, 255),
+                Color.FromArgb(124, 205, 124),
+                Color.FromArgb(0, 206, 209),
+                Color.FromArgb(0, 178, 238),
+                Color.FromArgb(56, 142, 142)
+            };
+
+            var typeFromHandle = typeof(Color);
+            var properties = typeFromHandle.GetProperties();
+            list.AddRange(from propertyInfo in properties where propertyInfo.PropertyType == typeof(Color) && (propertyInfo.Name.StartsWith("Dark") || propertyInfo.Name.StartsWith("Medium")) select propertyInfo.GetValue(null, null) into value select (Color)value);
+            Colors = list.ToArray();
+        }
+
+        /// <summary>
+        /// 相对于屏幕显示的位置
+        /// </summary>
+        /// <param name="screen">窗体需要显示的屏幕</param>
+        /// <param name="left">left</param>
+        /// <param name="top">top</param>
+        /// <returns></returns>
+        public static Point GetScreenLocation(Screen screen, int left, int top)
+        {
+            return new Point(screen.Bounds.Left + left, screen.Bounds.Top + top);
         }
     }
 }

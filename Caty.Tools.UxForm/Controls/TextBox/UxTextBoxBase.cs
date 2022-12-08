@@ -59,7 +59,7 @@ public partial class UxTextBoxBase : System.Windows.Forms.TextBox
     /// 获取或设置一个值，该值指示当输入类型InputType=Regex时，使用的正则表达式。
     /// </summary>
     [Description("获取或设置一个值，该值指示当输入类型InputType=Regex时，使用的正则表达式。")]
-    public string RegexPattern { get; set; } = "";
+    public string? RegexPattern { get; set; } = "";
 
     /// <summary>
     /// 当InputType为数字类型时，能输入的最大值

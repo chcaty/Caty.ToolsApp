@@ -32,7 +32,7 @@
             this.panColumns = new System.Windows.Forms.TableLayoutPanel();
             this.uxSplitLineH1 = new Caty.Tools.UxForm.Controls.UxSplitLineH();
             this.panRow = new System.Windows.Forms.Panel();
-            this.panPage = new System.Windows.Forms.Panel();
+            this.panHeadLeft = new System.Windows.Forms.Panel();
             this.panHead.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,6 +40,7 @@
             // 
             this.panHead.Controls.Add(this.panColumns);
             this.panHead.Controls.Add(this.uxSplitLineH1);
+            this.panHead.Controls.Add(this.panHeadLeft);
             this.panHead.Dock = System.Windows.Forms.DockStyle.Top;
             this.panHead.Location = new System.Drawing.Point(0, 0);
             this.panHead.Name = "panHead";
@@ -78,25 +79,22 @@
             this.panRow.Size = new System.Drawing.Size(1061, 475);
             this.panRow.TabIndex = 1;
             // 
-            // panPage
+            // panHeadLeft
             // 
-            this.panPage.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panPage.Location = new System.Drawing.Point(0, 515);
-            this.panPage.Name = "panPage";
-            this.panPage.Size = new System.Drawing.Size(1061, 50);
-            this.panPage.TabIndex = 0;
-            this.panPage.Visible = false;
+            this.panHeadLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panHeadLeft.Location = new System.Drawing.Point(0, 0);
+            this.panHeadLeft.Name = "panHeadLeft";
+            this.panHeadLeft.Size = new System.Drawing.Size(0, 39);
+            this.panHeadLeft.TabIndex = 2;
             // 
             // UCDataGridView
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.panRow);
-            this.Controls.Add(this.panPage);
             this.Controls.Add(this.panHead);
             this.Name = "UCDataGridView";
-            this.Size = new System.Drawing.Size(1061, 565);
-            this.Resize += new System.EventHandler(this.UxDataGridView_Resize);
+            this.Size = new System.Drawing.Size(1061, 565); 
             this.panHead.ResumeLayout(false);
             this.ResumeLayout(false);
         }
@@ -106,7 +104,7 @@
         private System.Windows.Forms.Panel panHead;
         private System.Windows.Forms.TableLayoutPanel panColumns;
         private UxSplitLineH uxSplitLineH1;
+        private System.Windows.Forms.Panel panHeadLeft;
         private System.Windows.Forms.Panel panRow;
-        private System.Windows.Forms.Panel panPage;
     }
 }

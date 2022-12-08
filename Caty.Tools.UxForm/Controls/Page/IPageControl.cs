@@ -62,5 +62,6 @@
         /// 当前页
         /// </summary>
         int PageIndex { get; set; }
+        PageModel PageModel { get; set; }
     }
 }

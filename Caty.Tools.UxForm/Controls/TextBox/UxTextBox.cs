@@ -98,7 +98,7 @@ namespace Caty.Tools.UxForm.Controls.TextBox
         /// 获取或设置一个值，该值指示当输入类型InputType=Regex时，使用的正则表达式。
         /// </summary>
         [Description("获取或设置一个值，该值指示当输入类型InputType=Regex时，使用的正则表达式。")]
-        public string RegexPattern
+        public string? RegexPattern
         {
             get => txtInput.RegexPattern;
             set => txtInput.RegexPattern = value;
@@ -148,6 +148,13 @@ namespace Caty.Tools.UxForm.Controls.TextBox
             get => txtInput.Text;
             set => txtInput.Text = value;
         }
+
+        /// <summary>
+        /// Gets or sets the color of the focus border.
+        /// </summary>
+        /// <value>The color of the focus border.</value>
+        [Description("获取焦点时边框颜色，当IsFocusColor=true有效"), Category("自定义")]
+        public Color FocusBorderColor { get; set; } = Color.FromArgb(255, 77, 59);
 
         [Description("获取焦点是否变色"), Category("自定义")]
         public bool IsFocusColor { get; set; } = true;
