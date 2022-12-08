@@ -41,7 +41,7 @@ namespace Caty.Tools.UxForm.Controls.List
         public delegate void ItemClickEvent(UxListItem item);
 
         [Description("选中项事件"), Category("自定义")]
-        public event ItemClickEvent ItemClick;
+        public event ItemClickEvent? ItemClick;
 
         [Description("选中后是否可以再次触发点击事件"), Category("自定义")]
         public bool SelectedCanClick { get; set; } = false;
@@ -49,7 +49,7 @@ namespace Caty.Tools.UxForm.Controls.List
         /// <summary>
         /// 选中的节点
         /// </summary>
-        public UxListItem SelectItem { get; private set; } = null;
+        public UxListItem? SelectItem { get; private set; }
 
         public UxList()
         {
@@ -65,7 +65,7 @@ namespace Caty.Tools.UxForm.Controls.List
                 ControlHelper.FreezeControl(this, true);
                 Controls.Clear();
                 SuspendLayout();
-                UxListItem first = null;
+                UxListItem? first = null;
                 for (var i = list.Count - 1; i >= 0; i--)
                 {
                     var item = list[i];
@@ -115,7 +115,7 @@ namespace Caty.Tools.UxForm.Controls.List
             }
         }
 
-        private void SelectLabel(UxListItem item)
+        private void SelectLabel(UxListItem? item)
         {
             try
             {
@@ -135,15 +135,7 @@ namespace Caty.Tools.UxForm.Controls.List
                 item.SubTitleForeColor = SubTitleForeColor;
 
                 SelectItem = item;
-                if (ItemClick != null)
-                {
-                    ItemClick(item);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
+                ItemClick?.Invoke(item);
             }
             finally
             {

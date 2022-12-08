@@ -11,18 +11,15 @@ namespace Caty.Tools.UxForm.UIEditor
             return UITypeEditorEditStyle.Modal;
         }
 
-        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+        public override object? EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
             //打开属性编辑器修改数据
-            FrmSelectImage frm = new FrmSelectImage();
-            if (value == null || value is Image)
+            var frm = new FrmSelectImage();
+            if (value is null or Image)
             {
                 if (value != null)
                     frm.SelectImage = (Image)value;
-                if (frm.ShowDialog() == DialogResult.OK)
-                    return frm.SelectImage;
-                else
-                    return value;
+                return frm.ShowDialog() == DialogResult.OK ? frm.SelectImage : value;
             }
             else
             {

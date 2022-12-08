@@ -4,7 +4,7 @@ namespace Caty.Tools.UxForm.Controls.List;
 
 public partial class UxHorizontalList : UserControl
 {
-    public UxHorizontalListItem SelectedItem { get; set; }
+    public UxHorizontalListItem? SelectedItem { get; set; }
 
     public event EventHandler? SelectedItemEvent;
 
@@ -79,12 +79,12 @@ public partial class UxHorizontalList : UserControl
         }
     }
 
-    private void Ux_SelectItem(object sender, EventArgs e)
+    private void Ux_SelectItem(object? sender, EventArgs? e)
     {
         SelectItem(sender as UxHorizontalListItem);
     }
 
-    private void SelectItem(UxHorizontalListItem item)
+    private void SelectItem(UxHorizontalListItem? item)
     {
         if (SelectedItem is { IsDisposed: false })
         {
@@ -92,11 +92,11 @@ public partial class UxHorizontalList : UserControl
         }
 
         SelectedItem = item;
-        SelectedItem.SetSelect(true);
-        SelectedItemEvent?.Invoke(item, null);
+        SelectedItem?.SetSelect(true);
+        SelectedItemEvent?.Invoke(item, null!);
     }
 
-    private void panLeft_MouseDown(object sender, MouseEventArgs e)
+    private void PanLeft_MouseDown(object sender, MouseEventArgs e)
     {
         if (panList.Location.X >= 0)
         {
@@ -125,7 +125,7 @@ public partial class UxHorizontalList : UserControl
         panRight.SendToBack();
     }
 
-    private void panRight_MouseDown(object sender, MouseEventArgs e)
+    private void PanRight_MouseDown(object sender, MouseEventArgs e)
     {
         if (panList.Location.X + panList.Width <= panMain.Width)
             return;

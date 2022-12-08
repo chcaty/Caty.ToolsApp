@@ -9,14 +9,14 @@ public partial class UxDataGridView : UserControl
 {
     #region 属性
     /// <summary>
-    /// The m head pading left
+    /// The m head padding left
     /// </summary>
     private int _headPaddingLeft;
 
     /// <summary>
-    /// Gets or sets the head pading left.
+    /// Gets or sets the head padding left.
     /// </summary>
-    /// <value>The head pading left.</value>
+    /// <value>The head padding left.</value>
     [Description("标题左侧间距"), Category("自定义")]
     public int HeadPaddingLeft
     {
@@ -148,7 +148,7 @@ public partial class UxDataGridView : UserControl
     /// <summary>
     /// The m data source
     /// </summary>
-    private object _dataSource;
+    private object? _dataSource;
     /// <summary>
     /// 数据源,支持列表或table，如果使用翻页控件，请使用翻页控件的DataSource
     /// </summary>
@@ -156,7 +156,7 @@ public partial class UxDataGridView : UserControl
     /// <exception cref="Exception">数据源不是有效的数据类型，请使用Datatable或列表</exception>
     /// <exception cref="System.Exception">数据源不是有效的数据类型，请使用Datatable或列表</exception>
     [Description("数据源,支持列表或table，如果使用翻页控件，请使用翻页控件的DataSource"), Category("自定义")]
-    public object DataSource
+    public object? DataSource
     {
         get => _dataSource;
         set

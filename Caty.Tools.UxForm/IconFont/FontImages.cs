@@ -158,7 +158,7 @@ namespace Caty.Tools.UxForm.IconFont
         /// <param name="foreColor">Ç°¾°É«</param>
         /// <param name="backColor">±³¾°É«</param>
         /// <returns>Í¼±ê</returns>
-        public static Icon GetIcon(FontIcons iconText, int imageSize = 32, Color? foreColor = null, Color? backColor = null)
+        public static Icon? GetIcon(FontIcons iconText, int imageSize = 32, Color? foreColor = null, Color? backColor = null)
         {
             var image = GetImage(iconText, imageSize, foreColor, backColor);
             return ToIcon(image, imageSize);
@@ -281,7 +281,7 @@ namespace Caty.Tools.UxForm.IconFont
         /// <param name="size">The size.</param>
         /// <returns>Icon.</returns>
         /// <exception cref="ArgumentNullException">srcBitmap</exception>
-        private static Icon ToIcon(Image srcBitmap, int size)
+        private static Icon? ToIcon(Image srcBitmap, int size)
         {
             if (srcBitmap == null)
             {

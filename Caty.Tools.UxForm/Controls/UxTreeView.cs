@@ -1,15 +1,11 @@
-﻿using Caty.Tools.UxForm.Properties;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.InteropServices;
+using Caty.Tools.UxForm.Properties;
 
 namespace Caty.Tools.UxForm.Controls;
 
 public partial class UxTreeView : TreeView
 {
-    private const int WS_VSCROLL = 2097152;
-
-    private const int GWL_STYLE = -16;
-
     private int _nodeHeight = 50;
 
     private SizeF _treeFontSize = SizeF.Empty;
@@ -94,18 +90,11 @@ public partial class UxTreeView : TreeView
 
     private void UxTreeView_AfterSelect(object sender, TreeViewEventArgs e)
     {
-        try
-        {
-            if (e.Node == null) return;
-            if (ParentNodeCanSelect) return;
-            if (e.Node.Nodes.Count <= 0) return;
-            e.Node.Expand();
-            SelectedNode = e.Node.FirstNode;
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
+        if (e.Node == null) return;
+        if (ParentNodeCanSelect) return;
+        if (e.Node.Nodes.Count <= 0) return;
+        e.Node.Expand();
+        SelectedNode = e.Node.FirstNode;
     }
 
     private void UxTreeView_SizeChanged(object sender, EventArgs e)
@@ -115,169 +104,144 @@ public partial class UxTreeView : TreeView
 
     private void UxTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
     {
-        try
+        if (e.Node == null) return;
+        if (e.Node.Nodes.Count > 0)
         {
-            if (e.Node == null) return;
-            if (e.Node.Nodes.Count > 0)
+            if (e.Node.IsExpanded)
             {
-                if (e.Node.IsExpanded)
-                {
-                    e.Node.Collapse();
-                }
-                else
-                {
-                    e.Node.Expand();
-                }
+                e.Node.Collapse();
             }
-
-            if (SelectedNode == null) return;
-            if (SelectedNode != e.Node || !e.Node.IsExpanded) return;
-            if (ParentNodeCanSelect) return;
-            if (e.Node.Nodes.Count > 0)
+            else
             {
-                SelectedNode = e.Node.FirstNode;
+                e.Node.Expand();
             }
         }
-        catch (Exception exception)
+
+        if (SelectedNode == null) return;
+        if (SelectedNode != e.Node || !e.Node.IsExpanded) return;
+        if (ParentNodeCanSelect) return;
+        if (e.Node.Nodes.Count > 0)
         {
-            throw exception;
+            SelectedNode = e.Node.FirstNode;
         }
     }
 
     private void TreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
     {
-        try
+        if (e.Node == null || !IsShowByCustomModel || (e.Node.Bounds.Width <= 0 &&
+                                                       e.Node.Bounds.Height <= 0 && e.Node.Bounds.X <= 0 &&
+                                                       e.Node.Bounds.Y <= 0))
         {
-            if (e.Node == null || !IsShowByCustomModel || (e.Node.Bounds.Width <= 0 &&
-                                                           e.Node.Bounds.Height <= 0 && e.Node.Bounds.X <= 0 &&
-                                                           e.Node.Bounds.Y <= 0))
+            e.DrawDefault = true;
+        }
+        else
+        {
+            if (Nodes.IndexOf(e.Node) == 0)
             {
-                e.DrawDefault = true;
+                _blnHasVBar = IsVerticalScrollBarVisible();
+            }
+
+            var font = e.Node.NodeFont ?? ((TreeView)sender).Font;
+
+            if (_treeFontSize == SizeF.Empty)
+            {
+                _treeFontSize = GetFontSize(font, e.Graphics);
+            }
+
+            var flag = false;
+            var num = 0;
+            if (ImageList is { Images.Count: > 0 } && e.Node.ImageIndex >= 0 &&
+                e.Node.ImageIndex < ImageList.Images.Count)
+            {
+                flag = true;
+                num = (e.Bounds.Height - ImageList.ImageSize.Height) / 2;
+            }
+
+            if ((e.State is TreeNodeStates.Selected or TreeNodeStates.Focused ||
+                 e.State == (TreeNodeStates.Focused | TreeNodeStates.Selected)) &&
+                (ParentNodeCanSelect || e.Node.Nodes.Count <= 0))
+            {
+                e.Graphics.FillRectangle(new SolidBrush(NodeSelectedColor),
+                    new Rectangle(new Point(0, e.Node.Bounds.Y), new Size(Width, e.Node.Bounds.Height)));
+                e.Graphics.DrawString(e.Node.Text, font, new SolidBrush(NodeSelectedForeColor),
+                    e.Bounds.X,
+                    e.Bounds.Y + (_nodeHeight - _treeFontSize.Height) / 2f);
             }
             else
             {
-                if (Nodes.IndexOf(e.Node) == 0)
-                {
-                    _blnHasVBar = IsVerticalScrollBarVisible();
-                }
-
-                var font = e.Node.NodeFont ?? ((TreeView)sender).Font;
-
-                if (_treeFontSize == SizeF.Empty)
-                {
-                    _treeFontSize = GetFontSize(font, e.Graphics);
-                }
-
-                var flag = false;
-                var num = 0;
-                if (ImageList != null && ImageList.Images.Count > 0 && e.Node.ImageIndex >= 0 &&
-                    e.Node.ImageIndex < ImageList.Images.Count)
-                {
-                    flag = true;
-                    num = (e.Bounds.Height - ImageList.ImageSize.Height) / 2;
-                }
-
-                if ((e.State is TreeNodeStates.Selected or TreeNodeStates.Focused ||
-                     e.State == (TreeNodeStates.Focused | TreeNodeStates.Selected)) &&
-                    (ParentNodeCanSelect || e.Node.Nodes.Count <= 0))
-                {
-                    e.Graphics.FillRectangle(new SolidBrush(NodeSelectedColor),
-                        new Rectangle(new Point(0, e.Node.Bounds.Y), new Size(Width, e.Node.Bounds.Height)));
-                    e.Graphics.DrawString(e.Node.Text, font, new SolidBrush(NodeSelectedForeColor),
-                        e.Bounds.X,
-                        e.Bounds.Y + (_nodeHeight - _treeFontSize.Height) / 2f);
-                }
-                else
-                {
-                    e.Graphics.FillRectangle(new SolidBrush(NodeBackgroundColor),
-                        new Rectangle(new Point(0, e.Node.Bounds.Y), new Size(Width, e.Node.Bounds.Height)));
-                    e.Graphics.DrawString(e.Node.Text, font, new SolidBrush(NodeForeColor), e.Bounds.X,
-                        e.Bounds.Y + (_nodeHeight - _treeFontSize.Height) / 2f);
-                }
-
-                if (flag)
-                {
-                    var num2 = e.Bounds.X - num - ImageList.ImageSize.Width;
-                    if (num2 < 0)
-                    {
-                        num2 = 3;
-                    }
-
-                    e.Graphics.DrawImage(ImageList.Images[e.Node.ImageIndex],
-                        new Rectangle(new Point(num2, e.Bounds.Y + num), ImageList.ImageSize));
-                }
-
-                if (NodeIsShowSplitLine)
-                {
-                    e.Graphics.DrawLine(new Pen(NodeSplitLineColor, 1f),
-                        new Point(0, e.Bounds.Y + _nodeHeight - 1),
-                        new Point(Width, e.Bounds.Y + _nodeHeight - 1));
-                }
-
-                var flag2 = false;
-                if (e.Node.Nodes.Count > 0)
-                {
-                    if (e.Node.IsExpanded && NodeUpPic != null)
-                    {
-                        e.Graphics.DrawImage(NodeUpPic,
-                            new Rectangle(Width - (_blnHasVBar ? 50 : 30),
-                                e.Bounds.Y + (_nodeHeight - 20) / 2, 20, 20));
-                    }
-                    else if (NodeDownPic != null)
-                    {
-                        e.Graphics.DrawImage(NodeDownPic,
-                            new Rectangle(Width - (_blnHasVBar ? 50 : 30),
-                                e.Bounds.Y + (_nodeHeight - 20) / 2, 20, 20));
-                    }
-
-                    flag2 = true;
-                }
-
-                if (!IsShowTip || !LstTips.ContainsKey(e.Node.Name) ||
-                    string.IsNullOrWhiteSpace(LstTips[e.Node.Name])) return;
-                var num3 = Width - (_blnHasVBar ? 50 : 30) - (flag2 ? 20 : 0);
-                var num4 = e.Bounds.Y + (_nodeHeight - 20) / 2;
-                e.Graphics.DrawImage(TipImage, new Rectangle(num3, num4, 20, 20));
-                var sizeF = e.Graphics.MeasureString(LstTips[e.Node.Name], TipFont, 100,
-                    StringFormat.GenericTypographic);
-                e.Graphics.DrawString(LstTips[e.Node.Name], TipFont, new SolidBrush(Color.White),
-                    num3 + 10 - sizeF.Width / 2f - 3f, num4 + 10 - sizeF.Height / 2f);
+                e.Graphics.FillRectangle(new SolidBrush(NodeBackgroundColor),
+                    new Rectangle(new Point(0, e.Node.Bounds.Y), new Size(Width, e.Node.Bounds.Height)));
+                e.Graphics.DrawString(e.Node.Text, font, new SolidBrush(NodeForeColor), e.Bounds.X,
+                    e.Bounds.Y + (_nodeHeight - _treeFontSize.Height) / 2f);
             }
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-    }
-
-
-    private SizeF GetFontSize(Font font, Graphics graphics = null)
-    {
-        SizeF result;
-        try
-        {
-            var flag = false;
-            if (graphics == null)
-            {
-                graphics = CreateGraphics();
-                flag = true;
-            }
-
-            var sizeF = graphics.MeasureString("a", font, 100, StringFormat.GenericTypographic);
 
             if (flag)
             {
-                graphics.Dispose();
+                var num2 = e.Bounds.X - num - ImageList.ImageSize.Width;
+                if (num2 < 0)
+                {
+                    num2 = 3;
+                }
+
+                e.Graphics.DrawImage(ImageList.Images[e.Node.ImageIndex],
+                    new Rectangle(new Point(num2, e.Bounds.Y + num), ImageList.ImageSize));
             }
 
-            result = sizeF;
+            if (NodeIsShowSplitLine)
+            {
+                e.Graphics.DrawLine(new Pen(NodeSplitLineColor, 1f),
+                    new Point(0, e.Bounds.Y + _nodeHeight - 1),
+                    new Point(Width, e.Bounds.Y + _nodeHeight - 1));
+            }
+
+            var flag2 = false;
+            if (e.Node.Nodes.Count > 0)
+            {
+                if (e.Node.IsExpanded && NodeUpPic != null)
+                {
+                    e.Graphics.DrawImage(NodeUpPic,
+                        new Rectangle(Width - (_blnHasVBar ? 50 : 30),
+                            e.Bounds.Y + (_nodeHeight - 20) / 2, 20, 20));
+                }
+                else if (NodeDownPic != null)
+                {
+                    e.Graphics.DrawImage(NodeDownPic,
+                        new Rectangle(Width - (_blnHasVBar ? 50 : 30),
+                            e.Bounds.Y + (_nodeHeight - 20) / 2, 20, 20));
+                }
+
+                flag2 = true;
+            }
+
+            if (!IsShowTip || !LstTips.ContainsKey(e.Node.Name) ||
+                string.IsNullOrWhiteSpace(LstTips[e.Node.Name])) return;
+            var num3 = Width - (_blnHasVBar ? 50 : 30) - (flag2 ? 20 : 0);
+            var num4 = e.Bounds.Y + (_nodeHeight - 20) / 2;
+            e.Graphics.DrawImage(TipImage, new Rectangle(num3, num4, 20, 20));
+            var sizeF = e.Graphics.MeasureString(LstTips[e.Node.Name], TipFont, 100,
+                StringFormat.GenericTypographic);
+            e.Graphics.DrawString(LstTips[e.Node.Name], TipFont, new SolidBrush(Color.White),
+                num3 + 10 - sizeF.Width / 2f - 3f, num4 + 10 - sizeF.Height / 2f);
         }
-        catch (Exception e)
+    }
+
+    private SizeF GetFontSize(Font font, Graphics? graphics = null)
+    {
+        var flag = false;
+        if (graphics == null)
         {
-            throw e;
+            graphics = CreateGraphics();
+            flag = true;
         }
 
-        return result;
+        var sizeF = graphics.MeasureString("a", font, 100, StringFormat.GenericTypographic);
+
+        if (flag)
+        {
+            graphics.Dispose();
+        }
+
+        return sizeF;
     }
 
     [DllImport("user32", CharSet = CharSet.Auto)]
@@ -285,6 +249,6 @@ public partial class UxTreeView : TreeView
 
     private bool IsVerticalScrollBarVisible()
     {
-        return base.IsHandleCreated && (GetWindowLong(base.Handle, -16) & 2097152) != 0;
+        return IsHandleCreated && (GetWindowLong(Handle, -16) & 2097152) != 0;
     }
 }

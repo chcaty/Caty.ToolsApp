@@ -196,7 +196,7 @@ namespace Caty.Tools.UxForm.Controls.KeyBoard
             OkClick?.Invoke((sender as Label)?.Tag, e);
         }
 
-        private void Money_MouseDown(object sender, MouseEventArgs e)
+        private void Money_MouseDown(object sender, MouseEventArgs? e)
         {
             MoneyClick?.Invoke((sender as Label)?.Tag, e);
         }

@@ -75,9 +75,9 @@ public partial class UxMenu : UserControl
     public MenuStyle MenuStyle { get; set; } = MenuStyle.Fill;
 
     private readonly List<Control> _parentItems = new();
-    private IMenuItem _selectParentItem = null;
-    private IMenuItem _selectChildrenItem = null;
-    private Panel _panChildren = null;
+    private IMenuItem? _selectParentItem;
+    private IMenuItem? _selectChildrenItem;
+    private Panel? _panChildren;
 
     private void ReloadItems()
     {
@@ -94,7 +94,7 @@ public partial class UxMenu : UserControl
                     parentItem.DataSource = parent;
                     if (ParentItemStyles != null)
                         parentItem.SetStyle(ParentItemStyles);
-                    parentItem.SelectedItem += parentItem_SelectedItem;
+                    parentItem.SelectedItem += ParentItem_SelectedItem;
                     var c = parentItem as Control;
                     c.Dock = DockStyle.Top;
                     Controls.Add(c);
@@ -123,11 +123,11 @@ public partial class UxMenu : UserControl
 
         if (IsShowFirstItem && _parentItems is { Count: > 0 })
         {
-            parentItem_SelectedItem(_parentItems[0], null);
+            ParentItem_SelectedItem(_parentItems[0], null);
         }
     }
 
-    private void parentItem_SelectedItem(object sender, EventArgs e)
+    private void ParentItem_SelectedItem(object? sender, EventArgs e)
     {
         FindForm().ActiveControl = this;
         var item = sender as IMenuItem;
@@ -135,12 +135,9 @@ public partial class UxMenu : UserControl
         {
             if (_selectParentItem != item)
             {
-                if (_selectParentItem != null)
-                {
-                    _selectParentItem.SetSelectedStyle(false);
-                }
+                _selectParentItem?.SetSelectedStyle(false);
                 _selectParentItem = item;
-                _selectParentItem.SetSelectedStyle(true);
+                _selectParentItem?.SetSelectedStyle(true);
                 SetChildrenControl(_selectParentItem);
             }
             else
@@ -154,12 +151,9 @@ public partial class UxMenu : UserControl
         {
             if (_selectChildrenItem != item)
             {
-                if (_selectChildrenItem != null)
-                {
-                    _selectChildrenItem.SetSelectedStyle(false);
-                }
+                _selectChildrenItem?.SetSelectedStyle(false);
                 _selectChildrenItem = item;
-                _selectChildrenItem.SetSelectedStyle(true);
+                _selectChildrenItem?.SetSelectedStyle(true);
             }
         }
 
@@ -197,7 +191,7 @@ public partial class UxMenu : UserControl
                         parentItem.DataSource = item;
                         if (ChildrenItemStyles != null)
                             parentItem.SetStyle(ChildrenItemStyles);
-                        parentItem.SelectedItem += parentItem_SelectedItem;
+                        parentItem.SelectedItem += ParentItem_SelectedItem;
                         var c = parentItem as Control;
                         if (intItemHeight == 0)
                             intItemHeight = c.Height;
@@ -232,7 +226,7 @@ public partial class UxMenu : UserControl
                         parentItem.DataSource = item;
                         if (ChildrenItemStyles != null)
                             parentItem.SetStyle(ChildrenItemStyles);
-                        parentItem.SelectedItem += parentItem_SelectedItem;
+                        parentItem.SelectedItem += ParentItem_SelectedItem;
                         var c = parentItem as Control;
                         if (intItemHeight == 0)
                             intItemHeight = c.Height;

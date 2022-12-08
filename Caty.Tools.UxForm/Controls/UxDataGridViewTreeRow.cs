@@ -118,7 +118,7 @@ namespace Caty.Tools.UxForm.Controls
                 if (value.HasValue)
                 {
                     panLeft.Enabled = true;
-                    panLeft.BackgroundImage = value.Value ? Resources.caret_down : Resources.caret_right;
+                    panLeft.BackgroundImage = value.Value ? BytesToImage(Resources.caret_down) : BytesToImage(Resources.caret_right);
                 }
                 else
                 {
@@ -381,6 +381,13 @@ namespace Caty.Tools.UxForm.Controls
                 item.Hide();
             }
             row.IsOpened = false;
+        }
+
+        public static Image BytesToImage(byte[] buffer)
+        {
+            MemoryStream ms = new MemoryStream(buffer);
+            Image image = System.Drawing.Image.FromStream(ms);
+            return image;
         }
     }
 }

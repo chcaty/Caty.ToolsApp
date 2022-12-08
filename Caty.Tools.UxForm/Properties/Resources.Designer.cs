@@ -73,7 +73,7 @@ namespace Caty.Tools.UxForm.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static Image caret_down {
+        internal static byte[] caret_down {
             get {
                 object obj = ResourceManager.GetObject("caret_down", resourceCulture);
                 return ((byte[])(obj));
@@ -83,7 +83,7 @@ namespace Caty.Tools.UxForm.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static Image caret_right {
+        internal static byte[] caret_right {
             get {
                 object obj = ResourceManager.GetObject("caret_right", resourceCulture);
                 return ((byte[])(obj));

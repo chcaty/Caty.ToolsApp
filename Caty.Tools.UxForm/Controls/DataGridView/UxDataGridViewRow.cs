@@ -4,6 +4,7 @@ namespace Caty.Tools.UxForm.Controls.DataGridView
 {
     public partial class UxDataGridViewRow : UserControl,IDataGridViewRow
     {
+        public event DataGridViewRowCustomEventHandler? RowCustomEvent;
         public event DataGridViewEventHandler? CheckBoxChangeEvent;
         public event DataGridViewEventHandler? CellClick;
         public event DataGridViewEventHandler? SourceChanged;
@@ -57,6 +58,9 @@ namespace Caty.Tools.UxForm.Controls.DataGridView
         {
             BackColor = blnSelected ? Color.FromArgb(255, 247, 245) : Color.Transparent;
         }
+
+        public int RowHeight { get; set; }
+        public int RowIndex { get; set; }
 
         public void ReloadCells()
         {

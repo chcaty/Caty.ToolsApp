@@ -103,6 +103,5 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Label label3;
-        private UxSplitLineH splitLineH1;
     }
 }

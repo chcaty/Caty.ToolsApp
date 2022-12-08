@@ -253,10 +253,31 @@ namespace Caty.Tools.UxForm.Helpers
         }
 
         /// <summary>
+        /// Creates the rounded rectangle path.
+        /// </summary>
+        /// <param name="rect">The rect.</param>
+        /// <param name="cornerRadius">The corner radius.</param>
+        /// <returns>GraphicsPath.</returns>
+        public static GraphicsPath CreateRoundedRectanglePath(this RectangleF rect, int cornerRadius)
+        {
+            var roundedRect = new GraphicsPath();
+            roundedRect.AddArc(rect.X, rect.Y, cornerRadius * 2, cornerRadius * 2, 180, 90);
+            roundedRect.AddLine(rect.X + cornerRadius, rect.Y, rect.Right - cornerRadius * 2, rect.Y);
+            roundedRect.AddArc(rect.X + rect.Width - cornerRadius * 2, rect.Y, cornerRadius * 2, cornerRadius * 2, 270, 90);
+            roundedRect.AddLine(rect.Right, rect.Y + cornerRadius * 2, rect.Right, rect.Y + rect.Height - cornerRadius * 2);
+            roundedRect.AddArc(rect.X + rect.Width - cornerRadius * 2, rect.Y + rect.Height - cornerRadius * 2, cornerRadius * 2, cornerRadius * 2, 0, 90);
+            roundedRect.AddLine(rect.Right - cornerRadius * 2, rect.Bottom, rect.X + cornerRadius * 2, rect.Bottom);
+            roundedRect.AddArc(rect.X, rect.Bottom - cornerRadius * 2, cornerRadius * 2, cornerRadius * 2, 90, 90);
+            roundedRect.AddLine(rect.X, rect.Bottom - cornerRadius * 2, rect.X, rect.Y + cornerRadius * 2);
+            roundedRect.CloseFigure();
+            return roundedRect;
+        }
+
+        /// <summary>
         /// Gets the colors.
         /// </summary>
         /// <value>The colors.</value>
-        public static Color[] Colors { get; private set; }
+        public static Color[] Colors { get; }
 
         static ControlHelper()
         {

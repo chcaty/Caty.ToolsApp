@@ -67,7 +67,7 @@
             this.panRight.Size = new System.Drawing.Size(46, 53);
             this.panRight.TabIndex = 2;
             this.panRight.Visible = false;
-            this.panRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panRight_MouseDown);
+            this.panRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanRight_MouseDown);
             // 
             // panLeft
             // 
@@ -79,7 +79,7 @@
             this.panLeft.Size = new System.Drawing.Size(46, 53);
             this.panLeft.TabIndex = 1;
             this.panLeft.Visible = false;
-            this.panLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panLeft_MouseDown);
+            this.panLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanLeft_MouseDown);
             // 
             // UCHorizontalList
             // 
